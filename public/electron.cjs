@@ -8,7 +8,7 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      icon: path.join(__dirname, 'assate', 'apple-touch-icon.png'), 
+      icon: path.join(__dirname, 'assets', 'apple-touch-icon.png'), 
       nodeIntegration: true
     }
   });
