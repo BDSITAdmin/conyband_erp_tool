@@ -1,15 +1,27 @@
-import Header from "./components/header"
+import { useState } from "react";
+import Header from './components/header'
+import Menu from "./components/Menu";
+import Content from "./components/Content";
 
-import { Component } from "react"
-import Menu from './components/menu'
 function App() {
-  
+  const [activePage, setActivePage] = useState("dashboard");
+
   return (
-    <>
-      <Header/>
-      <Menu/>
-    </>
-  )
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <Header />
+
+      {/* Sidebar + Content */}
+      <div className="flex flex-1">
+        <Menu activePage={activePage} setActivePage={setActivePage} />
+
+        {/* Main Content */}
+        <div className="flex-1 p-4 overflow-y-auto">
+          <Content activePage={activePage} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;

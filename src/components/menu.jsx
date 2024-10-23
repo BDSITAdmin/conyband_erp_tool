@@ -1,78 +1,41 @@
-import React from 'react';
-import icon1 from '../assets/dashboard.png';
-import icon2 from '../assets/inventry.png';
-import icon3 from '../assets/shopping-cart.png';
-import icon4 from '../assets/vendor.png';
-import icon5 from '../assets/product.png';
-import icon6 from '../assets/user.png';
-import icon7 from '../assets/setting.png';
-
-
-const Menu = () => {
+import {
+    FiHome,
+    FiBox,
+    FiShoppingCart,
+    FiUsers,
+    FiSettings,
+    FiPackage,
+    FiClipboard,
+  } from "react-icons/fi";
+  
+  const Menu = ({ activePage, setActivePage }) => {
     return (
-        <div className="w-2/12 min-w-4 h-screen bg-[#FFFFF] text-base font-semibold text-[#9CA3AF] p-4">
-
-            <ul className="space-y-4 ">
-                <li className="flex hover:bg-gray-700 p-2 gap-2 rounded">
-                    <img
-                        src={icon1}
-                        alt='dashboard'
-                        className=''
-                    />
-                    <a href="#inventory">Dashboard</a>
-                </li>
-                <li className="flex hover:bg-gray-700 p-2 gap-2 rounded">
-                    <img
-                        src={icon2}
-                        alt='inventry'
-                        className=''
-                    />
-                    <a href="#inventory">Inventory</a>
-                </li>
-                <li className="flex hover:bg-gray-700 p-2 gap-2 rounded">
-                    <img
-                        src={icon3}
-                        alt='purchase'
-                        className=''
-                    />
-                    <a href="#purchase">Purchase</a>
-                </li>
-                <li className="flex hover:bg-gray-700 p-2 gap-2 rounded">
-                    <img
-                        src={icon4}
-                        alt='vendor'
-                        className=''
-                    />
-                    <a href="#vendors">Vendors</a>
-                </li>
-                <li className="flex hover:bg-gray-700 p-2 gap-2 rounded">
-                    <img
-                        src={icon5}
-                        alt='product'
-                        className=''
-                    />
-                    <a href="#products">Products</a>
-                </li>
-                <li className="flex hover:bg-gray-700 p-2 gap-2 rounded">
-                    <img
-                        src={icon6}
-                        alt='user'
-                        className=''
-                    />
-                    <a href="#users">Users</a>
-                </li>
-                <li className="flex hover:bg-gray-700 p-2 gap-2 rounded">
-                    <img
-                        src={icon7}
-                        alt='settings'
-                        className=''
-                    />
-                    <a href="#settings">Settings</a>
-                </li>
-            </ul>
-        </div>
+      <div className="w-64 h-full p-4 overflow-y-auto bg-white border-r">
+        <ul className="space-y-4">
+          {[
+            { label: "Dashboard", icon: <FiHome />, page: "dashboard" },
+            { label: "Inventory", icon: <FiBox />, page: "inventory" },
+            { label: "Purchase", icon: <FiShoppingCart />, page: "purchase" },
+            { label: "Vendors", icon: <FiUsers />, page: "vendors" },
+            { label: "Products", icon: <FiPackage />, page: "products" },
+            { label: "Users", icon: <FiClipboard />, page: "users" },
+            { label: "Settings", icon: <FiSettings />, page: "settings" },
+          ].map(({ label, icon, page }) => (
+            <li
+              key={page}
+              className={`flex items-center gap-2 p-2 rounded cursor-pointer ${
+                activePage === page ? "bg-gray-300 text-black" : "text-gray-500"
+              } hover:bg-gray-200`}
+              onClick={() => setActivePage(page)}
+            >
+              {icon}
+              {label}
+            </li>
+          ))}
+        </ul>
+      </div>
     );
-};
-
-export default Menu;
-
+  };
+  
+  export default Menu;
+  
