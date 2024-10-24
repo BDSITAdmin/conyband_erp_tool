@@ -1,13 +1,13 @@
 import { useState } from "react";
+import Header from "./header";
 
-const Content = ({ activePage }) => {
+const Content = () => {
   const [activeTab, setActiveTab] = useState("purchasing");
 
-  if (activePage !== "dashboard") {
-    return <div className="p-6">Content for {activePage}</div>;
-  }
 
   return (
+    <>
+    <Header/>
     <div className="p-6">
       <h1 className="mb-4 text-2xl font-bold">Welcome to Cony Band Dashboard</h1>
 
@@ -78,6 +78,7 @@ const Content = ({ activePage }) => {
         </table>
       )}
     </div>
+    </>
   );
 };
 
