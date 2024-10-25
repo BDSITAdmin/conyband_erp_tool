@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   FiHome,
   FiBox,
@@ -10,6 +10,8 @@ import {
 } from "react-icons/fi";
 
 const Menu = () => {
+  const location = useLocation();
+
   return (
     <div className="w-64 h-full p-4 overflow-y-auto bg-white border-r">
       <ul className="space-y-4">
@@ -25,7 +27,7 @@ const Menu = () => {
           <li key={path} className="flex items-center gap-2 p-2 rounded hover:bg-gray-200">
             <Link
               to={path}
-              className="flex items-center gap-2 text-gray-500 hover:text-black"
+              className={`flex items-center gap-2 text-gray-500 ${location.pathname === path ? 'text-green-500 ' : 'hover:text-black'}`}
             >
               {icon}
               {label}
