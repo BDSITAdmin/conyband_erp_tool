@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiMoreVertical, FiEdit2, FiTrash2,FiPlus } from "react-icons/fi";
+import { FiMoreVertical, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
 
 
 
@@ -97,128 +97,13 @@ const Table = () => {
 
     return (
         <>
-            <div className="p-6 rounded-md bg-gray-50">
-                <h1 className="mb-4 text-2xl font-semibold">
-                    {activeTab === "Purchasing" ? "Purchasing" : "Finished Goods"}
-                </h1>
 
-                {/* Tabs */}
-                <div className="flex mb-6 space-x-4">
-                    <button
-                        className={`px-4 py-2 rounded-md ${activeTab === "Purchasing" ? "bg-green-500 text-white" : "bg-gray-200"
-                            }`}
-                        onClick={() => handleTabChange("Purchasing")}
-                    >
-                        Purchasing
-                    </button>
-                    <button
-                        className={`px-4 py-2 rounded-md ${activeTab === "Finished Goods" ? "bg-green-500 text-white" : "bg-gray-200"
-                            }`}
-                        onClick={() => handleTabChange("Finished Goods")}
-                    >
-                        Finished Goods
-                    </button>
-                </div>
+            <div className="flex flex-col items-center justify-center h-screen bg-red-100">
+                <h1 className="text-5xl font-bold text-red-600">Oops!</h1>
+                <p className="mt-4 text-xl text-gray-700">Something went wrong.</p>
+                <p className="text-gray-500">Error 404 - Page Not Found</p>
 
-                {/* Table */}
-                <table className="w-full border-collapse">
-                    <thead>
-                        <tr className="text-left text-gray-500 border-b">
-                            <th className="p-4"> </th>
-                            <th className="p-4">Product Id</th>
-                            <th className="p-4">Product Name</th>
-                            <th className="p-4">Product Category</th>
-                            <th className="p-4">Available Quantity</th>
-                            <th className="p-4">Status</th>
-                            <th className="p-4">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {paginatedData.map((item, index) => (
-                            <tr
-                                key={index}
-                                className="text-gray-700 border-b hover:bg-gray-100"
-                            >
-                                <td className="p-4">
-                                    <input type="checkbox" />
-                                </td>
-                                <td className="p-4">{item.id}</td>
-                                <td className="p-4">{item.name}</td>
-                                <td className="p-4">{item.category}</td>
-                                <td className="p-4">{item.quantity}</td>
-                                <td className="p-4">
-                                    <StatusBadge status={item.status} />
-                                </td>
-                                <td className="relative p-4">
-                                    <button className="p-2" onClick={() => toggleActions(index)}>
-                                        <FiMoreVertical />
-                                    </button>
-                                    {showActions === index && (
-                                        <div className="absolute right-0 w-32 mt-2 bg-white border rounded shadow-lg">
-                                            <button
-                                                className="flex items-center w-full gap-2 px-4 py-2 "
-                                                onClick={() => handleDelete(index)}
-                                            >
-                                                <FiTrash2 /> Delete
-                                            </button>
-                                            <button
-                                                className="flex items-center w-full gap-2 px-4 py-2 "
-                                                onClick={() => handleEdit(index)}
-                                            >
-                                                <FiEdit2 /> Edit
-                                            </button>
-                                        </div>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-                {/* Pagination and Add Item */}
-                <div className="flex items-center justify-end mt-4 space-x-2">
-                    {/* Pagination */}
-                    <div className="space-x-2">
-                        <button
-                            className="px-4 py-2 border rounded"
-                            disabled={currentPage === 1}
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                        >
-                            Previous
-                        </button>
-                        {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((page) => (
-                            <button
-                                key={page}
-                                className={`px-4 py-2 border rounded ${page === currentPage ? "bg-green-100 text-green-700" : ""
-                                    }`}
-                                onClick={() => setCurrentPage(page)}
-                            >
-                                {page}
-                            </button>
-                        ))}
-                        <button
-                            className="px-4 py-2 border rounded"
-                            disabled={currentPage === totalPages}
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                        >
-                            Next
-                        </button>
-                    </div>
-
-                </div>
             </div>
-            {/* Add Item Button, visible only for Finished Goods tab */}
-            <div className="flex">
-                {activeTab === "Finished Goods" && (
-                    <button
-                        className="flex items-center gap-2 px-4 py-2 m-6 ml-auto text-white bg-green-500 rounded"
-                        onClick={handleAddItem}
-                    >
-                        <FiPlus /> Add Finish Good
-                    </button>
-                )}
-            </div>
-
 
         </>
     );

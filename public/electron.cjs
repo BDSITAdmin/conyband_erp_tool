@@ -9,7 +9,7 @@ function createWindow() {
       nodeIntegration: true
     },
     // Test with a single known icon for all platforms
-    icon: path.join(__dirname, 'assets', 'favicon.ico') // Change to a single known icon for testing
+    icon: path.join(__dirname, '../src/assets', 'favicon.ico') // Change to a single known icon for testing
   });
 
   // Remove the default menu

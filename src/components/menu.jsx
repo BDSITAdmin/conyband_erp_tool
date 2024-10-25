@@ -13,7 +13,7 @@ const Menu = () => {
   const location = useLocation();
 
   return (
-    <div className="w-64 h-full p-4 overflow-y-auto bg-white border-r">
+    <div className="w-64 h-screen p-4 overflow-y-auto bg-white border-r">
       <ul className="space-y-4">
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
