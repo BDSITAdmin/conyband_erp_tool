@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddFinishGoodModal = () => {
+const ProductCategory = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleModal = () => {
@@ -15,7 +15,7 @@ const AddFinishGoodModal = () => {
                 onClick={toggleModal}
                 className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
             >
-               + Add Finished Good
+               + Add New Product
             </button>
 
             {/* Modal */}
@@ -23,22 +23,11 @@ const AddFinishGoodModal = () => {
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
                     <div className="relative bg-white shadow-lg rounded-xl w-96">
                         <h2 className="text-lg font-bold text-center text-white bg-[#10B981] py-3 rounded-t-xl">
-                            Add Finish Good
+                           Add Product type
                         </h2>
 
                         <form className="px-6 pb-6 mt-4 space-y-4">
-                            {/* Product ID */}
-                            <div className="flex items-center space-x-2">
-                                <label htmlFor="productID" className="w-1/3">Product ID</label>
-                                <select
-                                    id="productID"
-                                    className="w-2/3 px-2 py-1 border rounded"
-                                >
-                                    <option value="001">001</option>
-                                    <option value="002">002</option>
-                                    <option value="003">003</option>
-                                </select>
-                            </div>
+                            
 
                             {/* Product Name */}
                             <div className="flex items-center space-x-2">
@@ -53,7 +42,7 @@ const AddFinishGoodModal = () => {
 
                             {/* Manufactured Quantity */}
                             <div className="flex items-center space-x-2">
-                                <label htmlFor="quantity" className="w-1/3">Manufactured Quantity</label>
+                                <label htmlFor="quantity" className="w-1/3">Product Category</label>
                                 <input
                                     type="number"
                                     id="quantity"
@@ -68,7 +57,7 @@ const AddFinishGoodModal = () => {
                                     type="submit"
                                     className="bg-[#10B981]  text-white px-4 py-2 rounded"
                                 >
-                                    Add Finished Good
+                                    Add Product
                                 </button>
                             </div>
                         </form>
@@ -87,4 +76,4 @@ const AddFinishGoodModal = () => {
     );
 };
 
-export default AddFinishGoodModal;
+export default ProductCategory;

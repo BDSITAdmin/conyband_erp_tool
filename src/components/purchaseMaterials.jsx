@@ -13,7 +13,7 @@ const purchaseMaterials = () => {
             
             <button
                 onClick={toggleModal}
-                className="px-4 py-2 m-6 text-white bg-green-500 rounded"
+                className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
             >
                + Add Purchase
             </button>
@@ -27,6 +27,17 @@ const purchaseMaterials = () => {
                         </h2>
 
                         <form className="px-6 pb-6 mt-4 space-y-4">
+                           <div className="flex items-center space-x-2">
+                                <label htmlFor="productName" className="w-1/3">Purchase Date</label>
+                                <input
+                                    type="Date"
+                                    id="productDate"
+                                    className="w-2/3 px-2 py-1 border rounded"
+                                    placeholder="Enter Product date"
+                                />
+                            </div>
+                            
+  
                             {/* Product ID */}
                             <div className="flex items-center space-x-2">
                                 <label htmlFor="productID" className="w-1/3">Product ID</label>
