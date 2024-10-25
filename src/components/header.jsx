@@ -10,7 +10,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex items-center justify-between p-4 bg-white shadow-md">
+    <header className=" fixed top-0 left-0 w-full flex items-center justify-between p-4 bg-white shadow-md">
       <div className="flex items-center">
         <FiMenu size={24} className="cursor-pointer" onClick={toggleMenu} />
       </div>
