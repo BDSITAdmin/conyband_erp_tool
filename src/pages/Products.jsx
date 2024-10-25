@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2 } from "react-icons/fi";
 import ProductList from "../components/productButton";
+import ProductCategory from "../components/addProductCategory";
 
 // Sample data for Purchasing and Finished Goods
 const initialPurchasingData = Array(10).fill({
@@ -63,14 +64,14 @@ const Table = () => {
                 {/* Tabs */}
                 <div className="flex mb-6 space-x-4">
                     <button
-                        className={`px-4 py-2 rounded-md ${activeTab === "Purchasing" ? "bg-green-500 text-white" : "bg-gray-200"
+                        className={`px-4 py-2 rounded-md ${activeTab === "Purchasing" ? "bg-[#10B981] text-white" : "bg-gray-200"
                             }`}
                         onClick={() => handleTabChange("Purchasing")}
                     >
                         Product List
                     </button>
                     <button
-                        className={`px-4 py-2 rounded-md ${activeTab === "Finished Goods" ? "bg-green-500 text-white" : "bg-gray-200"
+                        className={`px-4 py-2 rounded-md ${activeTab === "Finished Goods" ? "bg-[#10B981] text-white" : "bg-gray-200"
                             }`}
                         onClick={() => handleTabChange("Finished Goods")}
                     >
@@ -166,7 +167,7 @@ const Table = () => {
             </div>
              {/* Add Item Button */}
              <div className="flex justify-end">
-                {activeTab === "Finished Goods" && <ProductList />}
+                {activeTab === "Finished Goods" && <ProductCategory />}
             </div>
         </>
     );

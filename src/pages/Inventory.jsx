@@ -106,18 +106,18 @@ const Table = () => {
                 {/* Tabs */}
                 <div className="flex mb-6 space-x-4">
                     <button
-                        className={`px-4 py-2 rounded-md ${activeTab === "Purchasing" ? "bg-green-500 text-white" : "bg-gray-200"
+                        className={`px-4 py-2 rounded-md ${activeTab === "Purchasing" ? "bg-[#10B981] text-white" : "bg-gray-200"
                             }`}
                         onClick={() => handleTabChange("Purchasing")}
                     >
                         Raw Materials
                     </button>
                     <button
-                        className={`px-4 py-2 rounded-md ${activeTab === "Finished Goods" ? "bg-green-500 text-white" : "bg-gray-200"
+                        className={`px-4 py-2 rounded-md ${activeTab === "Finished Goods" ? "bg-[#10B981] text-white" : "bg-gray-200"
                             }`}
                         onClick={() => handleTabChange("Finished Goods")}
                     >
-                        Finish Good
+                        Finished Good
                     </button>
                 </div>
 

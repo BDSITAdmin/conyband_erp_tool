@@ -13,7 +13,7 @@ const ProductList = () => {
             
             <button
                 onClick={toggleModal}
-                className="px-4 py-2 m-6 text-white bg-green-500 rounded"
+                className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
             >
                + Add New Product
             </button>

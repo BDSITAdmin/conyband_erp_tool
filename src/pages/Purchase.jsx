@@ -114,7 +114,7 @@ const Table = () => {
                                 <th className="p-4">Product Id</th>
                                 <th className="p-4">Product Name</th>
                                 <th className="p-4">Product Category</th>
-                                <th className="p-4">Available Quantity</th>
+                                <th className="p-4">Purchased Quantity</th>
                                 <th className="p-4">Status</th>
                                 <th className="p-4">Action</th>
                             </tr>
