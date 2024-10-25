@@ -16,17 +16,17 @@ const Header = () => {
       </div>
       <div className="flex items-center space-x-6">
         <div className="relative">
-          <FiSearch className="absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+          <FiSearch className="absolute text-gray-600 transform -translate-y-1/2 left-3 top-1/2" />
           <input
             type="text"
             placeholder="Search"
-            className="w-48 py-1 pl-10 pr-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-48 py-1 pl-10 pr-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
-        <FiCalendar size={20} className="cursor-pointer" />
-        <FiMail size={20} className="cursor-pointer" />
-        <FiBell size={20} className="cursor-pointer" />
-        <div className="flex items-center space-x-2 cursor-pointer">
+        <FiCalendar size={20} className="cursor-pointer text-gray-600" />
+        <FiMail size={20} className="cursor-pointer text-gray-600" />
+        <FiBell size={20} className="cursor-pointer text-gray-600" />
+        <div className="flex items-center space-x-2 cursor-pointer text-gray-600">
           <img
             src={MyImage}
             alt="Profile"
