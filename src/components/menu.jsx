@@ -15,6 +15,7 @@ const Menu = () => {
   return (
     <div className= " w-64 h-[100vh] p-4  bg-white border-r">
       <ul className="fixed space-y-4 mt-8">
+
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
           { label: "Inventory", icon: <FiBox />, path: "/inventory" },

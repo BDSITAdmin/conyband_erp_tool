@@ -15,7 +15,7 @@ const ProductCategory = () => {
                 onClick={toggleModal}
                 className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
             >
-               + Add New Product
+               + Add Category
             </button>
 
             {/* Modal */}
@@ -23,7 +23,7 @@ const ProductCategory = () => {
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
                     <div className="relative bg-white shadow-lg rounded-xl w-96">
                         <h2 className="text-lg font-bold text-center text-white bg-[#10B981] py-3 rounded-t-xl">
-                           Add Product type
+                           Add Category
                         </h2>
 
                         <form className="px-6 pb-6 mt-4 space-y-4">
@@ -31,25 +31,16 @@ const ProductCategory = () => {
 
                             {/* Product Name */}
                             <div className="flex items-center space-x-2">
-                                <label htmlFor="productName" className="w-1/3">Product Name</label>
+                                <label htmlFor="productName" className="w-1/3">Category Name</label>
                                 <input
                                     type="text"
-                                    id="productName"
+                                    id="categoryName"
                                     className="w-2/3 px-2 py-1 border rounded"
-                                    placeholder="Enter Product Name"
+                                    placeholder="Enter Category Name"
                                 />
                             </div>
 
-                            {/* Manufactured Quantity */}
-                            <div className="flex items-center space-x-2">
-                                <label htmlFor="quantity" className="w-1/3">Product Category</label>
-                                <input
-                                    type="number"
-                                    id="quantity"
-                                    className="w-2/3 px-2 py-1 border rounded"
-                                    placeholder="Enter Quantity"
-                                />
-                            </div>
+                            
 
                             {/* Submit Button */}
                             <div className="flex justify-center">

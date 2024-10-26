@@ -6,13 +6,15 @@ import ProductCategory from "../components/addProductCategory";
 // Sample data for Purchasing and Finished Goods
 const initialPurchasingData = Array(10).fill({
     id: "#P000001",
-    name: "Raw Material",
+    name: "Watch",
     category: "Raw Materials",
+    
 });
 
 const initialFinishedGoodsData = Array(10).fill({
     id: "#F000001",
     name: "Finished Product",
+    categoryName: "Raw Materials",
 });
 
 const Table = () => {
@@ -88,8 +90,16 @@ const Table = () => {
                             <tr className="text-left text-gray-500 border-b">
                                 <th className="p-4"></th>
                                 <th className="p-4">Product Id</th>
-                                <th className="p-4">Product Name</th>
+                                {activeTab === "Finished Goods" && (
+                                    
+                                    <th className="p-4">Category Name</th>
+                                    )}
                                 {activeTab === "Purchasing" && (
+
+                                <th className="p-4">Product Name</th>
+                                )}
+                                {activeTab === "Purchasing" && (
+                                    
                                     <th className="p-4">Product Category</th>
                                 )}
                                 <th className="p-4">Action</th>
@@ -102,7 +112,12 @@ const Table = () => {
                                         <input type="checkbox" />
                                     </td>
                                     <td className="p-4">{item.id}</td>
+                                    {activeTab === "Finished Goods" && (
+                                    <td className="p-4">{item.categoryName}</td>
+                                    )}
+                                    {activeTab === "Purchasing" && (
                                     <td className="p-4">{item.name}</td>
+                                    )}
                                     {activeTab === "Purchasing" && (
                                         <td className="p-4">{item.category}</td>
                                     )}

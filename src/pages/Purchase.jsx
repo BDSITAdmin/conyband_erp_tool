@@ -6,6 +6,7 @@ import PurchaseMaterials from '../components/purchaseMaterials'
 
 // Sample data for Purchasing and Finished Goods
 const initialPurchasingData = Array(10).fill({
+    purchaseDate: "25/10/2024",
     id: "#P000001",
     name: "Raw Material",
     category: "Raw Materials",
@@ -104,13 +105,14 @@ const Table = () => {
                 </h1>
                 {/* Table */}
                 <div className="p-4 bg-white rounded-lg">
-                    <h3 className="mb-4 text-lg font-semibold">
+                    {/* <h3 className="mb-4 text-lg font-semibold">
                         Purchase Materials
-                    </h3>
+                    </h3> */}
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="text-left text-gray-500 border-b">
                                 <th className="p-4"> </th>
+                                <th className="p-4">Purchased Date</th>
                                 <th className="p-4">Product Id</th>
                                 <th className="p-4">Product Name</th>
                                 <th className="p-4">Product Category</th>
@@ -128,6 +130,7 @@ const Table = () => {
                                     <td className="p-4">
                                         <input type="checkbox" />
                                     </td>
+                                    <td className="p-4">{item.purchaseDate}</td>
                                     <td className="p-4">{item.id}</td>
                                     <td className="p-4">{item.name}</td>
                                     <td className="p-4">{item.category}</td>

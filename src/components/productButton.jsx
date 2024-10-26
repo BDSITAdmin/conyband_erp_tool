@@ -43,12 +43,14 @@ const ProductList = () => {
                             {/* Manufactured Quantity */}
                             <div className="flex items-center space-x-2">
                                 <label htmlFor="quantity" className="w-1/3">Product Category</label>
-                                <input
-                                    type="number"
-                                    id="quantity"
+                                <select
+                                    id="productCategory"
                                     className="w-2/3 px-2 py-1 border rounded"
-                                    placeholder="Enter Quantity"
-                                />
+                                >
+                                    <option value="watch">watch</option>
+                                    <option value="bands">bands</option>
+                                    <option value="dialog">dialog</option>
+                                </select>
                             </div>
 
                             {/* Submit Button */}
