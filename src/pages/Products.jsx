@@ -60,7 +60,7 @@ const Table = () => {
 
     return (
         <>
-            <div className="p-6 rounded-md bg-gray-50">
+            <div className="p-6 rounded-md bg-gray-100">
                 <h1 className="mb-4 text-2xl font-semibold">Product Management</h1>
 
                 {/* Tabs */}
