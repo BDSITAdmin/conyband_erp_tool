@@ -14,9 +14,11 @@ const initialPurchasingData = Array(10).fill({
 });
 
 const initialFinishedGoodsData = Array(10).fill({
+    manufacturedDate: "26/10/2024",
     id: "#F000001",
     name: "Finished Product",
     category: "Finished Goods",
+    manufacturedQty: 4000,
     quantity: 500,
     status: "Unavailable",
 });
@@ -130,9 +132,16 @@ const Table = () => {
                         <thead>
                             <tr className="text-left text-gray-500 border-b">
                                 <th className="p-4"> </th>
+                                {activeTab === "Finished Goods" && (
+                                 <th className="p-4">Manufactured Date</th>
+                                )}
                                 <th className="p-4">Product Id</th>
                                 <th className="p-4">Product Name</th>
                                 <th className="p-4">Product Category</th>
+                                {activeTab === "Finished Goods" && (
+                                  <th className="p-4">Manufactured Qty</th>  
+                                )}
+                                
                                 <th className="p-4">Available Quantity</th>
                                 <th className="p-4">Status</th>
                                 <th className="p-4">Action</th>
@@ -147,9 +156,15 @@ const Table = () => {
                                     <td className="p-4">
                                         <input type="checkbox" />
                                     </td>
+                                    {activeTab === "Finished Goods" && (
+                                       <td className="p-4">{item.manufacturedDate}</td> 
+                                    )}
                                     <td className="p-4">{item.id}</td>
                                     <td className="p-4">{item.name}</td>
                                     <td className="p-4">{item.category}</td>
+                                    {activeTab === "Finished Goods" && (
+                                       <td className="p-4">{item.manufacturedQty}</td> 
+                                    )}
                                     <td className="p-4">{item.quantity}</td>
                                     <td className="p-4">
                                         <StatusBadge status={item.status} />
