@@ -210,7 +210,7 @@ const Table = () => {
                         {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((page) => (
                             <button
                                 key={page}
-                                className={`px-4 py-2 border rounded ${page === currentPage ? "bg-green-100 text-green-700" : ""
+                                className={`px-4 py-2 border rounded ${page === currentPage ? "bg-white text-green-800" : "border-green-600"
                                     }`}
                                 onClick={() => setCurrentPage(page)}
                             >
