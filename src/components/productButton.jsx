@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const ProductList = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,19 +28,6 @@ const ProductList = () => {
                         </h2>
 
                         <form className="px-6 pb-6 mt-4 space-y-4">
-                            
-
-                            {/* Product Name */}
-                            <div className="flex items-center space-x-2">
-                                <label htmlFor="productName" className="w-1/3">Product Name</label>
-                                <input
-                                    type="text"
-                                    id="productName"
-                                    className="w-2/3 px-2 py-1 border rounded"
-                                    placeholder="Enter Product Name"
-                                />
-                            </div>
-
                             {/* Manufactured Quantity */}
                             <div className="flex items-center space-x-2">
                                 <label htmlFor="quantity" className="w-1/3">Product Category</label>
@@ -52,6 +40,27 @@ const ProductList = () => {
                                     <option value="dialog">dialog</option>
                                 </select>
                             </div>
+
+                            {/* Product Name */}
+                            <div className="flex items-center space-x-2">
+                                <label htmlFor="productName" className="w-1/3">Product Name</label>
+                                <input
+                                    type="text"
+                                    id="productName"
+                                    className="w-2/3 px-2 py-1 border rounded"
+                                    placeholder="Enter Product Name"
+                                />
+                            </div>
+                            <div className="text-right"> 
+                                <Link
+                                to=""
+                                className='text-[#10B981] font-bold'
+                                >
+                                    Add New Category
+                                </Link>
+                            </div>
+
+                            
 
                             {/* Submit Button */}
                             <div className="flex justify-center">

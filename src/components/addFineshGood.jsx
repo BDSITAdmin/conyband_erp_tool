@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const AddFinishGoodModal = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [selectedDate, setSelectedDate] =  useState(new Date());
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
@@ -9,35 +13,42 @@ const AddFinishGoodModal = () => {
 
     return (
         <>
-            {/* Button to open the modal */}
-            
             <button
                 onClick={toggleModal}
                 className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
             >
-               + Add Finished Good
+                + Add Finished Good
             </button>
 
-            {/* Modal */}
             {isOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
-                    <div className="relative bg-white shadow-lg rounded-xl w-96">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="relative bg-white shadow-lg rounded-xl w-120">
                         <h2 className="text-lg font-bold text-center text-white bg-[#10B981] py-3 rounded-t-xl">
                             Add Finish Good
                         </h2>
 
                         <form className="px-6 pb-6 mt-4 space-y-4">
+                            {/* Date Picker */}
+                            <div className="flex items-center space-x-2">
+                                <label className="w-1/3">Manufactured Date</label>
+                                <DatePicker
+                                    className='w-full px-2 py-1 border rounded'
+                                    showIcon
+                                    toggleCalendarOnIconClick
+                                    selected={selectedDate}
+                                    onChange={(date) => setSelectedDate(date)}
+                                />
+                            </div>
+
                             {/* Product ID */}
                             <div className="flex items-center space-x-2">
                                 <label htmlFor="productID" className="w-1/3">Product ID</label>
-                                <select
+                                <input
+                                    type="text"
                                     id="productID"
                                     className="w-2/3 px-2 py-1 border rounded"
-                                >
-                                    <option value="001">001</option>
-                                    <option value="002">002</option>
-                                    <option value="003">003</option>
-                                </select>
+                                    placeholder="Enter Product ID"
+                                />
                             </div>
 
                             {/* Product Name */}
@@ -62,11 +73,17 @@ const AddFinishGoodModal = () => {
                                 />
                             </div>
 
+                            <div className="text-right">
+                                <Link to="/productButton.jsx" className="text-[#10B981] font-bold">
+                                    Add New Product Type
+                                </Link>
+                            </div>
+
                             {/* Submit Button */}
                             <div className="flex justify-center">
                                 <button
                                     type="submit"
-                                    className="bg-[#10B981]  text-white px-4 py-2 rounded"
+                                    className="bg-[#10B981] text-white px-4 py-2 rounded"
                                 >
                                     Add Finished Good
                                 </button>
