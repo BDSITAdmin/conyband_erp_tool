@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header";
-import Menu from './components/Menu';
+import Menu from './components/menu';
 import Dashboard from "./pages/Dashboard"; 
 import Inventory from "./pages/Inventory";
 import Products from './pages/Products';
