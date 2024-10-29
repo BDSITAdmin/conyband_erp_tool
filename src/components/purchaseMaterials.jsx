@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const purchaseMaterials = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [selectedDate, setSelectedDate] =  useState(new Date());
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
@@ -29,26 +33,25 @@ const purchaseMaterials = () => {
                         <form className="px-6 pb-6 mt-4 space-y-4">
                            <div className="flex items-center space-x-2">
                                 <label htmlFor="productName" className="w-1/3">Purchase Date</label>
-                                <input
-                                    type="Date"
-                                    id="productDate"
-                                    className="w-2/3 px-2 py-1 border rounded"
-                                    placeholder="Enter Product date"
+                                <DatePicker
+                                    className='w-full px-2 py-1 border rounded'
+                                    showIcon
+                                    toggleCalendarOnIconClick
+                                    selected={selectedDate}
+                                    onChange={(date) => setSelectedDate(date)}
                                 />
                             </div>
                             
   
-                            {/* Product ID */}
-                            <div className="flex items-center space-x-2">
+                           {/* Product ID */}
+                           <div className="flex items-center space-x-2">
                                 <label htmlFor="productID" className="w-1/3">Product ID</label>
-                                <select
+                                <input
+                                    type="text"
                                     id="productID"
                                     className="w-2/3 px-2 py-1 border rounded"
-                                >
-                                    <option value="001">001</option>
-                                    <option value="002">002</option>
-                                    <option value="003">003</option>
-                                </select>
+                                    placeholder="Enter Product ID"
+                                />
                             </div>
 
                             {/* Product Name */}
@@ -71,6 +74,14 @@ const purchaseMaterials = () => {
                                     className="w-2/3 px-2 py-1 border rounded"
                                     placeholder="Enter Quantity"
                                 />
+                            </div>
+                            <div className="text-right"> 
+                                <Link
+                                to=""
+                                className='text-[#10B981] font-bold'
+                                >
+                                    Add New Product
+                                </Link>
                             </div>
 
                             {/* Submit Button */}
