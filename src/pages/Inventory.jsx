@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
-import AddFinishGoodModal from "../components/addFineshGood";
+
+import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 
@@ -97,6 +100,14 @@ const Table = () => {
     );
 
     const totalPages = Math.ceil(currentData.length / itemsPerPage);
+
+    //model//
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedDate, setSelectedDate] =  useState(new Date());
+
+    const toggleModal = () => {
+        setIsOpen(!isOpen);
+    };
 
     return (
         <>
@@ -196,6 +207,90 @@ const Table = () => {
                     </table>
                 </div>
 
+                {/*Model*/}
+                <div className="">
+                {isOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="relative bg-white shadow-lg rounded-xl w-140">
+                            <h2 className="text-lg font-bold text-center text-white bg-[#10B981] py-3 rounded-t-xl">
+                                Add Finish Good
+                            </h2>
+    
+                            <form className="px-6 pb-6 mt-4 space-y-4">
+                                {/* Date Picker */}
+                                <div className="flex items-center space-x-2">
+                                    <label className="w-1/3">Manufactured Date</label>
+                                    <DatePicker
+                                        className='w-full px-2 py-1 border rounded'
+                                        showIcon
+                                        toggleCalendarOnIconClick
+                                        selected={selectedDate}
+                                        onChange={(date) => setSelectedDate(date)}
+                                    />
+                                </div>
+    
+                                {/* Product ID */}
+                                <div className="flex items-center space-x-2">
+                                    <label htmlFor="productID" className="w-1/3">Product ID</label>
+                                    <input
+                                        type="text"
+                                        id="productID"
+                                        className="w-2/3 px-2 py-1 border rounded"
+                                        placeholder="Enter Product ID"
+                                    />
+                                </div>
+    
+                                {/* Product Name */}
+                                <div className="flex items-center space-x-2">
+                                    <label htmlFor="productName" className="w-1/3">Product Name</label>
+                                    <input
+                                        type="text"
+                                        id="productName"
+                                        className="w-2/3 px-2 py-1 border rounded"
+                                        placeholder="Enter Product Name"
+                                    />
+                                </div>
+    
+                                {/* Manufactured Quantity */}
+                                <div className="flex items-center space-x-2">
+                                    <label htmlFor="quantity" className="w-1/3">Manufactured Quantity</label>
+                                    <input
+                                        type="number"
+                                        id="quantity"
+                                        className="w-2/3 px-2 py-1 border rounded"
+                                        placeholder="Enter Quantity"
+                                    />
+                                </div>
+    
+                                <div className="text-right">
+                                    <Link to="/products" className="text-[#10B981] font-bold">
+                                        Add New Product Type
+                                    </Link>
+                                </div>
+    
+                                {/* Submit Button */}
+                                <div className="flex justify-center">
+                                    <button
+                                        type="submit"
+                                        className="bg-[#10B981] text-white px-4 py-2 rounded"
+                                    >
+                                        Add Finished Good
+                                    </button>
+                                </div>
+                            </form>
+    
+                            {/* Close Button */}
+                            <button
+                                onClick={toggleModal}
+                                className="absolute text-lg text-black top-1 right-3 hover:text-gray-600"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                )}
+                </div>
+
                 {/* Pagination and Add Item */}
                 <div className="flex items-center justify-end mt-4 space-x-2">
                     {/* Pagination */}
@@ -231,7 +326,14 @@ const Table = () => {
             {/* Add Item Button, visible only for Finished Goods tab */}
             <div className="flex justify-end">
                 {activeTab === "Finished Goods" && (
-                    <AddFinishGoodModal />
+                    <button
+                    onClick={toggleModal}
+                    className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
+                >
+                    + Add Finished Good
+                </button>
+    
+                
                 )}
             </div>
 
