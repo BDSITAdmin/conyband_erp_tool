@@ -3,6 +3,8 @@ import { FiMoreVertical, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import useFetch from "../Hook/useFetch";
+import axios from "axios";
 
 
 
@@ -46,7 +48,38 @@ const Table = () => {
     const [finishedGoodsData, setFinishedGoodsData] = useState(initialFinishedGoodsData); // State for Finished Goods data
     const [showActions, setShowActions] = useState(null); // Control action dropdown visibility
     const [currentPage, setCurrentPage] = useState(1); // Track current page
+    const [ product_id, setproductId] = useState(null); // Track product
+    const [purchase_date, setPurchaseDate] = useState(new Date());
+    const [purchased_quantity, setPurchasedQuantity] = useState(null);
     const itemsPerPage = 5;
+
+
+    const { data, loading, error, reFetch } = useFetch('http://localhost:8080/api/v1/purchases')
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const purchaseData ={product_id,purchase_date,purchased_quantity}
+        console.log(purchaseData);
+
+        const purchased= {
+            product_id,
+            purchase_date,
+            purchased_quantity
+        };
+            
+        try {
+            const response = await axios.post(`http://localhost:8080/api/v1/purchases`,purchased);
+            setPurchases(prev => [...prev, response.data]);
+            setMessage("Data successfully added"); // Set success message
+            toggleModal();
+        } catch (error) {
+            console.error("Error adding purchase:", error);
+            setMessage("Error adding data, please try again."); // Set error message
+        }
+    };
+
 
     // Get data based on active tab
     const currentData = activeTab === "Purchasing" ? purchasingData : finishedGoodsData;
@@ -109,15 +142,13 @@ const Table = () => {
 
     return (
         <>
-            <div className="p-6 rounded-md bg-gray-100">
+            <div className="p-6 bg-gray-100 rounded-md">
                 <h1 className="mb-4 text-2xl font-semibold">
                     Purchase Materials
                 </h1>
-                {/* Table */}
+               
                 <div className="p-4 bg-white rounded-lg">
-                    {/* <h3 className="mb-4 text-lg font-semibold">
-                        Purchase Materials
-                    </h3> */}
+                   
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="text-left text-gray-500 border-b">
@@ -183,15 +214,15 @@ const Table = () => {
                         Add Purchase
                         </h2>
 
-                        <form className="px-6 pb-6 mt-4 space-y-4">
+                        <form className="px-6 pb-6 mt-4 space-y-4" onClick={handleSubmit}>
                            <div className="flex items-center space-x-2">
                                 <label htmlFor="productName" className="w-1/3">Purchase Date</label>
                                 <DatePicker
                                     className='w-full px-2 py-1 border rounded'
                                     showIcon
                                     toggleCalendarOnIconClick
-                                    selected={selectedDate}
-                                    onChange={(date) => setSelectedDate(date)}
+                                    selected={purchase_date}
+                                    onChange={(date) => setPurchaseDate(date)}
                                 />
                             </div>
                             
@@ -204,6 +235,8 @@ const Table = () => {
                                     id="productID"
                                     className="w-2/3 px-2 py-1 border rounded"
                                     placeholder="Enter Product ID"
+                                    value={product_id}
+                                    onChange={(e) => setproductId(e.target.value)}
                                 />
                             </div>
 
@@ -226,6 +259,8 @@ const Table = () => {
                                     id="quantity"
                                     className="w-2/3 px-2 py-1 border rounded"
                                     placeholder="Enter Quantity"
+                                    value={purchased_quantity}
+                                    onChange={(e) => setPurchasedQuantity (e.target.value)}
                                 />
                             </div>
                             <div className="text-right"> 

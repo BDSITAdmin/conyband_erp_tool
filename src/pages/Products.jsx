@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2 } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import useFetch from '../Hook/useFetch';
+import axios from 'axios';
 
 
 // Sample data for Purchasing and Finished Goods
@@ -23,9 +24,37 @@ const Table = () => {
     const [finishedGoodsData, setFinishedGoodsData] = useState(initialFinishedGoodsData);
     const [showActions, setShowActions] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [category_name, setCategoryName] = useState('');
     const itemsPerPage = 5;
 
     const currentData = activeTab === "Purchasing" ? purchasingData : finishedGoodsData;
+
+
+    const { data, loading, error, reFetch } = useFetch('http://localhost:8080/api/v1/categories')
+
+
+    //New Categories API
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data ={category_name}
+        console.log(data);
+
+        const NewCategory = {
+            category_name
+        };
+            
+        try {
+            const response = await axios.post(`http://localhost:8080/api/v1/purchases`, NewCategory );
+            setPurchases(prev => [...prev, response.data]);
+            setMessage("Data successfully added"); // Set success message
+            toggleModal();
+        } catch (error) {
+            console.error("Error adding purchase:", error);
+            setMessage("Error adding data, please try again."); // Set error message
+        }
+    };
+    
+    
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -74,9 +103,12 @@ const Table = () => {
 
 
 
+
+
+
     return (
         <>
-            <div className="p-6 rounded-md bg-gray-100">
+            <div className="p-6 bg-gray-100 rounded-md">
                 <h1 className="mb-4 text-2xl font-semibold">Product Management</h1>
 
                 {/* Tabs */}
@@ -195,37 +227,6 @@ const Table = () => {
                                         placeholder="Enter Product Name"
                                     />
                                 </div>
-                                <div className="text-right">
-                                    {/* <Link
-                                        to="#"
-                                        onClick={(e) => {
-                                            e.preventDefault(); // Prevents navigation
-                                            handleTabChange("Finished Goods");
-                                            toggleModal(); // Trigger the main modal toggle
-                                            addProductToggleModal(); // Trigger additional modal toggle
-                                        }}
-                                        className="text-[#10B981] font-bold"
-                                    >
-                                        Add New Category
-                                    </Link> */}
-                                    {/* Close Button */}
-                            <button
-                                 onClick={(e) => {
-                                    e.preventDefault(); // Prevents navigation
-                                    addProductToggleModal(); 
-                                    // handleTabChange("Finished Goods");
-                                    // toggleModal(); // Trigger the main modal toggle
-                                    // Trigger additional modal toggle
-                                }}
-                                className="text-lg text-black  hover:text-gray-600"
-                            >
-                               Add New Category
-                            </button>
-
-                                </div>
-
-
-
                                 {/* Submit Button */}
                                 <div className="flex justify-center">
                                     <button
@@ -236,14 +237,13 @@ const Table = () => {
                                     </button>
                                 </div>
                             </form>
-
-                            {/* Close Button */}
-                            {/* <button
+                             {/* Close Button */}
+                            <button
                                 onClick={addproducttoggleModal}
                                 className="absolute text-lg text-black top-1 right-3 hover:text-gray-600"
                             >
                                 &times;
-                            </button> */}
+                            </button>
                         </div>
                     </div>
                 )}
@@ -255,11 +255,7 @@ const Table = () => {
                             <h2 className="text-lg font-bold text-center text-white bg-[#10B981] py-3 rounded-t-xl">
                                 Add Category
                             </h2>
-
-                            <form className="px-6 pb-6 mt-4 space-y-4">
-
-
-                                {/* Product Name */}
+                            <form className="px-6 pb-6 mt-4 space-y-4" onClick={handleSubmit}>
                                 <div className="flex items-center space-x-2">
                                     <label htmlFor="productName" className="w-1/3">Category Name</label>
                                     <input
@@ -267,18 +263,17 @@ const Table = () => {
                                         id="categoryName"
                                         className="w-2/3 px-2 py-1 border rounded"
                                         placeholder="Enter Category Name"
+                                        value={category_name}
+                                        onChange={(e) => setCategoryName(e.target.value)}
                                     />
                                 </div>
-
-
-
                                 {/* Submit Button */}
                                 <div className="flex justify-center">
                                     <button
                                         type="submit"
                                         className="bg-[#10B981]  text-white px-4 py-2 rounded"
                                     >
-                                        Add Product
+                                        Add Category
                                     </button>
                                 </div>
                             </form>
