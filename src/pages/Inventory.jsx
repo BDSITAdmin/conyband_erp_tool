@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
-
+import useFetch from '../Hook/useFetch';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -48,7 +49,43 @@ const Table = () => {
     const [finishedGoodsData, setFinishedGoodsData] = useState(initialFinishedGoodsData); // State for Finished Goods data
     const [showActions, setShowActions] = useState(null); // Control action dropdown visibility
     const [currentPage, setCurrentPage] = useState(1); // Track current page
+    const [product_id, setproductId] = useState(null); // Track product
+    const [manufactured_date, setManufactured] = useState(new Date());
+    const [manufactured_quantity, setManufacturedQuantity] = useState(null);
+
     const itemsPerPage = 5;
+
+
+
+    const { data, loading, error, reFetch } = useFetch('http://localhost:8080/api/v1/finished-products')
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const manufacturedData = {
+            product_id,
+            manufactured_date,
+            manufactured_quantity
+        }
+        console.log(manufacturedData);
+
+        const manufactured = {
+            product_id,
+            manufactured_date,
+            manufactured_quantity
+        };
+
+        try {
+            const response = await axios.post(`http://localhost:8080/api/v1/finished-products`, manufactured);
+            setManufactured(prev => [...prev, response.data]);
+            setMessage("Product successfully added"); // Set success message
+            toggleModal();
+        } catch (error) {
+            console.error("Error adding purchase:", error);
+            setMessage("Error adding data, please try again."); // Set error message
+        }
+    };
 
     // Get data based on active tab
     const currentData = activeTab === "Purchasing" ? purchasingData : finishedGoodsData;
@@ -111,10 +148,12 @@ const Table = () => {
 
     return (
         <>
-            <div className="p-6 bg-gray-100 rounded-md">
+            <div className="p-6 rounded-md bg-gray-100">
                 <h1 className="mb-4 text-2xl font-semibold">
                     {activeTab === "Purchasing" ? "Inventory Management" : "Inventory Management"}
                 </h1>
+
+                {/* Tabs */}
                 <div className="flex mb-6 space-x-4">
                     <button
                         className={`px-4 py-2 rounded-md ${activeTab === "Purchasing" ? "bg-[#10B981] text-white" : "bg-gray-200"
@@ -133,6 +172,7 @@ const Table = () => {
                 </div>
 
                 <div className="p-4 bg-white rounded-lg">
+                    {/* Table */}
                     <h1 className="mb-4 text-2xl font-semibold">
                         {activeTab === "Purchasing" ? "Raw Materials" : "Final Good"}
                     </h1>
@@ -203,6 +243,8 @@ const Table = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {/*Add finish goods Model*/}
                 <div className="">
                     {isOpen && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -212,25 +254,32 @@ const Table = () => {
                                 </h2>
 
                                 <form className="px-6 pb-6 mt-4 space-y-4">
-                                    <div className="flex items-center space-x-2">
+                                    {/* Date Picker */}
+                                    <div className="flex items-center text-gray-400 space-x-2">
                                         <label className="w-1/3">Manufactured Date</label>
                                         <DatePicker
-                                            className='w-full px-2 py-1 border rounded'
+                                            className='w-full px-2 py-1  border rounded'
                                             showIcon
                                             toggleCalendarOnIconClick
                                             selected={selectedDate}
                                             onChange={(date) => setSelectedDate(date)}
                                         />
                                     </div>
+
+                                    {/* Product ID */}
                                     <div className="flex items-center space-x-2">
                                         <label htmlFor="productID" className="w-1/3">Product ID</label>
                                         <input
                                             type="text"
                                             id="productID"
+                                            value={product_id}
+                                            onChange={(e) => setproductId(e.target.value)}
                                             className="w-2/3 px-2 py-1 border rounded"
                                             placeholder="Enter Product ID"
                                         />
                                     </div>
+
+                                    {/* Product Name */}
                                     <div className="flex items-center space-x-2">
                                         <label htmlFor="productName" className="w-1/3">Product Name</label>
                                         <input
@@ -240,11 +289,15 @@ const Table = () => {
                                             placeholder="Enter Product Name"
                                         />
                                     </div>
+
+                                    {/* Manufactured Quantity */}
                                     <div className="flex items-center space-x-2">
                                         <label htmlFor="quantity" className="w-1/3">Manufactured Quantity</label>
                                         <input
                                             type="number"
                                             id="quantity"
+                                            value={manufactured_quantity}
+                                            onChange={(e) => setManufacturedQuantity(e.target.value)}
                                             className="w-2/3 px-2 py-1 border rounded"
                                             placeholder="Enter Quantity"
                                         />
@@ -255,15 +308,20 @@ const Table = () => {
                                             Add New Product Type
                                         </Link>
                                     </div>
+
+                                    {/* Submit Button */}
                                     <div className="flex justify-center">
                                         <button
                                             type="submit"
+                                            onSubmit={handleSubmit}
                                             className="bg-[#10B981] text-white px-4 py-2 rounded"
                                         >
                                             Add Finished Good
                                         </button>
                                     </div>
                                 </form>
+
+                                {/* Close Button */}
                                 <button
                                     onClick={toggleModal}
                                     className="absolute text-lg text-black top-1 right-3 hover:text-gray-600"
@@ -274,7 +332,10 @@ const Table = () => {
                         </div>
                     )}
                 </div>
+
+                {/* Pagination and Add Item */}
                 <div className="flex items-center justify-end mt-4 space-x-2">
+                    {/* Pagination */}
                     <div className="space-x-2">
                         <button
                             className="px-4 py-2 border rounded"
@@ -304,6 +365,7 @@ const Table = () => {
 
                 </div>
             </div>
+            {/* Add Item Button, visible only for Finished Goods tab */}
             <div className="flex justify-end">
                 {activeTab === "Finished Goods" && (
                     <button
