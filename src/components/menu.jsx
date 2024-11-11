@@ -14,14 +14,14 @@ const Menu = () => {
 
   return (
     <div className= " w-64 h-[100vh] p-4  bg-white border-r">
-      <ul className="fixed space-y-4 mt-8">
+      <ul className="fixed mt-8 space-y-4">
 
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
           { label: "Inventory", icon: <FiBox />, path: "/inventory" },
           { label: "Purchase", icon: <FiShoppingCart />, path: "/purchase" },
           { label: "Vendors", icon: <FiUsers />, path: "/vendors" },
-          { label: "Products", icon: <FiPackage />, path: "/products" },
+          { label: "Components", icon: <FiPackage />, path: "/Components" },
           { label: "Users", icon: <FiClipboard />, path: "/users" },
           { label: "Settings", icon: <FiSettings />, path: "/settings" },
         ].map(({ label, icon, path }) => (
