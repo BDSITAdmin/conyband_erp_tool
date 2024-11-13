@@ -154,9 +154,9 @@ const Table = () => {
                             <tr className="text-left text-gray-500 border-b">
                                 <th className="p-4"> </th>
                                 <th className="p-4">Purchased Date</th>
-                                <th className="p-4">Product Id</th>
-                                <th className="p-4">Product Name</th>
-                                <th className="p-4">Product Category</th>
+                                <th className="p-4">Component Id</th>
+                                <th className="p-4">Component Name</th>
+                                <th className="p-4">Component Category</th>
                                 <th className="p-4">Purchased Quantity</th>
                                 <th className="p-4">Status</th>
                                 <th className="p-4">Action</th>

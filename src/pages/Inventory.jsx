@@ -148,7 +148,7 @@ const Table = () => {
 
     return (
         <>
-            <div className="p-6 rounded-md bg-gray-100">
+            <div className="p-6 bg-gray-100 rounded-md">
                 <h1 className="mb-4 text-2xl font-semibold">
                     {activeTab === "Purchasing" ? "Inventory Management" : "Inventory Management"}
                 </h1>
@@ -185,22 +185,20 @@ const Table = () => {
                                 )}
                                 <th className="p-4">Product Id</th>
                                 <th className="p-4">Product Name</th>
-                                <th className="p-4">Product Category</th>
+                                
+                                {activeTab === "Purchasing" && <th className="p-4">Product Category</th>}
                                 {activeTab === "Finished Goods" && (
                                     <th className="p-4">Manufactured Qty</th>
                                 )}
-
                                 <th className="p-4">Available Quantity</th>
-                                <th className="p-4">Status</th>
+                              
+                                {activeTab === "Purchasing" && <th className="p-4">Status</th>}
                                 <th className="p-4">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {paginatedData.map((item, index) => (
-                                <tr
-                                    key={index}
-                                    className="text-gray-700 border-b hover:bg-gray-100"
-                                >
+                                <tr key={index} className="text-gray-700 border-b hover:bg-gray-100">
                                     <td className="p-4">
                                         <input type="checkbox" />
                                     </td>
@@ -209,14 +207,18 @@ const Table = () => {
                                     )}
                                     <td className="p-4">{item.id}</td>
                                     <td className="p-4">{item.name}</td>
-                                    <td className="p-4">{item.category}</td>
+                                    {/* Render Category cell only in the Purchasing tab */}
+                                    {activeTab === "Purchasing" && <td className="p-4">{item.category}</td>}
                                     {activeTab === "Finished Goods" && (
                                         <td className="p-4">{item.manufacturedQty}</td>
                                     )}
                                     <td className="p-4">{item.quantity}</td>
-                                    <td className="p-4">
-                                        <StatusBadge status={item.status} />
-                                    </td>
+                                    {/* Render Status cell only in the Purchasing tab */}
+                                    {activeTab === "Purchasing" && (
+                                        <td className="p-4">
+                                            <StatusBadge status={item.status} />
+                                        </td>
+                                    )}
                                     <td className="relative p-4">
                                         <button className="p-2" onClick={() => toggleActions(index)}>
                                             <FiMoreVertical />
@@ -224,13 +226,13 @@ const Table = () => {
                                         {showActions === index && (
                                             <div className="absolute right-0 w-32 mt-2 bg-white border rounded shadow-lg">
                                                 <button
-                                                    className="flex items-center w-full gap-2 px-4 py-2 "
+                                                    className="flex items-center w-full gap-2 px-4 py-2"
                                                     onClick={() => handleDelete(index)}
                                                 >
                                                     <FiTrash2 /> Delete
                                                 </button>
                                                 <button
-                                                    className="flex items-center w-full gap-2 px-4 py-2 "
+                                                    className="flex items-center w-full gap-2 px-4 py-2"
                                                     onClick={() => handleEdit(index)}
                                                 >
                                                     <FiEdit2 /> Edit
@@ -241,6 +243,8 @@ const Table = () => {
                                 </tr>
                             ))}
                         </tbody>
+
+
                     </table>
                 </div>
 
@@ -255,10 +259,10 @@ const Table = () => {
 
                                 <form className="px-6 pb-6 mt-4 space-y-4">
                                     {/* Date Picker */}
-                                    <div className="flex items-center text-gray-400 space-x-2">
+                                    <div className="flex items-center space-x-2 text-gray-400">
                                         <label className="w-1/3">Manufactured Date</label>
                                         <DatePicker
-                                            className='w-full px-2 py-1  border rounded'
+                                            className='w-full px-2 py-1 border rounded'
                                             showIcon
                                             toggleCalendarOnIconClick
                                             selected={selectedDate}
@@ -304,7 +308,7 @@ const Table = () => {
                                     </div>
 
                                     <div className="text-right">
-                                        <Link to="/products" className="text-[#10B981] font-bold">
+                                        <Link to="#" className="text-[#10B981] font-bold">
                                             Add New Product Type
                                         </Link>
                                     </div>

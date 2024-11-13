@@ -35,7 +35,7 @@ const AddProductModal = () => {
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     {/* Modal Content */}
-                    <div className="relative p-6 mx-auto bg-white rounded-lg shadow-md w-96">
+                    <div className="relative max-h-[90vh] overflow-y-auto p-6 mx-auto bg-white rounded-lg shadow-md w-96">
                         <h2 className="text-2xl font-semibold text-center text-[#10B981]">Add Product</h2>
 
                         <div className="my-4">
