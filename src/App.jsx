@@ -9,7 +9,7 @@ import Vendors from './pages/Vendors';
 import Purchase from './pages/Purchase';
 import Settings from './pages/settings';
 import Users from './pages/users';
-
+import OrderManagement from './pages/OrderManagement';
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
             <Route path="/Components" element={<Components />} />
             <Route path="/Vendors" element={<Vendors />} />
             <Route path="/Purchase" element={<Purchase />} />
+            <Route path="/OrderManagement" element={<OrderManagement />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>

@@ -3,6 +3,9 @@ import { FiMoreVertical, FiEdit2, FiTrash2 } from "react-icons/fi";
 import AddProductModal from "../components/addProductModal";
 import ProductList from "../components/productButton";
 import ComponentList from "../components/componentList";
+import ProductTable from "../components/productView";
+
+
 
 // Sample data
 const initialPurchasingData = Array(10).fill({
@@ -20,13 +23,13 @@ const initialFinishedGoodsData = Array(10).fill({
 const initialProductListData = Array(10).fill({
     id: "#PR00001",
     productName: "Product A",
-    allComponents: (<button
-        onClick={() => alert('Viewing all components')}
-        className="px-3 py-1 text-[#007AFF] underline hover:text-[#10B981]"
-      >
-        View All
-      </button>),
+    allComponents: null,
 });
+const data = [
+    { componentName: "Watch Glass", quantity: 100  },
+    { componentName: "Watch Glass", quantity: 100  },
+   
+];
 
 const Table = () => {
     const [activeTab, setActiveTab] = useState("Purchasing");
@@ -126,7 +129,8 @@ const Table = () => {
                                 {activeTab === "Purchasing" && <td className="p-4">{item.category}</td>}
                                 {activeTab === "Finished Goods" && <td className="p-4">{item.categoryName}</td>}
                                 {activeTab === "Product List" && <td className="p-4">{item.productName}</td>}
-                                {activeTab === "Product List" && <td className="p-4">{item.allComponents}</td>}
+                                {activeTab === "Product List" && <td className="p-4">
+                                    <ProductTable data= {data}/></td>}
                                 <td className="relative p-4">
                                     <button className="p-2" onClick={() => toggleActions(index)}>
                                         <FiMoreVertical />
