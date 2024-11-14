@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import { z } from 'zod';
 import SuccessAlert from './SuccessAlert';
@@ -20,6 +20,8 @@ const ProductList = () => {
     const [tosucessMessage, settosucessMessage] = useState(null);
     const [toErrorMessage, setErrorMessage] = useState(null);
     const [isFormValid, setIsFormValid] = useState(false);
+    const modalRef = useRef(null); 
+    const buttonRef = useRef(null);
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
@@ -73,6 +75,24 @@ const ProductList = () => {
         validateCategoryName(categoryName);
     }, [categoryName]);
 
+    const handleOutsideClick = (e) => {
+        if (modalRef.current && !modalRef.current.contains(e.target) && !buttonRef.current.contains(e.target)) {
+            setIsOpen(false); 
+        }
+    };
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('click', handleOutsideClick);
+        } else {
+            document.removeEventListener('click', handleOutsideClick);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [isOpen]);
+
     return (
         <>
             {/* Button to open the modal */}
@@ -80,6 +100,7 @@ const ProductList = () => {
             {toErrorMessage && <ErrorAlert message={toErrorMessage} />}
             <button
                 onClick={toggleModal}
+                ref={buttonRef}
                 className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
             >
              + Add Category
@@ -89,7 +110,7 @@ const ProductList = () => {
             {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
                     {isLoading ? <LoadingCircle/> :
-                     <div className="relative bg-white shadow-lg rounded-xl w-96">
+                     <div ref={modalRef} className="relative bg-white shadow-lg rounded-xl w-96">
                         <h2 className="text-lg font-bold text-center text-white bg-[#10B981] py-3 rounded-t-xl">
                         Add Category
                         </h2>
