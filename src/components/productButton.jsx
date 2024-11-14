@@ -53,6 +53,7 @@ const ProductList = () => {
             if (process.env.NODE_ENV === "development") {
                 console.log("Category added:", response.data);
             }
+            setCategoryName("")
         }
         }catch(error){
             if(error instanceof z.ZodError) {
@@ -67,7 +68,7 @@ const ProductList = () => {
                 setTimeout(() => setErrorMessage(null), 3000);
                 setIsLoading(false);
             }
-            
+            setCategoryName("")
         }
     }
 
