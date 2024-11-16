@@ -4,12 +4,13 @@ import Paper from '@mui/material/Paper';
 
 function TableComponent({columns, rows}) {
   const paginationModel = { page: 0, pageSize: 5 };
-  console.log(rows.length )
+  const row = rows.map(row => ({ id: row.category_id, ...row }));
 
+  console.log(row)
   return (
     <Paper sx={{ height: 400, width: '100%', marginTop:"20px" }}>
       <DataGrid
-        rows={rows}
+        rows={row}
         columns={columns}
         initialState={{ pagination: { paginationModel }}}
         pageSizeOptions={[5, 10]}

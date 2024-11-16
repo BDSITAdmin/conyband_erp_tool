@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import ToggleButtons from '../components/ToggleButtons'
 import TableComponent from '../components/TableComponent'
 import useFetch from '../hooks/useFetch';
+import AddCategoryForm from '../components/AddCategoryForm';
 
 function ProductConfiguration() {
   const [selectedToggle, setSelectedToggle] = useState("Component Category");
@@ -12,20 +13,7 @@ function ProductConfiguration() {
     "Product List": "http://localhost:8080/api/v1/purchases",
   };
 
-  const { data: rows, loading, error, reFetch } = useFetch(apiEndpoints[selectedToggle]);
-
-
-  // const rows = [
-  //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  //   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  //   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  //   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  //   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  //   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  //   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  // ];
+  const { data: rows, loading, error, reFetch: reFetchCategories } = useFetch(apiEndpoints[selectedToggle]);
  
 
   const columnDefinitions = {
@@ -61,8 +49,9 @@ function ProductConfiguration() {
       reFetch(); 
     }}
     />
-    {length > 1 && <TableComponent columns={columns} rows={rows} />}
-    {length<1 && <h2 className='m-4' >No Data Found</h2>}
+    {rows.length > 1 && <TableComponent columns={columns} rows={rows} />}
+    {rows.length<1 && <h2 className='m-4' >No Data Found</h2>}
+    <AddCategoryForm reFetchCategories={reFetchCategories} />
     </div>
     </>
   )
