@@ -4,7 +4,7 @@ import { z } from 'zod';
 import SuccessAlert from './SuccessAlert';
 import ErrorAlert from './ErrorAlert';
 import LoadingCircle from './LoadingCircle';
-import useFetch from '../Hook/useFetch';
+import useFetch from '../hooks/useFetch';
 
 const categorySchema = z.object({
     category_name: z

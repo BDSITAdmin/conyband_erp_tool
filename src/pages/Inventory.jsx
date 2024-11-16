@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
-import useFetch from '../Hook/useFetch';
+import useFetch from '../hooks/useFetch';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
 
 
 // Sample data for Purchasing and Finished Goods

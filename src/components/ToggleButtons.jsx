@@ -3,6 +3,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 function ToggleButtons({data}) {
+  console.log(data)
   const [alignment, setAlignment] = React.useState(data[0]);
 
   const handleChange = (event, newAlignment) => {

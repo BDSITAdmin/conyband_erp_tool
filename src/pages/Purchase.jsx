@@ -3,7 +3,7 @@ import { FiMoreVertical, FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import useFetch from "../Hook/useFetch";
+import useFetch from "../hooks/useFetch";
 import axios from "axios";
 
 
