@@ -15,7 +15,7 @@ const initialPurchasingData = Array(10).fill({
 });
 
 const initialFinishedGoodsData = Array(10).fill({
-    id: "#F000001",
+    id: "#F000002",
     name: "Finished Component",
     categoryName: "Raw Materials",
 });

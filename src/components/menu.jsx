@@ -13,8 +13,8 @@ const Menu = () => {
   const location = useLocation();
 
   return (
-    <div className= " w-64 h-auto p-4  bg-white border-r">
-      <ul className="fixed mt-8 space-y-4">
+    <div className= "overflow-y-auto pt-2 w-1/5 space-y-4 px-4 h-[100vh] bg-white border-r">
+      <ul className="">
 
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
@@ -22,7 +22,7 @@ const Menu = () => {
           { label: "Purchase", icon: <FiShoppingCart />, path: "/purchase" },
           { label: "Order Management", icon: <FiBox />, path: "/OrderManagement" },
           { label: "Vendors", icon: <FiUsers />, path: "/vendors" },
-          { label: "Components", icon: <FiPackage />, path: "/Components" },
+          { label: "Product Config", icon: <FiPackage />, path: "/product-config" },
           { label: "Users", icon: <FiClipboard />, path: "/users" },
           { label: "Settings", icon: <FiSettings />, path: "/settings" },
         ].map(({ label, icon, path }) => (

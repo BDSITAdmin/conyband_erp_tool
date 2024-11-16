@@ -4,6 +4,7 @@ import { z } from 'zod';
 import SuccessAlert from './SuccessAlert';
 import ErrorAlert from './ErrorAlert';
 import LoadingCircle from './LoadingCircle';
+import useFetch from '../Hook/useFetch';
 
 const categorySchema = z.object({
     category_name: z
@@ -22,6 +23,9 @@ const ProductList = () => {
     const [isFormValid, setIsFormValid] = useState(false);
     const modalRef = useRef(null); 
     const buttonRef = useRef(null);
+
+    const { data, loading, error, reFetch } = useFetch("http://localhost:8080/api/v1/categories");
+    // console.log("data is", data)
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
