@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
+import LoadingCircle from './LoadingCircle';
 
-const AddProductModal = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const AddProductForm = () => {
+    const [isOpen, setIsOpen] = useState(false);
     const [components, setComponents] = useState([{ name: '', quantity: '' }]);
+    const [isLoading, setIsLoading] = useState(false);
+    const modalRef = useRef(null); 
+    const buttonRef = useRef(null);
 
-    const handleOpenModal = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
+
+    const handleOutsideClick = (e) => {
+        if (modalRef.current && !modalRef.current.contains(e.target) && !buttonRef.current.contains(e.target)) {
+            setIsOpen(false); 
+        }
+    };
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('click', handleOutsideClick);
+        } else {
+            document.removeEventListener('click', handleOutsideClick);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [isOpen]);
 
     const handleAddComponent = () => {
         setComponents([...components, { name: '', quantity: '' }]);
@@ -21,22 +43,29 @@ const AddProductModal = () => {
         setComponents(newComponents);
     };
 
+    const toggleModal = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <div className="">
             {/* Add Product Button to open the modal */}
             <button
-                onClick={handleOpenModal}
-                className="px-4 py-2 m-6 font-semibold text-white bg-[#10B981] rounded-md"
+                onClick={toggleModal}
+                ref={buttonRef}
+                className="px-4 py-2  text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full "
             >
-               + Add Product
+               <AddIcon sx={{color:'white', paddingTop:'3px' }}/>  Add Product
             </button>
 
             {/* Modal Overlay */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            {isOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
                     {/* Modal Content */}
-                    <div className="relative max-h-[90vh] overflow-y-auto p-6 mx-auto bg-white rounded-lg shadow-md w-96">
-                        <h2 className="text-2xl font-semibold text-center text-[#10B981]">Add Product</h2>
+                    <div ref={modalRef} className="relative bg-white shadow-lg rounded-xl max-w-max ">
+                        <h2 className="text-lg font-medium text-center text-white bg-[#10B981] py-3 rounded-t-xl">
+                        Add New Category
+                        </h2>
 
                         <div className="my-4">
                             <label className="block text-sm font-medium text-gray-700">Product Name</label>
@@ -85,13 +114,10 @@ const AddProductModal = () => {
                         </div>
 
                         <div className="flex justify-center mt-4">
+                            <CloseIcon sx={{cursor:"pointer", color:"#4e504f", position:'absolute', top:'1px', right:'2px', fontWeight:'600' }} onClick={toggleModal} />
                             <button
-                                onClick={handleCloseModal}
-                                className="absolute text-lg text-black top-1 right-3 hover:text-gray-600"
+                             className="px-4 py-2 font-semibold text-white bg-[#10B981] rounded-md"
                             >
-                                &times;
-                            </button>
-                            <button className="px-4 py-2 font-semibold text-white bg-[#10B981] rounded-md">
                                 Add Product
                             </button>
                         </div>
@@ -102,4 +128,4 @@ const AddProductModal = () => {
     );
 };
 
-export default AddProductModal;
+export default AddProductForm;

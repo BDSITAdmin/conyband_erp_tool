@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import ToggleButtons from '../components/ToggleButtons'
-import TableComponent from '../components/TableComponent'
 import useFetch from '../hooks/useFetch';
-import AddCategoryForm from '../components/AddCategoryForm';
+import ProductConfigTable from '../components/ProductConfigTable';
 
 function ProductConfiguration() {
   const [selectedToggle, setSelectedToggle] = useState("Component Category");
@@ -10,26 +9,28 @@ function ProductConfiguration() {
   const apiEndpoints = {
     "Component Category": "http://localhost:8080/api/v1/categories",
     "Component List": "http://localhost:8080/api/v1/components",
-    "Product List": "http://localhost:8080/api/v1/purchases",
+    "Product List": "http://localhost:8080/api/v1/products",
   };
 
-  const { data: rows, loading, error, reFetch: reFetchCategories } = useFetch(apiEndpoints[selectedToggle]);
+  const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
+  
+  console.log(rows.length)
  
 
   const columnDefinitions = {
     "Component Category": [
-      { field: "category_id", headerName: "Component Id",width: 200 },
-      { field: "category_name", headerName: "Category Name", width: 200 },
+      { field: "category_id", headerName: "Category Id",width: 150 },
+      { field: "category_name", headerName: "Category Name", width: 150 },
     ],
     "Component List": [
-      { field: "component_id", headerName: "Component Id", width: 100 },
-      { field: "component_name", headerName: "Component Name",width: 200 },
-      { field: "category_id", headerName: "Component Category", width: 250 },
-      { field: "Action", headerName: "Action", width: 200 },
+      { field: "component_id", headerName: "Component Id", width: 150 },
+      { field: "component_name", headerName: "Component Name",width: 150 },
+      { field: "*category_name", headerName: "Category", width: 150 },
+      { field: "Action", headerName: "Action", width: 150 },
     ],
     "Product List": [
-      { field: "ProductId", headerName: "Product Id", width: 100 },
-      { field: "ProductName", headerName: "Product Name", width: 200 },
+      { field: "product_id", headerName: "Product Id", width: 100 },
+      { field: "product_name", headerName: "Product Name", width: 150 },
       { field: "AllComponents", headerName: "All Components", width: 200 },
       { field: "Action", headerName: "Action", width: 200 },
     ],
@@ -46,12 +47,12 @@ function ProductConfiguration() {
     data={Object.keys(apiEndpoints)}
     onChange={(value) => {
       setSelectedToggle(value);
-      reFetch(); 
     }}
     />
-    {rows.length > 1 && <TableComponent columns={columns} rows={rows} />}
-    {rows.length<1 && <h2 className='m-4' >No Data Found</h2>}
-    <AddCategoryForm reFetchCategories={reFetchCategories} />
+    {rows.length > 1 ?
+      <ProductConfigTable columns={columns} rows={rows} reFetchTableData={reFetchTableData} /> :
+      <h2 className='m-4' >No Data Found</h2>
+    }
     </div>
     </>
   )

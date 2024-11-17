@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2 } from "react-icons/fi";
-import AddProductModal from "../components/addProductModal";
+import AddProductModal from "../components/AddProductForm";
 import AddCategoryForm from "../components/AddCategoryForm";
-import ComponentList from "../components/componentList";
+import ComponentList from "../components/AddComponentForm";
 import ProductTable from "../components/productView";
 
 

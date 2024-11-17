@@ -15,7 +15,7 @@ const categorySchema = z.object({
         .regex(/^[A-Za-z0-9 ]+$/, "Category name can only contain letters, numbers, and spaces"), 
 });
 
-const AddCategoryForm = ({reFetchCategories}) => {
+const AddCategoryForm = ({reFetchTableData}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [categoryName, setCategoryName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ const AddCategoryForm = ({reFetchCategories}) => {
         if (response.status === 201) {
             settosucessMessage("Category added successfully!");
             setTimeout(() => settosucessMessage(null), 3000);
-            reFetchCategories();
+            reFetchTableData();
             setIsLoading(false)
             if (process.env.NODE_ENV === "development") {
                 console.log("Category added:", response.data);
@@ -110,7 +110,7 @@ const AddCategoryForm = ({reFetchCategories}) => {
                     {isLoading ? <LoadingCircle/> :
                      <div ref={modalRef} className="relative bg-white shadow-lg rounded-xl max-w-max ">
                         <h2 className="text-lg font-medium text-center text-white bg-[#10B981] py-3 rounded-t-xl">
-                        Add New Category
+                        Add New Category Type
                         </h2>
 
                         <form className="px-6 my-3">
@@ -152,7 +152,7 @@ const AddCategoryForm = ({reFetchCategories}) => {
                 ref={buttonRef}
                 className="px-4 py-2  text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full "
             >
-             <AddIcon sx={{color:'white', paddingTop:'3px' }}/> Add New Category
+             <AddIcon sx={{color:'white', paddingTop:'3px' }}/> Add Category
             </button>
         </>
     );
