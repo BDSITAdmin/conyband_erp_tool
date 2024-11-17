@@ -14,7 +14,7 @@ function ProductConfiguration() {
 
   const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
   
-  console.log(rows.length)
+  // console.log(rows.length)
  
 
   const columnDefinitions = {

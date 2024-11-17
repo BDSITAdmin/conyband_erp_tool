@@ -10,7 +10,7 @@ function ProductConfigTable({columns, rows, reFetchTableData}) {
     <TableComponent columns={columns} rows={rows} />
     <AddCategoryForm reFetchTableData={reFetchTableData} />
     <AddProductForm/>
-    <ComponentList/>
+    <ComponentList reFetchTableData={reFetchTableData}/>
     </>
   )
 }

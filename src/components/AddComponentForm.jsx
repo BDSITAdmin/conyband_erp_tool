@@ -17,7 +17,7 @@ const componentSchema = z.object({
         .min(3, "Component name must be at least 3 characters long"),
 });
 
-const AddComponentForm = () => {
+const AddComponentForm = ({reFetchTableData}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [componentCategory, setComponentCategory] = useState("");
@@ -25,12 +25,16 @@ const AddComponentForm = () => {
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isFormValid, setIsFormValid] = useState(false);
+    const [inputCatValue, setInputCatValue] = useState('');
+    const [showList, setShowList] = useState(false);
+    
 
-    const{ data, loading, error, reFetch } = useFetch("http://localhost:8080/api/v1/categories")
+    const{ data:categoriesData, loading, error, reFetch } = useFetch("http://localhost:8080/api/v1/categories")
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
     };
+
 
     const modalRef = useRef(null); 
     const buttonRef = useRef(null);
@@ -87,7 +91,7 @@ const AddComponentForm = () => {
                 component_name: validatedData?.componentName,
             };
 
-            // console.log(payload)
+            console.log("inputCatValue", inputCatValue)
 
             const response = await axios.post("http://localhost:8080/api/v1/components", payload);
             console.log("response is",response)
@@ -97,6 +101,7 @@ const AddComponentForm = () => {
                 reFetchTableData();
                 setComponentCategory("");
                 setComponentName("");
+                setIsLoading(false); 
             }
         } catch (error) {
             if (error instanceof z.ZodError) {
@@ -110,6 +115,19 @@ const AddComponentForm = () => {
             } 
         }
     };
+
+    const handleInputChange = (e) => {
+        setInputCatValue(e.target.value);
+        setShowList(true); 
+        e.preventDefault();
+      };
+
+    const handleSelectList =(items, e)=>{
+        setInputCatValue(items?.category_name);
+        setShowList(false);
+        e.preventDefault();
+    }
+
 
     return (
         <>
@@ -150,11 +168,16 @@ const AddComponentForm = () => {
                                     <input
                                         type="text"
                                         id="ComponentName"
-                                        value={componentCategory}
-                                        onChange={(e) => setComponentCategory(e.target.value)}
+                                        value={inputCatValue}
+                                        onChange={handleInputChange}
                                         className="px-2 py-1 border rounded"
                                         placeholder="Enter Category ID/Name"
                                     />
+                                    {showList && (<ul className='absolute top-[100px]  rounded-sm bg-white max-h-[40vh] overflow-y-scroll w-[200px] '>
+                                        {categoriesData.filter((item) =>item.category_name.toLowerCase().includes(inputCatValue.toLowerCase())).map((items, index)=>(
+                                            <li className='p-2 px-4 hover:bg-gray-200 cursor-pointer' onClick={(e) => handleSelectList(items,e)} key={index} >{items?.category_name}  [ID-{items?.category_id}]</li>
+                                        ))}
+                                    </ul>)}
                             </div>
 
                             {/* Product Name */}
