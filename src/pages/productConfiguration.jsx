@@ -34,13 +34,11 @@ function ProductConfiguration() {
       { field: "component_id", headerName: "Component Id", width: 150 },
       { field: "component_name", headerName: "Component Name",width: 150 },
       // { field: "category_id", headerName: "Category", width: 150 },
-      { field: "Action", headerName: "Action", width: 150 },
     ],
     "Product List": [
       { field: "product_id", headerName: "Product Id", width: 100 },
       { field: "product_name", headerName: "Product Name", width: 150 },
       { field: "AllComponents", headerName: "All Components", width: 200 },
-      { field: "Action", headerName: "Action", width: 200 },
     ],
   };
 
@@ -58,7 +56,7 @@ function ProductConfiguration() {
     }}
     />
     {rows.length > 1 ?
-      <TableComponent columns={columns} rows={rows} /> :
+      <TableComponent columns={columns} rows={rows} reFetchTableData={reFetchTableData} /> :
       <h2 className='m-4' >No Data Found</h2>
     }
     { selectedToggle ==="Component Category" && <AddCategoryForm reFetchTableData={reFetchTableData} />}
