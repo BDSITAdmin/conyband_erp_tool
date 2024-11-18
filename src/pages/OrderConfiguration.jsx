@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useFetch from '../hooks/useFetch';
 import TableComponent from '../components/TableComponent';
-import AddCategoryForm from '../components/AddOrderForm'
+import AddOrderForm from '../components/AddOrderForm'
 
 
 function OrderConfiguration() {
@@ -25,7 +25,7 @@ function OrderConfiguration() {
                 
             </div>
             <div className="flex justify-end">
-                <AddCategoryForm />
+                <AddOrderForm/>
             </div>
             
         </>
