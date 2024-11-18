@@ -4,6 +4,7 @@ import { IconButton, Menu, MenuItem, Paper, Modal, TextField, Button } from '@mu
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 
+
 function TableComponent({ columns, rows, reFetchTableData }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedRowId, setSelectedRowId] = useState(null);
@@ -14,10 +15,11 @@ function TableComponent({ columns, rows, reFetchTableData }) {
   const row = rows.map((row) => ({ id: row.category_id, ...row }));
 
   const handleMenuOpen = (event, id) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget); 
     setSelectedRowId(id);
   };
-
+  
+  
   const handleMenuClose = () => {
     setAnchorEl(null);
     setSelectedRowId(null);
@@ -57,7 +59,6 @@ function TableComponent({ columns, rows, reFetchTableData }) {
     handleMenuClose();
   };
 
-  // Actions column
   const actionColumn = {
     field: 'actions',
     headerName: 'Actions',
@@ -68,13 +69,14 @@ function TableComponent({ columns, rows, reFetchTableData }) {
         <IconButton onClick={(event) => handleMenuOpen(event, params.row.id)}>
           <MoreVertIcon />
         </IconButton>
-        {selectedRowId === params.row.id && (
+        
+        {anchorEl && selectedRowId === params.row.id && (
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'center' }}
           >
             <MenuItem onClick={() => handleEdit(params.row.id)}>Edit</MenuItem>
             <MenuItem onClick={() => handleDelete(params.row.id)}>Delete</MenuItem>
@@ -83,6 +85,8 @@ function TableComponent({ columns, rows, reFetchTableData }) {
       </div>
     ),
   };
+  
+  
 
   const updatedColumns = [...columns, actionColumn];
 
