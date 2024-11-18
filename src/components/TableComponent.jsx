@@ -17,6 +17,7 @@ function TableComponent({columns, rows}) {
         initialState={{ pagination: { paginationModel }}}
         pageSizeOptions={[5, 10]}
         checkboxSelection
+        getRowId={(row) => row.id || Math.random().toString(36).substr(2, 9)}
         sx={{ border: 0,borderRadius:"8px" }}
       />
     </Paper>

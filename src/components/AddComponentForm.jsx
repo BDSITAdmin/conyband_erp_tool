@@ -36,8 +36,8 @@ const AddComponentForm = ({reFetchTableData}) => {
     };
 
 
-    const modalRef = useRef(null); 
-    const buttonRef = useRef(null);
+    // const modalRef = useRef(null); 
+    // const buttonRef = useRef(null);
 
     const validateForm = () => {
         try {
@@ -58,23 +58,23 @@ const AddComponentForm = ({reFetchTableData}) => {
     }, [componentCategory, componentName]);
 
 
-    const handleOutsideClick = (e) => {
-        if (modalRef.current && !modalRef.current.contains(e.target) && !buttonRef.current.contains(e.target)) {
-            setIsOpen(false); 
-        }
-    };
+    // const handleOutsideClick = (e) => {
+    //     if (modalRef.current && !modalRef.current.contains(e.target) && !buttonRef.current.contains(e.target)) {
+    //         setIsOpen(false); 
+    //     }
+    // };
 
-    useEffect(() => {
-        if (isOpen) {
-            document.addEventListener('click', handleOutsideClick);
-        } else {
-            document.removeEventListener('click', handleOutsideClick);
-        }
+    // useEffect(() => {
+    //     if (isOpen) {
+    //         document.addEventListener('click', handleOutsideClick);
+    //     } else {
+    //         document.removeEventListener('click', handleOutsideClick);
+    //     }
 
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        };
-    }, [isOpen]);
+    //     return () => {
+    //         document.removeEventListener('click', handleOutsideClick);
+    //     };
+    // }, [isOpen]);
 
 
     const handleAddComponentAPI = async (e) => {
@@ -91,7 +91,7 @@ const AddComponentForm = ({reFetchTableData}) => {
                 component_name: validatedData?.componentName,
             };
 
-            console.log("inputCatValue", inputCatValue)
+            // console.log("payload is", inputCatValue)
 
             const response = await axios.post("http://localhost:8080/api/v1/components", payload);
             console.log("response is",response)
@@ -119,6 +119,7 @@ const AddComponentForm = ({reFetchTableData}) => {
     const handleInputChange = (e) => {
         setInputCatValue(e.target.value);
         setShowList(true); 
+        
         e.preventDefault();
       };
 
@@ -137,7 +138,7 @@ const AddComponentForm = ({reFetchTableData}) => {
             
             <button
                 onClick={toggleModal}
-                ref={buttonRef}
+                // ref={buttonRef}
                 className="px-4 py-2  text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full "
             >
              <AddIcon sx={{color:'white', paddingTop:'3px' }}/>  Add Component
@@ -146,7 +147,7 @@ const AddComponentForm = ({reFetchTableData}) => {
             {/* Modal */}
             {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
-                    {isLoading ? <LoadingCircle/> :<div ref={modalRef} className="relative bg-white shadow-lg rounded-xl max-w-max ">
+                    {isLoading ? <LoadingCircle/> :<div className="relative bg-white shadow-lg rounded-xl max-w-max ">
                         <h2 className="text-lg font-medium text-center text-white bg-[#10B981] py-3 rounded-t-xl">
                         Add New Component Type
                         </h2>
