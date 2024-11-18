@@ -4,13 +4,14 @@ import AddCategoryForm from './AddCategoryForm'
 import AddProductForm from './AddProductForm'
 import ComponentList from './AddComponentForm'
 
-function ProductConfigTable({columns, rows, reFetchTableData}) {
+function ProductConfigTable({columns, rows, reFetchTableData, selectedToggle}) {
+  console.log(selectedToggle)
   return (
     <>
     <TableComponent columns={columns} rows={rows} />
-    <AddCategoryForm reFetchTableData={reFetchTableData} />
-    <AddProductForm/>
-    <ComponentList reFetchTableData={reFetchTableData}/>
+    { selectedToggle ==="Component Category" && <AddCategoryForm reFetchTableData={reFetchTableData} />}
+    { selectedToggle ==="Product List" && <AddProductForm/>}
+    {selectedToggle ==="Component List" && <ComponentList reFetchTableData={reFetchTableData}/>}
     </>
   )
 }

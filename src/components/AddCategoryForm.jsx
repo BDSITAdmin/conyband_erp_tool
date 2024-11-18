@@ -6,8 +6,7 @@ import ErrorAlert from './ErrorAlert';
 import LoadingCircle from './LoadingCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+
 
 const categorySchema = z.object({
     category_name: z
@@ -27,12 +26,7 @@ const AddCategoryForm = ({reFetchTableData}) => {
     const modalRef = useRef(null); 
     const buttonRef = useRef(null);
 
-    // const options = [
-    //     { label: 'The Godfather', id: 1 },
-    //     { label: 'Pulp Fiction', id: 2 },
-    //   ];
-
-    const options = ['The Godfather-2', 'Pulp Fiction'];
+   
 
     const toggleModal = () => {
         setIsOpen(!isOpen);

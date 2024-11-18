@@ -174,7 +174,10 @@ const AddComponentForm = ({reFetchTableData}) => {
                                         placeholder="Enter Category ID/Name"
                                     />
                                     {showList && (<ul className='absolute top-[100px]  rounded-sm bg-white max-h-[40vh] overflow-y-scroll w-[200px] '>
-                                        {categoriesData.filter((item) =>item.category_name.toLowerCase().includes(inputCatValue.toLowerCase())).map((items, index)=>(
+                                        {categoriesData.filter((item) => 
+                                            item.category_name.toLowerCase().includes(inputCatValue.toLowerCase()) || 
+                                            item.category_id.toString().includes(inputCatValue) 
+                                        ).map((items, index)=>(
                                             <li className='p-2 px-4 hover:bg-gray-200 cursor-pointer' onClick={(e) => handleSelectList(items,e)} key={index} >{items?.category_name}  [ID-{items?.category_id}]</li>
                                         ))}
                                     </ul>)}

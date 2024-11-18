@@ -14,7 +14,7 @@ function ProductConfiguration() {
 
   const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
   
-  // console.log(rows.length)
+  // console.log("new tog",selectedToggle)
  
 
   const columnDefinitions = {
@@ -25,7 +25,7 @@ function ProductConfiguration() {
     "Component List": [
       { field: "component_id", headerName: "Component Id", width: 150 },
       { field: "component_name", headerName: "Component Name",width: 150 },
-      { field: "*category_name", headerName: "Category", width: 150 },
+      { field: "category_id", headerName: "Category", width: 150 },
       { field: "Action", headerName: "Action", width: 150 },
     ],
     "Product List": [
@@ -50,7 +50,7 @@ function ProductConfiguration() {
     }}
     />
     {rows.length > 1 ?
-      <ProductConfigTable columns={columns} rows={rows} reFetchTableData={reFetchTableData} /> :
+      <ProductConfigTable columns={columns} rows={rows} selectedToggle={selectedToggle} reFetchTableData={reFetchTableData} /> :
       <h2 className='m-4' >No Data Found</h2>
     }
     </div>
