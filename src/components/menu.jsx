@@ -13,9 +13,8 @@ const Menu = () => {
   const location = useLocation();
 
   return (
-    <div className= "overflow-y-auto pt-2 w-1/5 space-y-4 px-4 h-[100vh] bg-white border-r">
-      <ul className="">
-
+    <div className="overflow-y-auto pt-2 w-1/5 space-y-4 px-4 h-[100vh] bg-white border-r">
+      <ul>
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
           { label: "Inventory", icon: <FiBox />, path: "/inventory" },
@@ -26,10 +25,12 @@ const Menu = () => {
           { label: "Users", icon: <FiClipboard />, path: "/users" },
           { label: "Settings", icon: <FiSettings />, path: "/settings" },
         ].map(({ label, icon, path }) => (
-          <li key={path} className="flex items-center gap-2 p-2 rounded hover:bg-gray-200">
+          <li key={path}>
             <Link
               to={path}
-              className={`flex items-center gap-2 text-gray-500 ${location.pathname === path ? 'text-green-500 ' : 'hover:text-black'}`}
+              className={`flex items-center gap-2 p-2 rounded hover:bg-gray-200 ${
+                location.pathname === path ? 'text-green-500' : 'text-gray-500 hover:text-black'
+              }`}
             >
               {icon}
               {label}
