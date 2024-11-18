@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header";
-import Menu from "./components/Menu";
+import Menu from "./components/menu";
 import Dashboard from "./pages/Dashboard"; 
 import Inventory from "./pages/Inventory";
 import Components from './pages/Product';
@@ -9,7 +9,7 @@ import Vendors from './pages/Vendors';
 import Purchase from './pages/Purchase';
 import Settings from './pages/settings';
 import Users from './pages/users';
-import OrderManagement from './pages/OrderManagement';
+import OrderConfiguration from './pages/order-Configuration';
 import ProductConfiguration from "./pages/productConfiguration";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
             <Route path="/product-config" element={<ProductConfiguration />} />
             <Route path="/Vendors" element={<Vendors />} />
             <Route path="/Purchase" element={<Purchase />} />
-            <Route path="/OrderManagement" element={<OrderManagement />} />
+            <Route path="/order-config" element={<OrderConfiguration />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>

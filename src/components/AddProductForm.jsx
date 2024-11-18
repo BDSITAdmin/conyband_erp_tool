@@ -71,46 +71,47 @@ const AddProductForm = () => {
                                 <label className="block text-sm font-medium text-gray-700">Product Name</label>
                                 <input type="text" className="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
                             </div>
-
-                            {components.map((component, index) => (
-                                <div key={index} className="my-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="block text-sm font-medium text-gray-700">
-                                            Component {index + 1}
-                                        </label>
-                                        {index > 0 && (
-                                            <button
-                                                onClick={() => handleRemoveComponent(index)}
-                                                className="font-semibold text-red-500"
-                                            >
-                                                ✕
-                                            </button>
-                                        )}
+                            <div className="overflow-y-auto max-h-80">
+                                {components.map((component, index) => (
+                                    <div key={index} className="my-4 ">
+                                        <div className="flex items-center justify-between ">
+                                            <label className="block text-sm font-medium text-gray-700 overflow-auto max-h-90%">
+                                                Component {index + 1}
+                                            </label>
+                                            {index > 0 && (
+                                                <button
+                                                    onClick={() => handleRemoveComponent(index)}
+                                                    className="font-semibold text-red-500"
+                                                >
+                                                    ✕
+                                                </button>
+                                            )}
+                                        </div>
+                                        <input
+                                            type="text"
+                                            placeholder="Component Name"
+                                            value={component.name}
+                                            onChange={(e) => handleInputChange(index, 'name', e.target.value)}
+                                            className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                                        />
+                                        <input
+                                            type="number"
+                                            placeholder="Quantity"
+                                            value={component.quantity}
+                                            onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
+                                            className="block w-full p-2 mt-2 border border-gray-300 rounded-md"
+                                        />
                                     </div>
-                                    <input
-                                        type="text"
-                                        placeholder="Component Name"
-                                        value={component.name}
-                                        onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-                                        className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                                    />
-                                    <input
-                                        type="number"
-                                        placeholder="Quantity"
-                                        value={component.quantity}
-                                        onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                                        className="block w-full p-2 mt-2 border border-gray-300 rounded-md"
-                                    />
-                                </div>
-                            ))}
-                            <div className="flex justify-end ">
+                                ))}
+                                <div className="flex justify-end ">
 
-                                <button
-                                    onClick={handleAddComponent}
-                                    className="mt-2 text-sm font-semibold text-[#10B981]"
-                                >
-                                    Add Component
-                                </button>
+                                    <button
+                                        onClick={handleAddComponent}
+                                        className="mt-2 text-sm font-semibold text-[#10B981]"
+                                    >
+                                        Add Component
+                                    </button>
+                                </div>
                             </div>
 
                             <div className="flex justify-center mt-4">
