@@ -21,7 +21,7 @@ const AddOrderForm = () => {
             {/* Button to open the modal */}
             <button
                 onClick={handleOpenModal}
-                className="px-4 py-2  text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full"
+                className="px-4 py-2  text-white flex float-end mr-6 items-center justify-center bg-[#10B981] rounded-full"
             >
                <AddIcon sx={{color:'white', paddingTop:'3px' }}/>  Add Order
             </button>
@@ -55,7 +55,7 @@ const AddOrderForm = () => {
                         <div className="flex justify-center">
                             <button
                                 onClick={handleEstimate}
-                                className="px-4 py-2 text-white bg-[#10B981] rounded"
+                                className="px-4 mx-4 py-2 text-white bg-[#10B981] rounded"
                             >
                                 Estimate Order
                             </button>

@@ -5,7 +5,7 @@ const ViewComponentFromProduct = ({ data, setShowComponent }) => {
 
     const handleCloseView =()=>{
         setShowComponent(false)
-      }
+    }
 
   return (
     <div className="p-4">

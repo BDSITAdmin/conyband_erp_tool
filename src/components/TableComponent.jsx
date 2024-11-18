@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { IconButton, Menu, MenuItem, Paper, Modal, TextField, Button } from '@mui/material';
+import { IconButton, Menu, MenuItem, Paper, Modal, TextField } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 
@@ -118,21 +118,12 @@ function TableComponent({ columns, rows, reFetchTableData }) {
             onChange={(e) => setEditData({ ...editData, name: e.target.value })}
             margin="normal"
           />
-          <TextField
-            fullWidth
-            label="Description"
-            value={editData.description || ''}
-            onChange={(e) => setEditData({ ...editData, description: e.target.value })}
-            margin="normal"
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleUpdate}
-            sx={{ mt: 2 }}
-          >
-            Save Changes
-          </Button>
+          <button
+                onClick={handleUpdate}
+                className="px-4 py-2  text-white flex  mx-auto my-3 items-center justify-center bg-[#10B981] rounded-full "
+            >
+             Save Changes
+            </button>
         </Paper>
       </Modal>
     </>

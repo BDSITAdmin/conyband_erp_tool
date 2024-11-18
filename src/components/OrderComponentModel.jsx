@@ -1,18 +1,17 @@
 import React, { useState } from "react";
+import CloseIcon from '@mui/icons-material/Close';
 
-const TableModal = ({ data }) => {
+const OrderComponentModel = ({ data, setShowComponent }) => {
+  const handleCloseView =()=>{
+    setShowComponent(false)
+}
 
   return (
     <div className="p-4">
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative w-full max-w-5xl p-4 bg-white rounded-lg shadow-lg">
 
-            <button
-              className="absolute text-gray-600 top-2 right-2 hover:text-gray-800"
- 
-            >
-              &times;
-            </button>
+          <CloseIcon sx={{cursor:"pointer", color:"#4e504f", position:'absolute', top:'1px', right:'2px', fontWeight:'600' }} onClick={handleCloseView} />
 
             <h2 className="mb-4 text-lg font-semibold">Component Table</h2>
 
@@ -46,4 +45,4 @@ const TableModal = ({ data }) => {
   );
 };
 
-export default TableModal;
+export default OrderComponentModel;
