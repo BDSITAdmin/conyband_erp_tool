@@ -1,7 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ToggleButtons from '../components/ToggleButtons'
 import useFetch from '../hooks/useFetch';
-import ProductConfigTable from '../components/ProductConfigTable';
+import TableComponent from '../components/TableComponent';
+import AddCategoryForm from '../components/AddCategoryForm'
+import AddProductForm from '../components/AddProductForm'
+import ComponentList from '../components/AddComponentForm'
 
 function ProductConfiguration() {
   const [selectedToggle, setSelectedToggle] = useState("Component Category");
@@ -12,9 +15,14 @@ function ProductConfiguration() {
     "Product List": "http://localhost:8080/api/v1/products",
   };
 
+
+
   const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
   
-  // console.log("new tog",selectedToggle)
+
+  useEffect(()=>{
+    reFetchTableData()
+  },[selectedToggle])
  
 
   const columnDefinitions = {
@@ -25,7 +33,7 @@ function ProductConfiguration() {
     "Component List": [
       { field: "component_id", headerName: "Component Id", width: 150 },
       { field: "component_name", headerName: "Component Name",width: 150 },
-      { field: "category_id", headerName: "Category", width: 150 },
+      // { field: "category_id", headerName: "Category", width: 150 },
       { field: "Action", headerName: "Action", width: 150 },
     ],
     "Product List": [
@@ -50,9 +58,12 @@ function ProductConfiguration() {
     }}
     />
     {rows.length > 1 ?
-      <ProductConfigTable columns={columns} rows={rows} selectedToggle={selectedToggle} reFetchTableData={reFetchTableData} /> :
+      <TableComponent columns={columns} rows={rows} /> :
       <h2 className='m-4' >No Data Found</h2>
     }
+    { selectedToggle ==="Component Category" && <AddCategoryForm reFetchTableData={reFetchTableData} />}
+    { selectedToggle ==="Product List" && <AddProductForm/>}
+    {selectedToggle ==="Component List" && <ComponentList reFetchTableData={reFetchTableData}/>}
     </div>
     </>
   )
