@@ -36,6 +36,7 @@ const AddComponentForm = ({reFetchTableData}) => {
     };
 
 
+
     // const modalRef = useRef(null); 
     // const buttonRef = useRef(null);
 
@@ -202,7 +203,7 @@ const AddComponentForm = ({reFetchTableData}) => {
                             <div className="flex justify-center">
                                     <button
                                         type="submit"
-                                        className="bg-[#10B981]  text-white px-4 py-2 rounded"
+                                        className={isFormValid ? ` bg-[#10B981] text-white px-4 py-[6px] rounded-md flex justify-center items-center `:` bg-[#10b98190] text-white px-4 py-[6px] rounded-md flex justify-center items-center `}
                                         disabled={!isFormValid}
                                         onClick={handleAddComponentAPI}
                                     >

@@ -135,7 +135,7 @@ const AddCategoryForm = ({reFetchTableData}) => {
                             <div className="flex justify-center mb-[1rem] mt-[0.75rem] ">
                             <button
                                 type="submit"
-                                className="bg-[#10B981]  text-white px-4 py-[6px] rounded-md flex justify-center items-center "
+                                className={isFormValid ? ` bg-[#10B981] text-white px-4 py-[6px] rounded-md flex justify-center items-center `:` bg-[#10b98190] text-white px-4 py-[6px] rounded-md flex justify-center items-center `}
                                 onClick={handleAddCategoryAPI}
                                 disabled={!isFormValid} 
                             >
