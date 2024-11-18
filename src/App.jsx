@@ -9,7 +9,7 @@ import Vendors from './pages/Vendors';
 import Purchase from './pages/Purchase';
 import Settings from './pages/settings';
 import Users from './pages/users';
-import OrderConfiguration from './pages/order-Configuration';
+import OrderConfiguration from './pages/OrderConfiguration';
 import ProductConfiguration from "./pages/productConfiguration";
 
 function App() {
