@@ -13,13 +13,13 @@ const Menu = () => {
   const location = useLocation();
 
   return (
-    <div className="overflow-y-auto pt-2 w-1/5 space-y-4 px-4 h-[100vh] bg-white border-r">
+    <div className="overflow-y-auto pt-8 w-1/5 space-y-4 px-4 h-[100vh] bg-white border-r">
       <ul>
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
           { label: "Inventory", icon: <FiBox />, path: "/inventory" },
           { label: "Purchase", icon: <FiShoppingCart />, path: "/purchase" },
-          { label: "Order Management", icon: <FiBox />, path: "/OrderManagement" },
+          { label: "Order Config ", icon: <FiBox />, path: "/order-config" },
           { label: "Vendors", icon: <FiUsers />, path: "/vendors" },
           { label: "Product Config", icon: <FiPackage />, path: "/product-config" },
           { label: "Users", icon: <FiClipboard />, path: "/users" },
@@ -28,7 +28,7 @@ const Menu = () => {
           <li key={path}>
             <Link
               to={path}
-              className={`flex items-center gap-2 p-2 rounded hover:bg-gray-200 ${
+              className={`flex items-center gap-2 p-3 rounded hover:bg-gray-200 ${
                 location.pathname === path ? 'text-green-500' : 'text-gray-500 hover:text-black'
               }`}
             >

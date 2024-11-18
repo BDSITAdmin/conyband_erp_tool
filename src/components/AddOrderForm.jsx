@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import AddIcon from '@mui/icons-material/Add';
 
-const AddOrderModal = () => {
+const AddCategoryForm = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [productName, setProductName] = useState('');
     const [quantity, setQuantity] = useState('');
@@ -19,16 +20,14 @@ const AddOrderModal = () => {
             {/* Button to open the modal */}
             <button
                 onClick={handleOpenModal}
-                className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
+                className="px-4 py-2  text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full"
             >
-               + Add Order
+               <AddIcon sx={{color:'white', paddingTop:'3px' }}/>  Add Order
             </button>
-
-            {/* Modal Overlay */}
             {isModalOpen && (
-                <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     {/* Modal Content */}
-                    <div className=" relative bg-white p-6 rounded-lg shadow-md w-96">
+                    <div className="relative p-6 bg-white rounded-lg shadow-md w-96">
                         <h2 className="text-center text-2xl font-semibold text-[#10B981] mb-4">Add Order</h2>
 
                         {/* Form Fields */}
@@ -75,4 +74,4 @@ const AddOrderModal = () => {
     );
 };
 
-export default AddOrderModal;
+export default AddCategoryForm;

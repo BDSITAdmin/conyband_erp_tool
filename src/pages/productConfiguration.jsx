@@ -47,7 +47,7 @@ function ProductConfiguration() {
   return (
     <>
     {/* navigation  */}
-    <div className="p-6 w-full bg-gray-100 rounded-md">
+    <div className="w-full p-6 bg-gray-100 rounded-md">
         <h1 className="mb-4 text-2xl font-semibold">Product Configuration</h1>
     <ToggleButtons  
     data={Object.keys(apiEndpoints)}
