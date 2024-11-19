@@ -110,7 +110,7 @@ function TableComponent({ columns, rows, reFetchTableData }) {
         sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
         <Paper sx={{ padding: 3, width: '400px' }}>
-          <h3>Edit Category</h3>
+          <h3 className='text-xl text-bold'>Edit Category</h3>
           <TextField
             fullWidth
             label="Category Name"

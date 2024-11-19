@@ -19,7 +19,7 @@ const Menu = () => {
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
           { label: "Inventory", icon: <FiBox />, path: "/inventory" },
           { label: "Purchase", icon: <FiShoppingCart />, path: "/purchase" },
-          { label: "Order Config ", icon: <FiBox />, path: "/order-config" },
+          { label: "Orders ", icon: <FiBox />, path: "/order-config" },
           { label: "Vendors", icon: <FiUsers />, path: "/vendors" },
           { label: "Product Config", icon: <FiPackage />, path: "/product-config" },
           { label: "Users", icon: <FiClipboard />, path: "/users" },

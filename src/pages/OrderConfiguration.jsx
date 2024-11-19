@@ -84,7 +84,7 @@ function OrderConfiguration() {
         <>
         {showComponet && <OrderComponentModel data={dataToView} setShowComponent = {setShowComponent}  /> }
             <div className="w-full p-6 bg-gray-100 rounded-md">
-                <h1 className="mb-4 text-2xl font-semibold">Order Configuration</h1>
+                <h1 className="mb-4 text-2xl font-semibold">Order Management</h1>
                 
                 {/* {rows.length > 1 ?
                     <OrderTable/> :
