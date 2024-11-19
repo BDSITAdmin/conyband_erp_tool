@@ -18,8 +18,8 @@ function OrderConfiguration() {
 
     const columns = [
         { field: 'id', headerName: 'Order ID', width: 120 },
-        { field: 'firstName', headerName: 'Order Name', width: 150 },
-        { field: 'lastName', headerName: 'Order Qty', width: 150 },
+        { field: 'productName', headerName: 'Product Name', width: 150 },
+        { field: 'orderQuantity', headerName: 'Order Quantity', width: 150 },
         {
             field: "AllComponents",
             headerName: "All Components",
@@ -36,15 +36,15 @@ function OrderConfiguration() {
       ];
       
       const row = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+        { id: 1, productName: 'Snow', orderQuantity:35 },
+        { id: 2, productName: 'Lannister', orderQuantity: 42 },
+        { id: 3, productName: 'Lannister', orderQuantity: 45 },
+        { id: 4, productName: 'Stark', orderQuantity: 16 },
+        { id: 5, productName: 'Targaryen', orderQuantity:23 },
+        { id: 6, productName: 'Melisandre', orderQuantity: 50 },
+        { id: 7, productName: 'Clifford', orderQuantity: 44 },
+        { id: 8, productName: 'Frances', orderQuantity: 36 },
+        { id: 9, productName: 'Roxie', orderQuantity: 65 },
       ];
 
 

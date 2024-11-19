@@ -23,6 +23,8 @@ const AddProductForm = ({ reFetchTableData }) => {
         setComponents([...components, { name: '', quantity: '' }]);
     };
 
+    console.log("components data is ", components)
+
     const handleRemoveComponent = (index) => {
         setComponents(components.filter((_, i) => i !== index));
     };
