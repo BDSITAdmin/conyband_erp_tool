@@ -32,7 +32,7 @@ const ProductTable = ({ data }) => {
             <h2 className="mb-4 text-lg font-semibold">Component Table</h2>
 
             {/* Table */}
-            <div className="overflow-x-auto">
+            <div className="overflow-y-auto max-h-60">
               <table className="min-w-full border-collapse">
                 <thead>
                   <tr className="text-gray-600 bg-gray-100">

@@ -17,7 +17,7 @@ const AddProductForm = ({ reFetchTableData }) => {
     const [components, setComponents] = useState([{ name: '', quantity: '' }]);
     const [isFormValid, setIsFormValid] = useState(false);
 
-    
+
 
     const handleAddComponent = () => {
         setComponents([...components, { name: '', quantity: '' }]);
@@ -54,7 +54,7 @@ const AddProductForm = ({ reFetchTableData }) => {
     useEffect(() => {
         validateForm();
     }, [productName, components]);
-      
+
 
     const handleCreateProduct = async (e) => {
         e.preventDefault();
@@ -65,7 +65,7 @@ const AddProductForm = ({ reFetchTableData }) => {
             });
             console.log("productResponse", productResponse)
             if (productResponse.status === 201) {
-                const productId = productResponse.data.id; 
+                const productId = productResponse.data.id;
 
                 // Step 2: Attach components to the product
                 const componentPromises = components.map((component) =>
@@ -128,42 +128,43 @@ const AddProductForm = ({ reFetchTableData }) => {
                                         required
                                     />
                                 </div>
+                                <div className="overflow-y-auto max-h-60">
+                                    {components.map((component, index) => (
+                                        <div key={index} className="my-4">
+                                            <div className="flex items-center justify-between">
+                                                <label className="block text-sm font-medium text-gray-700">
+                                                    Component {index + 1}
+                                                </label>
+                                                {index > 0 && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveComponent(index)}
+                                                        className="font-semibold text-red-500"
+                                                    >
+                                                        <CloseIcon sx={{ cursor: "pointer", color: "#4e504f", fontSize: '20px', fontWeight: '600' }} />
+                                                    </button>
 
-                                {components.map((component, index) => (
-                                    <div key={index} className="my-4">
-                                        <div className="flex items-center justify-between">
-                                            <label className="block text-sm font-medium text-gray-700">
-                                                Component {index + 1}
-                                            </label>
-                                            {index > 0 && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleRemoveComponent(index)}
-                                                    className="font-semibold text-red-500"
-                                                >
-                                                    <CloseIcon sx={{cursor:"pointer", color:"#4e504f",fontSize:'20px', fontWeight:'600' }}/>
-                                                </button>
-                                                
-                                            )}
+                                                )}
+                                            </div>
+                                            <input
+                                                type="text"
+                                                placeholder="Component Name"
+                                                value={component.name}
+                                                onChange={(e) => handleInputChange(index, 'name', e.target.value)}
+                                                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
+                                                required
+                                            />
+                                            <input
+                                                type="number"
+                                                placeholder="Quantity"
+                                                value={component.quantity}
+                                                onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
+                                                className="block w-full p-2 mt-2 border border-gray-300 rounded-md"
+                                                required
+                                            />
                                         </div>
-                                        <input
-                                            type="text"
-                                            placeholder="Component Name"
-                                            value={component.name}
-                                            onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-                                            className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                                            required
-                                        />
-                                        <input
-                                            type="number"
-                                            placeholder="Quantity"
-                                            value={component.quantity}
-                                            onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                                            className="block w-full p-2 mt-2 border border-gray-300 rounded-md"
-                                            required
-                                        />
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
 
                                 <div className="flex justify-end">
                                     <button
@@ -176,17 +177,17 @@ const AddProductForm = ({ reFetchTableData }) => {
                                 </div>
 
                                 <div className="flex justify-center mt-4">
-                                <button
-                                    type="submit"
-                                    className={
-                                    isFormValid
-                                        ? 'bg-[#10B981] text-white px-4 py-[6px] rounded-md flex justify-center items-center'
-                                        : 'bg-[#10b98190] text-white px-4 py-[6px] rounded-md flex justify-center items-center'
-                                    }
-                                    disabled={!isFormValid}
-                                >
-                                    Add Product
-                                </button>
+                                    <button
+                                        type="submit"
+                                        className={
+                                            isFormValid
+                                                ? 'bg-[#10B981] text-white px-4 py-[6px] rounded-md flex justify-center items-center'
+                                                : 'bg-[#10b98190] text-white px-4 py-[6px] rounded-md flex justify-center items-center'
+                                        }
+                                        disabled={!isFormValid}
+                                    >
+                                        Add Product
+                                    </button>
                                 </div>
                             </form>
 

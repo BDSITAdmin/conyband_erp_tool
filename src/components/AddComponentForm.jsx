@@ -174,7 +174,7 @@ const AddComponentForm = ({reFetchTableData}) => {
                                         value={inputCatValue}
                                         onChange={handleInputChange}
                                         className="px-2 py-1 border rounded"
-                                        placeholder="Enter Category ID/Name"
+                                        placeholder="Component Category"
                                     />
                                     {showList && (<ul className='absolute top-[100px]  rounded-sm bg-white max-h-[40vh] overflow-y-scroll w-[200px] '>
                                         {categoriesData.filter((item) => 
