@@ -5,6 +5,7 @@ import axios from 'axios';
 import LoadingCircle from './LoadingCircle';
 import SuccessAlert from './SuccessAlert';
 import ErrorAlert from './ErrorAlert';
+import QuantityInput from './QuantityInput';
 
 
 
@@ -118,7 +119,7 @@ const AddProductForm = ({ reFetchTableData }) => {
                             <h2 className="text-lg font-medium text-center text-white bg-[#10B981] py-3 rounded-t-xl">
                                 Add New Product
                             </h2>
-                            <form onSubmit={handleCreateProduct} className="px-6 pb-6 mt-4 space-y-4">
+                            <form onSubmit={handleCreateProduct} className="px-6 pb-6 ">
                                 <div className="my-4">
                                     <label className="block text-sm font-medium text-gray-700">Product Name*</label>
                                     <input
@@ -143,27 +144,37 @@ const AddProductForm = ({ reFetchTableData }) => {
                                                         onClick={() => handleRemoveComponent(index)}
                                                         className="font-semibold text-red-500"
                                                     >
-                                                        <CloseIcon sx={{ cursor: "pointer", color: "#4e504f", fontSize: '20px', fontWeight: '600' }} />
+                                                        <CloseIcon
+                                                            sx={{
+                                                                cursor: "pointer",
+                                                                color: "#4e504f",
+                                                                fontSize: "20px",
+                                                                fontWeight: "600",
+                                                            }}
+                                                        />
                                                     </button>
-
                                                 )}
                                             </div>
-                                            <input
-                                                type="text"
-                                                placeholder="Component Name"
-                                                value={component.name}
-                                                onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-                                                className="block w-full p-2 mt-1 border border-gray-300 rounded-md"
-                                                required
-                                            />
-                                            <input
-                                                type="number"
-                                                placeholder="Quantity"
-                                                value={component.quantity}
-                                                onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-                                                className="block w-full p-2 mt-2 border border-gray-300 rounded-md"
-                                                required
-                                            />
+                                            <div className="flex mt-2 space-x-4">
+                                                {/* Component Name Field */}
+                                                <input
+                                                    type="text"
+                                                    placeholder="Component Name"
+                                                    value={component.name}
+                                                    onChange={(e) => handleInputChange(index, "name", e.target.value)}
+                                                    className="block w-1/2 p-2 border border-gray-300 rounded-md"
+                                                    required
+                                                />
+                                                {/* Quantity Field */}
+                                                <QuantityInput
+                                                    type="number"
+                                                    placeholder="Quantity"
+                                                    value={component.quantity}
+                                                    onChange={(e) => handleInputChange(index, "quantity", e.target.value)}
+                                                    className="block w-1/2 p-2 border border-gray-300 rounded-md"
+                                                    required
+                                                />
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -191,6 +202,7 @@ const AddProductForm = ({ reFetchTableData }) => {
                                         Add Product
                                     </button>
                                 </div>
+                                
                             </form>
 
                             <CloseIcon
