@@ -9,7 +9,7 @@ import Vendors from './pages/Vendors';
 import Purchase from './pages/Purchase';
 import Settings from './pages/settings';
 import Users from './pages/users';
-import OrderConfiguration from './pages/order-Configuration';
+import OrderManagement from './pages/OrderManagement';
 import ProductConfiguration from "./pages/productConfiguration";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
             <Route path="/product-config" element={<ProductConfiguration />} />
             <Route path="/Vendors" element={<Vendors />} />
             <Route path="/Purchase" element={<Purchase />} />
-            <Route path="/order-config" element={<OrderConfiguration />} />
+            <Route path="/OrderManagement" element={<OrderManagement />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
