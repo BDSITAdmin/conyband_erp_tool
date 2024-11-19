@@ -116,20 +116,19 @@ const AddCategoryForm = ({ reFetchTableData }) => {
                             </h2>
 
                             <form className="px-6 my-3">
-
-                                {/* Product Name */}
-                                <div className="flex items-center justify-center gap-3">
-                                    <h2 className="w-[140px]">Category Name*</h2>
-                                    <input
-                                        type="text"
-                                        className="w-2/3 px-2 py-1 border rounded"
-                                        id="categoryName"
-                                        value={categoryName}
-                                        onChange={(e) => setCategoryName(e.target.value)}
-                                        placeholder="Enter Product Name"
-                                    />
-                                </div>
-
+                            {/* Product Name */}
+                            <div className="flex items-center justify-center gap-3">
+                                <h2 className="w-[140px]">Category Name*</h2>
+                                <input
+                                    type="text"
+                                    className="w-2/3 px-2 py-1 border rounded"
+                                    id="categoryName"
+                                    value={categoryName}
+                                    onChange={(e) => setCategoryName(e.target.value)}
+                                    placeholder="Enter Product Name"
+                                    required
+                                />
+                            </div>
 
                                 {/* Submit Button */}
                                 <div className="flex justify-center mb-[1rem] mt-[0.75rem] ">

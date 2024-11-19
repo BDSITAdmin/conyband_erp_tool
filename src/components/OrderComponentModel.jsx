@@ -1,38 +1,22 @@
 import React, { useState } from "react";
+import CloseIcon from '@mui/icons-material/Close';
 
-const TableModal = ({ data }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+const OrderComponentModel = ({ data, setShowComponent }) => {
+  const handleCloseView =()=>{
+    setShowComponent(false)
+}
 
   return (
     <div className="p-4">
-      {/* Button to Open Modal */}
-      <button
-        onClick={toggleModal}
-        className="px-3 py-1 text-[#007AFF] underline hover:text-[#10B981]"
-      >
-        View All
-      </button>
-
-      {/* Modal */}
-      {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative w-full max-w-5xl p-4 bg-white rounded-lg shadow-lg">
-            {/* Close Button */}
-            <button
-              className="absolute text-gray-600 top-2 right-2 hover:text-gray-800"
-              onClick={toggleModal}
-            >
-              &times;
-            </button>
+
+          <CloseIcon sx={{cursor:"pointer", color:"#4e504f", position:'absolute', top:'1px', right:'2px', fontWeight:'600' }} onClick={handleCloseView} />
 
             <h2 className="mb-4 text-lg font-semibold">Component Table</h2>
 
             {/* Table */}
-            <div className="overflow-x-auto">
+            <div className="overflow-y-auto max-h-60">
               <table className="min-w-full border-collapse">
                 <thead>
                   <tr className="text-gray-600 bg-gray-100">
@@ -56,9 +40,9 @@ const TableModal = ({ data }) => {
             </div>
           </div>
         </div>
-      )}
+      
     </div>
   );
 };
 
-export default TableModal;
+export default OrderComponentModel;

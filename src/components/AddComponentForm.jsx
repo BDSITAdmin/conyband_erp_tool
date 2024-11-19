@@ -8,14 +8,14 @@ import SuccessAlert from './SuccessAlert';
 import ErrorAlert from './ErrorAlert';
 import useFetch from '../hooks/useFetch';
 
-const componentSchema = z.object({
-    componentCategory: z
-        .string()
-        .optional(),
-    componentName: z
-        .string()
-        .min(3, "Component name must be at least 3 characters long"),
-});
+    const componentSchema = z.object({
+        componentCategory: z
+            .string()
+            .optional(),
+        componentName: z
+            .string()
+            .min(3, "Component name must be at least 3 characters long"),
+    });
 
 const AddComponentForm = ({reFetchTableData}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +27,7 @@ const AddComponentForm = ({reFetchTableData}) => {
     const [isFormValid, setIsFormValid] = useState(false);
     const [inputCatValue, setInputCatValue] = useState('');
     const [showList, setShowList] = useState(false);
+
     
 
     const{ data:categoriesData, loading, error, reFetch } = useFetch("http://localhost:8080/api/v1/categories")
@@ -195,6 +196,7 @@ const AddComponentForm = ({reFetchTableData}) => {
                                         onChange={(e) => setComponentName(e.target.value)}
                                         className="px-2 w-[200px] py-1 border rounded"
                                         placeholder="Enter Component Name"
+                                        required
                                     />
                             </div>
 

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 
-const AddCategoryForm = () => {
+const AddOrderForm = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [productName, setProductName] = useState('');
     const [quantity, setQuantity] = useState('');
@@ -20,7 +21,7 @@ const AddCategoryForm = () => {
             {/* Button to open the modal */}
             <button
                 onClick={handleOpenModal}
-                className="px-4 py-2  text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full"
+                className="px-4 py-2  text-white flex float-end mr-6 items-center justify-center bg-[#10B981] rounded-full"
             >
                <AddIcon sx={{color:'white', paddingTop:'3px' }}/>  Add Order
             </button>
@@ -54,18 +55,13 @@ const AddCategoryForm = () => {
                         <div className="flex justify-center">
                             <button
                                 onClick={handleEstimate}
-                                className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
+                                className="px-4 mx-4 py-2 text-white bg-[#10B981] rounded"
                             >
-                                Estimate
+                                Estimate Order
                             </button>
                         </div>
                         {/* Close Button */}
-                        <button
-                            onClick={handleCloseModal}
-                            className="absolute text-lg text-black top-1 right-3 hover:text-gray-600"
-                        >
-                            &times;
-                        </button>
+                        <CloseIcon sx={{cursor:"pointer", color:"#4e504f", position:'absolute', top:'1px', right:'2px', fontWeight:'600' }} onClick={handleCloseModal} />
                     </div>
 
                 </div>
@@ -74,4 +70,4 @@ const AddCategoryForm = () => {
     );
 };
 
-export default AddCategoryForm;
+export default AddOrderForm;

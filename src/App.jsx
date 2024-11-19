@@ -9,7 +9,11 @@ import Vendors from './pages/Vendors';
 import Purchase from './pages/Purchase';
 import Settings from './pages/settings';
 import Users from './pages/users';
+<<<<<<< HEAD
 import OrderManagement from './pages/OrderManagement';
+=======
+import OrderConfiguration from './pages/OrderConfiguration';
+>>>>>>> b5055b10075643202f274a81b6b1a4450b74eb98
 import ProductConfiguration from "./pages/productConfiguration";
 
 function App() {

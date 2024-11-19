@@ -17,11 +17,11 @@ const Menu = () => {
       <ul>
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
+          { label: "Order Management ", icon: <FiBox />, path: "/order-config" },
           { label: "Inventory", icon: <FiBox />, path: "/inventory" },
           { label: "Purchase", icon: <FiShoppingCart />, path: "/purchase" },
-          { label: "Order Config ", icon: <FiBox />, path: "/order-config" },
+          { label: "Product Configuration", icon: <FiPackage />, path: "/product-config" },
           { label: "Vendors", icon: <FiUsers />, path: "/vendors" },
-          { label: "Product Config", icon: <FiPackage />, path: "/product-config" },
           { label: "Users", icon: <FiClipboard />, path: "/users" },
           { label: "Settings", icon: <FiSettings />, path: "/settings" },
         ].map(({ label, icon, path }) => (
