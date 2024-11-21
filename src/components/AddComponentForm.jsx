@@ -8,16 +8,16 @@ import SuccessAlert from './SuccessAlert';
 import ErrorAlert from './ErrorAlert';
 import useFetch from '../hooks/useFetch';
 
-    const componentSchema = z.object({
-        componentCategory: z
-            .string()
-            .optional(),
-        componentName: z
-            .string()
-            .min(3, "Component name must be at least 3 characters long"),
-    });
+const componentSchema = z.object({
+    componentCategory: z
+        .string()
+        .optional(),
+    componentName: z
+        .string()
+        .min(3, "Component name must be at least 3 characters long"),
+});
 
-const AddComponentForm = ({reFetchTableData}) => {
+const AddComponentForm = ({ reFetchTableData }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [componentCategory, setComponentCategory] = useState("");
@@ -28,9 +28,9 @@ const AddComponentForm = ({reFetchTableData}) => {
     const [inputCatValue, setInputCatValue] = useState('');
     const [showList, setShowList] = useState(false);
 
-    
 
-    const{ data:categoriesData, loading, error, reFetch } = useFetch("http://localhost:8080/api/v1/categories")
+
+    const { data: categoriesData, loading, error, reFetch } = useFetch("http://localhost:8080/api/v1/categories")
 
     const toggleModal = () => {
         setIsOpen(!isOpen);
@@ -96,36 +96,36 @@ const AddComponentForm = ({reFetchTableData}) => {
             // console.log("payload is", inputCatValue)
 
             const response = await axios.post("http://localhost:8080/api/v1/components", payload);
-            console.log("response is",response)
+            console.log("response is", response)
             if (response.status === 201) {
                 setSuccessMessage("Component added successfully!");
                 setTimeout(() => setSuccessMessage(null), 3000);
                 reFetchTableData();
                 setComponentCategory("");
                 setComponentName("");
-                setIsLoading(false); 
+                setIsLoading(false);
             }
         } catch (error) {
             if (error instanceof z.ZodError) {
                 setErrorMessage(error.errors[0].message);
                 setTimeout(() => setErrorMessage(null), 3000);
-                setIsLoading(false); 
+                setIsLoading(false);
             } else {
                 setErrorMessage("Failed to add component. Please try again.");
                 setTimeout(() => setErrorMessage(null), 3000);
-                setIsLoading(false); 
-            } 
+                setIsLoading(false);
+            }
         }
     };
 
     const handleInputChange = (e) => {
         setInputCatValue(e.target.value);
-        setShowList(true); 
-        
-        e.preventDefault();
-      };
+        setShowList(true);
 
-    const handleSelectList =(items, e)=>{
+        e.preventDefault();
+    };
+
+    const handleSelectList = (items, e) => {
         setInputCatValue(items?.category_name);
         setShowList(false);
         e.preventDefault();
@@ -137,27 +137,27 @@ const AddComponentForm = ({reFetchTableData}) => {
             {successMessage && <SuccessAlert message={successMessage} />}
             {errorMessage && <ErrorAlert message={errorMessage} />}
             {/* Button to open the modal */}
-            
+
             <button
                 onClick={toggleModal}
                 // ref={buttonRef}
                 className="px-4 py-2  text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full "
             >
-             <AddIcon sx={{color:'white', paddingTop:'3px' }}/>  Add Component
+                <AddIcon sx={{ color: 'white', paddingTop: '3px' }} />  Add Component
             </button>
 
             {/* Modal */}
             {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
-                    {isLoading ? <LoadingCircle/> :<div className="relative bg-white shadow-lg rounded-xl max-w-max ">
+                    {isLoading ? <LoadingCircle /> : <div className="relative bg-white shadow-lg rounded-xl max-w-max ">
                         <h2 className="text-lg font-medium text-center text-white bg-[#10B981] py-3 rounded-t-xl">
-                        Add New Component Type
+                            Add New Component Type
                         </h2>
 
                         <form className="px-6 my-3">
                             <div className="flex items-center justify-end gap-3 mb-3">
-                                    <h2 className="">Component Category</h2>
-                                    {/* <select
+                                <h2 className="">Component Category</h2>
+                                {/* <select
                                         id="ComponentCategory"
                                         className=" px-2 w-[200px] py-1 border rounded"
                                         placeholder="Enter Category ID/Name"
@@ -168,54 +168,54 @@ const AddComponentForm = ({reFetchTableData}) => {
                                         <option value="bands">bands</option>
                                         <option value="dialog">dialog</option>
                                     </select> */}
-                                    <input
-                                        type="text"
-                                        id="ComponentName"
-                                        value={inputCatValue}
-                                        onChange={handleInputChange}
-                                        className="px-2 py-1 border rounded"
-                                        placeholder="Enter Category ID/Name"
-                                    />
-                                    {showList && (<ul className='absolute top-[100px]  rounded-sm bg-white max-h-[40vh] overflow-y-scroll w-[200px] '>
-                                        {categoriesData.filter((item) => 
-                                            item.category_name.toLowerCase().includes(inputCatValue.toLowerCase()) || 
-                                            item.category_id.toString().includes(inputCatValue) 
-                                        ).map((items, index)=>(
-                                            <li className='p-2 px-4 cursor-pointer hover:bg-gray-200' onClick={(e) => handleSelectList(items,e)} key={index} >{items?.category_name}  [ID-{items?.category_id}]</li>
-                                        ))}
-                                    </ul>)}
+                                <input
+                                    type="text"
+                                    id="ComponentName"
+                                    value={inputCatValue}
+                                    onChange={handleInputChange}
+                                    className="px-2 py-1 border rounded"
+                                    placeholder="Enter Category ID/Name"
+                                />
+                                {showList && (<ul className='absolute top-[100px]  rounded-sm bg-white max-h-[40vh] overflow-y-scroll w-[200px] '>
+                                    {categoriesData.filter((item) =>
+                                        item.category_name.toLowerCase().includes(inputCatValue.toLowerCase()) ||
+                                        item.category_id.toString().includes(inputCatValue)
+                                    ).map((items, index) => (
+                                        <li className='p-2 px-4 cursor-pointer hover:bg-gray-200' onClick={(e) => handleSelectList(items, e)} key={index} >{items?.category_name}  [ID-{items?.category_id}]</li>
+                                    ))}
+                                </ul>)}
                             </div>
 
                             {/* Product Name */}
                             <div className="flex items-center justify-end gap-3 mb-3">
-                                    <h2 className="">Component Name*</h2>
-                                    <input
-                                        type="text"
-                                        id="ComponentName"
-                                        value={componentName}
-                                        onChange={(e) => setComponentName(e.target.value)}
-                                        className="px-2 w-[200px] py-1 border rounded"
-                                        placeholder="Enter Component Name"
-                                        required
-                                    />
+                                <h2 className="">Component Name*</h2>
+                                <input
+                                    type="text"
+                                    id="ComponentName"
+                                    value={componentName}
+                                    onChange={(e) => setComponentName(e.target.value)}
+                                    className="px-2 w-[200px] py-1 border rounded"
+                                    placeholder="Enter Component Name"
+                                    required
+                                />
                             </div>
 
 
                             {/* Submit Button */}
                             <div className="flex justify-center">
-                                    <button
-                                        type="submit"
-                                        className={isFormValid ? ` bg-[#10B981] text-white px-4 py-[6px] rounded-md flex justify-center items-center `:` bg-[#10b98190] text-white px-4 py-[6px] rounded-md flex justify-center items-center `}
-                                        disabled={!isFormValid}
-                                        onClick={handleAddComponentAPI}
-                                    >
-                                        Add Component
-                                    </button>
+                                <button
+                                    type="submit"
+                                    className={isFormValid ? ` bg-[#10B981] text-white px-4 py-[6px] rounded-md flex justify-center items-center ` : ` bg-[#10b98190] text-white px-4 py-[6px] rounded-md flex justify-center items-center `}
+                                    disabled={!isFormValid}
+                                    onClick={handleAddComponentAPI}
+                                >
+                                    Add Component
+                                </button>
                             </div>
                         </form>
 
                         {/* Close Button */}
-                        <CloseIcon sx={{cursor:"pointer", color:"#4e504f", position:'absolute', top:'1px', right:'2px', fontWeight:'600' }} onClick={toggleModal} />
+                        <CloseIcon sx={{ cursor: "pointer", color: "#4e504f", position: 'absolute', top: '1px', right: '2px', fontWeight: '600' }} onClick={toggleModal} />
                     </div>}
                 </div>
             )}
