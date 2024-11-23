@@ -99,7 +99,7 @@ function ProductConfiguration() {
     <>
   {showComponet &&<ViewComponentFromProduct data= {dataToView}  setShowComponent = {setShowComponent} />}
     <div className="w-full p-6 bg-gray-100 rounded-md">
-        <h1 className="mb-4 text-2xl font-semibold">Product Configuration</h1>
+        <h1 className="mb-4 text-2xl font-semibold">Configuration</h1>
     <ToggleButtons  
     data={Object.keys(apiEndpoints)}
     onChange={(value) => {

@@ -26,7 +26,7 @@ function App() {
             <Route path="/product-config" element={<ProductConfiguration />} />
             <Route path="/Vendors" element={<Vendors />} />
             <Route path="/Purchase" element={<Purchase />} />
-            <Route path="/OrderManagement" element={<OrderConfiguration />} />
+            <Route path="/order-config" element={<OrderConfiguration />} />
             <Route path="/users" element={<Users />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
