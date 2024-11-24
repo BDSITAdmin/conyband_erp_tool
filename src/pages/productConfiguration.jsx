@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import ToggleButtons from '../components/ToggleButtons'
 import useFetch from '../hooks/useFetch';
 import TableComponent from '../components/TableComponent';
@@ -11,9 +11,9 @@ import ViewComponentFromProduct from '../components/ViewComponentFromProduct';
 
 function ProductConfiguration() {
   const [selectedToggle, setSelectedToggle] = useState("Component Category");
-  const [showComponet, setShowComponent]= useState(false);
+  const [showComponet, setShowComponent] = useState(false);
 
-  
+
   const dataToView = [
     {
       "componentName": "yogi123",
@@ -40,7 +40,7 @@ function ProductConfiguration() {
       "shortage": 2
     }
   ]
-  
+
 
   const apiEndpoints = {
     "Component Category": "http://localhost:8080/api/v1/categories",
@@ -56,22 +56,22 @@ function ProductConfiguration() {
 
   const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
 
-  
-  
 
-  useEffect(()=>{
+
+
+  useEffect(() => {
     reFetchTableData()
-  },[selectedToggle])
- 
+  }, [selectedToggle])
+
 
   const columnDefinitions = {
     "Component Category": [
-      { field: "category_id", headerName: "Category Id",width: 150 },
+      { field: "category_id", headerName: "Category Id", width: 150 },
       { field: "category_name", headerName: "Category Name", width: 150 },
     ],
     "Component List": [
       { field: "component_id", headerName: "Component Id", width: 150 },
-      { field: "component_name", headerName: "Component Name",width: 150 },
+      { field: "component_name", headerName: "Component Name", width: 150 },
       // { field: "category_id", headerName: "Category", width: 150 },
     ],
     "Product List": [

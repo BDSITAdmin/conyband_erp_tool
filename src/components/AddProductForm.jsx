@@ -15,13 +15,13 @@ const AddProductForm = ({ reFetchTableData }) => {
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [productName, setProductName] = useState('');
-    const [components, setComponents] = useState([{ name: '', quantity: '' }]);
+    const [components, setComponents] = useState([{ componentID: '', quantity: '' }]);
     const [isFormValid, setIsFormValid] = useState(false);
 
 
 
     const handleAddComponent = () => {
-        setComponents([...components, { name: '', quantity: '' }]);
+        setComponents([...components, { componentID: '', quantity: '' }]);
     };
 
     console.log("components data is ", components)
@@ -46,7 +46,7 @@ const AddProductForm = ({ reFetchTableData }) => {
             return;
         }
         for (const component of components) {
-            if (!component.name.trim() || isNaN(component.quantity) || component.quantity <= 0) {
+            if (!component.componentID || isNaN(component.quantity) || component.quantity <= 0) {
                 setIsFormValid(false);
                 return;
             }
@@ -66,20 +66,22 @@ const AddProductForm = ({ reFetchTableData }) => {
             const productResponse = await axios.post('http://localhost:8080/api/v1/products', {
                 product_name: productName.trim(),
             });
-            console.log("productResponse", productResponse)
+            console.log("productResponse", productResponse?.data?.product_id)
             if (productResponse.status === 201) {
-                const productId = productResponse.data.id;
+                const productId = productResponse?.data?.product_id;
+                console.log("product Id", productId)
 
                 // Step 2: Attach components to the product
                 const componentPromises = components.map((component) =>
-                    axios.post('http://localhost:8080/api/v1/components', {
+                    axios.post('http://localhost:8080/api/v1/productComponents', {
                         product_id: productId,
-                        component_name: component.name.trim(),
+                        component_id: component.componentID,
                         quantity: parseInt(component.quantity, 10),
                     })
                 );
 
-                await Promise.all(componentPromises);
+                const finalProductWithComponent = await Promise.all(componentPromises);
+                console.log(finalProductWithComponent);
 
                 setSuccessMessage('Product and components added successfully!');
                 setTimeout(() => setSuccessMessage(null), 3000);
@@ -111,7 +113,7 @@ const AddProductForm = ({ reFetchTableData }) => {
             </button>
 
             {isOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="fixed inset-0 flex items-center z-50 justify-center bg-black bg-opacity-50">
                     {isLoading ? (
                         <LoadingCircle />
                     ) : (
