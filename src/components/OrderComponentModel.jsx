@@ -29,10 +29,10 @@ const OrderComponentModel = ({ data, setShowComponent }) => {
                 <tbody>
                   {data.map((item, index) => (
                     <tr key={index} className="border-t border-gray-200">
-                      <td className="px-4 py-2">{item.componentName}</td>
-                      <td className="px-4 py-2">{item.totalRequired}</td>
-                      <td className="px-4 py-2">{item.available}</td>
-                      <td className="px-4 py-2">{item.shortage}</td>
+                      <td className="px-4 py-2">{item?.componentName}</td>
+                      <td className="px-4 py-2">{item?.totalRequired}</td>
+                      <td className="px-4 py-2">{item?.available}</td>
+                      <td className="px-4 py-2">{item?.shortage}</td>
                     </tr>
                   ))}
                 </tbody>

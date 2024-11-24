@@ -12,51 +12,25 @@ import ViewComponentFromProduct from '../components/ViewComponentFromProduct';
 function ProductConfiguration() {
   const [selectedToggle, setSelectedToggle] = useState("Component Category");
   const [showComponet, setShowComponent] = useState(false);
-
-
-  const dataToView = [
-    {
-      "componentName": "yogi123",
-      "totalRequired": 10,
-      "available": 8,
-      "shortage": 2
-    },
-    {
-      "componentName": "componentABC",
-      "totalRequired": 20,
-      "available": 15,
-      "shortage": 5
-    },
-    {
-      "componentName": "componentXYZ",
-      "totalRequired": 30,
-      "available": 30,
-      "shortage": 0
-    },
-    {
-      "componentName": "componentLMN",
-      "totalRequired": 5,
-      "available": 3,
-      "shortage": 2
-    }
-  ]
+  const [viewAllId, SetViewAllId] = useState();
 
 
   const apiEndpoints = {
     "Component Category": "http://localhost:8080/api/v1/categories",
     "Component List": "http://localhost:8080/api/v1/components",
-    "Product List": "http://localhost:8080/api/v1/products",
+    "Product List": "http://localhost:8080/api/v1/productConfiguration/products",  
   };
 
   const handleView = (productId) => {
     // console.log(`View details for Product ID: ${productId}`);
+    SetViewAllId(productId)
     setShowComponent(true)
   };
 
 
   const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
 
-
+// console.log(rows)
 
 
   useEffect(() => {
@@ -97,7 +71,7 @@ function ProductConfiguration() {
 
   return (
     <>
-  {showComponet &&<ViewComponentFromProduct data= {dataToView}  setShowComponent = {setShowComponent} />}
+  {showComponet &&<ViewComponentFromProduct viewAllId={viewAllId} data= {rows}  setShowComponent = {setShowComponent} />}
     <div className="w-full p-6 bg-gray-100 rounded-md">
         <h1 className="mb-4 text-2xl font-semibold">Configuration</h1>
     <ToggleButtons  
