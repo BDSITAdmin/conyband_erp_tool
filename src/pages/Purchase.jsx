@@ -11,7 +11,7 @@ const Table = () => {
         { field: 'date', headerName: 'Purchase Date', width: 130 },
         { field: 'name', headerName: 'Product Name', width: 130 },
         { field: 'category', headerName: 'Product Category', width: 130 },
-        { field: 'quantity', headerName: 'Purchase Quantity', width: 150 },
+        { field: 'quantity', headerName: 'Available Quantity', width: 150 },
         { field: 'status', headerName: 'Status', width: 130 },
        
        

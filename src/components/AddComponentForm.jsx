@@ -96,7 +96,7 @@ const AddComponentForm = ({ reFetchTableData }) => {
             // console.log("payload is", inputCatValue)
 
             const response = await axios.post("http://localhost:8080/api/v1/components", payload);
-            console.log("response is", response)
+            //console.log("response is", response)
             if (response.status === 201) {
                 setSuccessMessage("Component added successfully!");
                 setTimeout(() => setSuccessMessage(null), 3000);
