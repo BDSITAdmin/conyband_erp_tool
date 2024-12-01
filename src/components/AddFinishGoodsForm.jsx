@@ -7,11 +7,10 @@ import SuccessAlert from "./SuccessAlert";
 import ErrorAlert from "./ErrorAlert";
 import LoadingCircle from "./LoadingCircle";
 import { format } from "date-fns";
-import useFetch from "../hooks/useFetch";
 import { z } from "zod";
 
 const componentSchema = z.object({
-    productName: z.string().min(3, "Product name must be at least 3 characters long").optional(),
+    product_name: z.string().min(3, "Product name must be at least 3 characters long").optional(),
     product_id: z.string().regex(/^[A-Za-z0-9\s]+$/, "Component ID must only contain alphanumeric characters and spaces"),
     manufactured_quantity: z.number().positive("Quantity must be a positive number"),
     manufactured_date: z.date(),
@@ -21,18 +20,19 @@ const FinishGood = ({ reFetchTableData }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [product_id, setproduct_id] = useState("");
-    const [productName, setproductName] = useState("");
+    const [product_name, setproduct_name] = useState("");
     const [manufactured_date, setmanufacturedDate] = useState(new Date());
     const [manufactured_quantity, setmanufactured_quantity] = useState(0);
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isFormValid, setIsFormValid] = useState(false);
+    const [productIdError, setProductIdError] = useState("");  // Track product ID error
 
     const validateComponentData = () => {
         try {
             componentSchema.parse({
                 product_id: product_id.trim() || undefined,
-                productName: productName.trim(),
+                product_name: product_name.trim(),
                 manufactured_quantity: manufactured_quantity,
                 manufactured_date: manufactured_date,
             });
@@ -46,7 +46,32 @@ const FinishGood = ({ reFetchTableData }) => {
 
     useEffect(() => {
         validateComponentData();
-    }, [product_id, productName, manufactured_quantity, manufactured_date]);
+    }, [product_id, product_name, manufactured_quantity, manufactured_date]);
+
+    // Fetch product details based on the product ID
+    const fetchProductDetails = async (product_id) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/v1/products/${product_id}`);
+            if (response.status === 200 && response.data) {
+                setproduct_name(response.data.product_name); // Assuming the response contains a 'product_name' field
+                setProductIdError("");  // Clear error if product is found
+            }
+        } catch (error) {
+            console.error("Error fetching product details:", error);
+            setproduct_name(""); // Reset if the product ID is not found or there's an error
+            setProductIdError("Product ID not found. Please check the ID and try again.");  // Set error message
+        }
+    };
+
+    // Trigger fetching product details when user types the product ID
+    useEffect(() => {
+        if (product_id) {
+            fetchProductDetails(product_id);
+        } else {
+            setproduct_name(""); // Clear product name if product ID is empty
+            setProductIdError("");  // Clear error if product ID is empty
+        }
+    }, [product_id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,14 +80,14 @@ const FinishGood = ({ reFetchTableData }) => {
         try {
             const validateData = componentSchema.parse({
                 product_id: product_id.trim() || undefined,
-                productName: productName.trim(),
+                product_name: product_name.trim(),
                 manufactured_quantity: manufactured_quantity,
                 manufactured_date: manufactured_date,
             });
 
             const payload = {
                 product_id: validateData.product_id,
-                productName: validateData.productName,
+                product_name: validateData.product_name,
                 manufactured_quantity: validateData.manufactured_quantity,
                 manufactured_date: format(new Date(validateData.manufactured_date), "yyyy-MM-dd"),
             };
@@ -74,7 +99,7 @@ const FinishGood = ({ reFetchTableData }) => {
                 setTimeout(() => setSuccessMessage(null), 3000);
                 reFetchTableData();
                 setproduct_id("");
-                setproductName("");
+                setproduct_name("");
                 setmanufactured_quantity(0);
                 setmanufacturedDate(new Date());
             }
@@ -133,17 +158,22 @@ const FinishGood = ({ reFetchTableData }) => {
                                         onChange={(e) => setproduct_id(e.target.value)}
                                     />
                                 </div>
+                                {productIdError && (
+                                    <div className="text-red-500 text-sm mt-1">
+                                        {productIdError}
+                                    </div>
+                                )}
                                 <div className="flex items-center space-x-2">
-                                    <label htmlFor="productName" className="w-1/3">
+                                    <label htmlFor="product_name" className="w-1/3">
                                         Product Name
                                     </label>
                                     <input
                                         type="text"
-                                        id="productName"
+                                        id="product_name"
                                         className="w-2/3 px-2 py-1 border rounded"
-                                        placeholder="Enter Product Name"
-                                        value={productName}
-                                        onChange={(e) => setproductName(e.target.value)}
+                                        placeholder="Product Name"
+                                        value={product_name}
+                                        readOnly
                                     />
                                 </div>
                                 <div className="flex items-center space-x-2">
@@ -165,7 +195,7 @@ const FinishGood = ({ reFetchTableData }) => {
                                         className={`${
                                             isFormValid ? "bg-[#10B981]" : "bg-[#10b98190]"
                                         } text-white px-4 py-[6px] rounded-md flex justify-center items-center`}
-                                        disabled={!isFormValid}
+                                        disabled={!isFormValid || productIdError}
                                     >
                                         Add Finished Good
                                     </button>
