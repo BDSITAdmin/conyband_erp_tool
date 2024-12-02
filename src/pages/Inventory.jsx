@@ -23,7 +23,9 @@ function ProductConfiguration() {
         error,
         reFetch: reFetchTableData,
     } = useFetch(apiEndpoints[selectedToggle]);
+      
 
+    console.log(rows);
     // Handle viewing row details
     const handleView = (productId) => {
         const selectedData = rows.find((row) =>
@@ -37,7 +39,7 @@ function ProductConfiguration() {
 
     const columnDefinitions = {
         'Raw Materials': [
-            { field: 'component_id', headerName: 'Component Id', width: 150 },
+            { field: 'component_id', headerName: ' Id', width: 150 },
             { field: 'component_name', headerName: 'Component Name', width: 150 },
             { field: 'Component_Category', headerName: 'Component Category', width: 150 },
             { field: 'available_quantity', headerName: 'Available Quantity', width: 150 },
