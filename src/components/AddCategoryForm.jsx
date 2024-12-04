@@ -125,7 +125,7 @@ const AddCategoryForm = ({ reFetchTableData }) => {
                                     id="categoryName"
                                     value={categoryName}
                                     onChange={(e) => setCategoryName(e.target.value)}
-                                    placeholder="Enter Product Name"
+                                    placeholder="Enter Category Name"
                                     required
                                 />
                             </div>

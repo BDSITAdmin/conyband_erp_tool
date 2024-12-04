@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ToggleButtons from '../components/ToggleButtons';
 import TableComponent from '../components/TableComponent';
 import FinishGood from '../components/AddFinishGoodsForm';
@@ -7,29 +7,30 @@ import useFetch from '../hooks/useFetch';
 function ProductConfiguration() {
     const [selectedToggle, setSelectedToggle] = useState('Components');
 
-    // API Endpoints for toggles
     const apiEndpoints = {
-        Components: 'http://localhost:8080/api/v1/inventory-management/raw-materials',
+        'Components': 'http://localhost:8080/api/v1/inventory-management/raw-materials',
         'Finish Good': 'http://localhost:8080/api/v1/inventory-management/finished-goods',
     };
 
-    // Fetch data using the selected API endpoint
-    const {
-        data: rows = [],
-        loading,
-        error,
-        reFetch: reFetchTableData,
-    } = useFetch(apiEndpoints[selectedToggle]);
 
-    // Column definitions for the tables
+
+    // Fetch data using the selected API endpoint
+    const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
+
+    useEffect(() => {
+        reFetchTableData()
+      }, [selectedToggle])
+    
+   
+
     const columnDefinitions = {
-        Components: [
+        'Components': [
             { field: 'component_id', headerName: 'Id', width: 150 },
             { field: 'component_name', headerName: 'Name', width: 150 },
             { field: 'Component_Category', headerName: 'Category', width: 150 },
-            { field: 'available_quantity', headerName: 'Available Quantity', width: 150 },
-            { field: 'status', headerName: 'Status', width: 150 },
+            { field: 'Available_Quantity', headerName: 'Available Quantity', width: 150 },
         ],
+        
         'Finish Good': [
             { field: 'Manufactured_Date', headerName: 'Date', width: 150 },
             { field: 'product_id', headerName: 'Product Id', width: 150 },
@@ -40,6 +41,7 @@ function ProductConfiguration() {
     };
 
     const columns = columnDefinitions[selectedToggle];
+    console.log('Selected Toggle:', selectedToggle, 'Rows:', rows);
 
     return (
         <div className="w-full p-6 bg-gray-100 rounded-md">
@@ -65,4 +67,5 @@ function ProductConfiguration() {
     );
 }
 
-export default ProductConfiguration;
+
+export default ProductConfiguration;  
