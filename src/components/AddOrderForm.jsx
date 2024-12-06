@@ -1,58 +1,94 @@
-import React, { useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
-import ErrorAlert from './ErrorAlert';
-import axios from 'axios'; 
-import SuccessAlert from './SuccessAlert';
- 
-const AddOrderForm = () => {
+import React, { useState, useEffect } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import ErrorAlert from "./ErrorAlert";
+import SuccessAlert from "./SuccessAlert";
+import axios from "axios";
+
+const AddOrderForm = ({ reFetchTableData }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [productName, setProductName] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [isLoading, setIsLoading] = useState(false); // For handling loading state
-    
+    const [productName, setProductName] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [productList, setProductList] = useState([]); // Store the full product list
+    const [productId, setProductId] = useState("");
 
     const handleOpenModal = () => setIsModalOpen(true);
+
     const handleCloseModal = () => {
-        setProductName('');
-        setQuantity('');
+        setProductName("");
+        setQuantity("");
+        setProductId("");
         setIsModalOpen(false);
     };
 
-    const handleSubmitOrder = async (e) => {
-        setIsLoading(true); // Set loading state to true before making API call
-        const orderData = {
-            product_id: productName,
-            quantity: Number(quantity),
+    // Fetch the full product list once when the component mounts
+    useEffect(() => {
+        const fetchProductList = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/v1/products");
+                if (response.status === 200 && Array.isArray(response.data)) {
+                    setProductList(response.data);
+                } else {
+                    throw new Error("Failed to fetch product list");
+                }
+            } catch (error) {
+                console.error("Error fetching product list:", error);
+                setErrorMessage("Failed to fetch product list. Please try again.");
+                setTimeout(() => setErrorMessage(null), 3000);
+            }
         };
 
-        try {
-            setIsLoading(true);
-            const response = await axios.post('http://localhost:8080/api/v1/productComponents',orderData);
-              
-              if (response.status === 201) {
-                 sttosuccessMaggage("Category ADDED SUCCESESfully !");
-                 setTimeout(() => settosucessMessage(null), 3000);
-                 reFetchTableData();
-                 setIsLoading(false)
-                 if (process.env.NODE_ENV === "development") {
-                     console.log("Category added:", response.data);
-                 }
-                setCategoryName("")
-             }
+        fetchProductList();
+    }, []);
 
-           
-        } catch (error) {
-            console.error('Error creating order:', error);
-            alert('Failed to create order. Please try again.');
-        } finally {
-            setIsLoading(false);
+    // Find the product ID by filtering the local product list
+    const findProductId = (name) => {
+        const product = productList.find((p) => p.product_name === name.trim());
+        if (product) {
+            return product.product_id;
+        } else {
+            setErrorMessage("Product not found. Please check the product name.");
+            setTimeout(() => setErrorMessage(null), 3000);
+            return null;
         }
     };
 
-    const handleEstimate = (e) => {
-        e.preventDefault(); 
-        handleSubmitOrder();
+    const handleSubmitOrder = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        // Find product ID from the local product list
+        const id = findProductId(productName);
+        if (!id) {
+            setIsLoading(false);
+            return; // Stop execution if product ID is not found
+        }
+
+        const payload = {
+            product_id: id.toString(),
+            order_quantity: quantity.toString(),
+        };
+
+        console.log(payload)
+
+        try {
+            const response = await axios.post("http://localhost:8080/api/v1/order-config", payload);
+            if (response.status === 201) {
+                setSuccessMessage("Order added successfully!");
+                setTimeout(() => setSuccessMessage(null), 3000);
+                reFetchTableData();
+                handleCloseModal(); // Close modal on success
+            }
+        } catch (error) {
+            console.error("Error creating order:", error);
+            setErrorMessage("Failed to create order. Please try again.");
+            setTimeout(() => setErrorMessage(null), 3000);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -64,6 +100,8 @@ const AddOrderForm = () => {
             >
                 <AddIcon sx={{ color: 'white', paddingTop: '3px' }} /> Add Order
             </button>
+            {successMessage && <SuccessAlert message={successMessage} />}
+            {errorMessage && <ErrorAlert message={errorMessage} />}
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="relative bg-white shadow-lg rounded-xl max-w-max">
@@ -95,7 +133,7 @@ const AddOrderForm = () => {
                             </div>
                             <div className="flex justify-center">
                                 <button
-                                    onClick={handleEstimate}
+                                    onClick={handleSubmitOrder}
                                     disabled={isLoading}
                                     className={`px-4 mx-4 py-2 text-white rounded ${
                                         isLoading ? 'bg-gray-400' : 'bg-[#10B981]'

@@ -181,7 +181,8 @@ const AddComponentForm = ({ reFetchTableData }) => {
                                         item.category_name.toLowerCase().includes(inputCatValue.toLowerCase()) ||
                                         item.category_id.toString().includes(inputCatValue)
                                     ).map((items, index) => (
-                                        <li className='p-2 px-4 cursor-pointer hover:bg-gray-200' onClick={(e) => handleSelectList(items, e)} key={index} >{items?.category_name}  [ID-{items?.category_id}]</li>
+                                        <li className='p-2 px-4 cursor-pointer hover:bg-gray-200'
+                                         onClick={(e) => handleSelectList(items, e)} key={index} >{items?.category_name}  [ID-{items?.category_id}]</li>
                                     ))}
                                 </ul>)}
                             </div>

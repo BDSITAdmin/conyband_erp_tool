@@ -72,6 +72,8 @@ const FinishGood = ({ reFetchTableData }) => {
 
    
 
+   
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -102,6 +104,7 @@ const FinishGood = ({ reFetchTableData }) => {
                 setproduct_name("");
                 setmanufactured_quantity(0);
                 setmanufacturedDate(new Date());
+                toggleModal(); // Close the modal after a successful submission
             }
         } catch (error) {
             console.error("Error occurred:", error.response || error.message || error);

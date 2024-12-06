@@ -65,7 +65,7 @@ function OrderConfiguration() {
         )}
       </div>
       <div className="flex justify-end">
-        <AddOrderForm />
+        <AddOrderForm reFetchTableData={reFetchTableData}  />
       </div>
     </>
   );
