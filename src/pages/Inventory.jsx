@@ -3,6 +3,7 @@ import ToggleButtons from '../components/ToggleButtons';
 import TableComponent from '../components/TableComponent';
 import FinishGood from '../components/AddFinishGoodsForm';
 import useFetch from '../hooks/useFetch';
+import { format } from 'date-fns'; // Import format from date-fns
 
 function ProductConfiguration() {
     const [selectedToggle, setSelectedToggle] = useState('Components');
@@ -12,16 +13,17 @@ function ProductConfiguration() {
         'Finish Good': 'http://localhost:8080/api/v1/inventory-management/finished-goods',
     };
 
-
-
     // Fetch data using the selected API endpoint
     const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
 
     useEffect(() => {
-        reFetchTableData()
-      }, [selectedToggle])
-    
-   
+        reFetchTableData();
+    }, [selectedToggle]);
+
+    // Function to format dates
+    const formatDate = (dateString) => {
+        return format(new Date(dateString), 'yyyy-MM-dd');
+    };
 
     const columnDefinitions = {
         'Components': [
@@ -41,7 +43,17 @@ function ProductConfiguration() {
     };
 
     const columns = columnDefinitions[selectedToggle];
-    console.log('Selected Toggle:', selectedToggle, 'Rows:', rows);
+
+    // Format the Manufactured_Date field for 'Finish Good' section
+    const formattedRows = rows.map((row) => {
+        if (selectedToggle === 'Finish Good' && row.Manufactured_Date) {
+            return {
+                ...row,
+                Manufactured_Date: formatDate(row.Manufactured_Date),
+            };
+        }
+        return row;
+    });
 
     return (
         <div className="w-full p-6 bg-gray-100 rounded-md">
@@ -54,10 +66,10 @@ function ProductConfiguration() {
                 <h2 className="m-4">Loading...</h2>
             ) : error ? (
                 <h2 className="m-4 text-red-500">Error: {error.message || 'Something went wrong'}</h2>
-            ) : rows.length > 0 ? (
+            ) : formattedRows.length > 0 ? (
                 <TableComponent
                     columns={columns}
-                    rows={rows}
+                    rows={formattedRows}
                 />
             ) : (
                 <h2 className="m-4">No Data Found</h2>
@@ -67,5 +79,4 @@ function ProductConfiguration() {
     );
 }
 
-
-export default ProductConfiguration;  
+export default ProductConfiguration;
