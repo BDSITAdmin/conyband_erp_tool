@@ -43,7 +43,7 @@ const OrderComponentModel = ({ data , setShowComponent, viewAllId }) => {
                     <td className="border px-4 py-2">{item?.required_quantity}</td>
                     <td className="border px-4 py-2">{item?.available_quantity}</td>
                     <td className="border px-4 py-2">
-                      {Math.max(0, item.totalRequired - item.available)}
+                      {Math.max(0, item?.required_quantity - item?.available_quantity)}
                     </td>
                   </tr>
                 ))}

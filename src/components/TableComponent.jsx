@@ -59,43 +59,43 @@ function TableComponent({ columns, rows, reFetchTableData }) {
     handleMenuClose();
   };
 
-  const actionColumn = {
-    field: 'actions',
-    headerName: 'Actions',
-    width: 100,
-    sortable: false,
-    renderCell: (params) => (
-      <div>
-        <IconButton onClick={(event) => handleMenuOpen(event, params.row.id)}>
-          <MoreVertIcon />
-        </IconButton>
+  // const actionColumn = {
+  //   field: 'actions',
+  //   headerName: 'Actions',
+  //   width: 100,
+  //   sortable: false,
+  //   renderCell: (params) => (
+  //     <div>
+  //       <IconButton onClick={(event) => handleMenuOpen(event, params.row.id)}>
+  //         <MoreVertIcon />
+  //       </IconButton>
         
-        {anchorEl && selectedRowId === params.row.id && (
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-          >
-            <MenuItem onClick={() => handleEdit(params.row.id)}>Edit</MenuItem>
-            <MenuItem onClick={() => handleDelete(params.row.id)}>Delete</MenuItem>
-          </Menu>
-        )}
-      </div>
-    ),
-  };
+  //       {anchorEl && selectedRowId === params.row.id && (
+  //         <Menu
+  //           anchorEl={anchorEl}
+  //           open={Boolean(anchorEl)}
+  //           onClose={handleMenuClose}
+  //           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+  //           transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+  //         >
+  //           <MenuItem onClick={() => handleEdit(params.row.id)}>Edit</MenuItem>
+  //           <MenuItem onClick={() => handleDelete(params.row.id)}>Delete</MenuItem>
+  //         </Menu>
+  //       )}
+  //     </div>
+  //   ),
+  // };
   
   
 
-  const updatedColumns = [...columns, actionColumn];
+  // const updatedColumns = [...columns, actionColumn];
 
   return (
     <>
       <Paper sx={{ height: 400, width: '100%', marginTop: '20px' }}>
         <DataGrid
           rows={row}
-          columns={updatedColumns}
+          columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection

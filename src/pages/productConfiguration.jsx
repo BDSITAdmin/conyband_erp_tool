@@ -40,17 +40,17 @@ function ProductConfiguration() {
 
   const columnDefinitions = {
     "Component Category": [
-      { field: "category_id", headerName: "Category Id", width: 150 },
-      { field: "category_name", headerName: "Category Name", width: 150 },
+      { field: "category_id", headerName: "ID", width: 150 },
+      { field: "category_name", headerName: "Name", width: 150 },
     ],
     "Component List": [
-      { field: "component_id", headerName: "Component Id", width: 150 },
-      { field: "component_name", headerName: "Component Name", width: 150 },
+      { field: "component_id", headerName: "ID", width: 150 },
+      { field: "component_name", headerName: "Name", width: 150 },
       // { field: "category_id", headerName: "Category", width: 150 },
     ],
     "Product List": [
-      { field: "product_id", headerName: "Product Id", width: 100 },
-      { field: "product_name", headerName: "Product Name", width: 150 },
+      { field: "product_id", headerName: "ID", width: 100 },
+      { field: "product_name", headerName: "Name", width: 150 },
       {
         field: "AllComponents",
         headerName: "All Components",
@@ -89,8 +89,8 @@ function ProductConfiguration() {
       <h2 className='m-4' >No Data Found</h2>
     }
     { selectedToggle ==="Component Category" && <AddCategoryForm reFetchTableData={reFetchTableData} />}
-    { selectedToggle ==="Product List" && <AddProductForm/>}
     {selectedToggle ==="Component List" && <ComponentList reFetchTableData={reFetchTableData}/>}
+    { selectedToggle ==="Product List" && <AddProductForm reFetchTableData={reFetchTableData}/>}
     </div>
     </>
   )

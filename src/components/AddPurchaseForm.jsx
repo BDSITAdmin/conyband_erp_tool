@@ -7,9 +7,10 @@ import SuccessAlert from "./SuccessAlert";
 import ErrorAlert from "./ErrorAlert";
 import { format } from "date-fns";
 import { z } from "zod";
+import useFetch from "../hooks/useFetch";
 
 const purchaseSchema = z.object({
-    component_id: z.string().regex(/^[A-Za-z0-9\s]+$/, "Component ID must only contain alphanumeric characters and spaces"),
+    component_name: z.string().min(1, "Component name is required"),
     purchased_date: z.date(),
     purchased_quantity: z.number().positive("Quantity must be a positive number"),
 });
@@ -17,19 +18,25 @@ const purchaseSchema = z.object({
 const AddComponentForm = ({ reFetchTableData }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [component_id, setComponentId] = useState("");
     const [component_name, setComponentName] = useState("");
+    const [component_id, setComponentId] = useState(""); // Stored but not shown to the user
     const [purchased_date, setPurchasedDate] = useState(new Date());
     const [purchased_quantity, setPurchasedQuantity] = useState(0);
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isFormValid, setIsFormValid] = useState(false);
-    const [componentIdError, setComponentIdError] = useState("");
+    const [inputCompValue, setInputCompValue] = useState(""); // For displaying component suggestions
+    const [showList, setShowList] = useState(false);
+
+    // Fetch components data
+    const { data: componentsData, loading: loadingComponents, error: errorComponents } = useFetch("http://localhost:8080/api/v1/components");
+
+    const toggleModal = () => setIsOpen(!isOpen);
 
     const validateFormData = () => {
         try {
             purchaseSchema.parse({
-                component_id: component_id.trim(),
+                component_name: component_name.trim(),
                 purchased_date: purchased_date,
                 purchased_quantity: purchased_quantity,
             });
@@ -43,30 +50,7 @@ const AddComponentForm = ({ reFetchTableData }) => {
 
     useEffect(() => {
         validateFormData();
-    }, [component_id, purchased_date, purchased_quantity]);
-
-    const fetchComponentDetails = async (component_id) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/v1/components/${component_id}`);
-            if (response.status === 200 && response.data) {
-                setComponentName(response.data.component_name);
-                setComponentIdError("");
-            }
-        } catch (error) {
-            console.error("Error fetching product details:", error);
-            setComponentName("");
-            setComponentIdError("Component ID not found. Please check and try again.");
-        }
-    };
-
-    useEffect(() => {
-        if (component_id) {
-            fetchComponentDetails(component_id);
-        } else {
-            setComponentName("");
-            setComponentIdError("");
-        }
-    }, [component_id]);
+    }, [component_name, purchased_date, purchased_quantity]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -74,28 +58,30 @@ const AddComponentForm = ({ reFetchTableData }) => {
 
         try {
             const validData = purchaseSchema.parse({
-                component_id: component_id.trim(),
+                component_name: component_name.trim(),
                 purchased_date: purchased_date,
                 purchased_quantity: purchased_quantity,
             });
 
             const payload = {
-                component_id: validData.component_id,
+                component_id: component_id.toString(), // Use the selected component's ID for the payload
                 purchase_date: format(validData.purchased_date, "yyyy-MM-dd"),
                 purchased_quantity: validData.purchased_quantity.toString(),
             };
+
             console.log("Payload being sent:", payload);
 
             const response = await axios.post("http://localhost:8080/api/v1/purchases", payload);
-            console.log("API Response:", response);
+
             if (response.status === 201) {
                 setSuccessMessage("Successfully added purchase!");
                 setTimeout(() => setSuccessMessage(null), 3000);
                 reFetchTableData();
-                setComponentId("");
                 setComponentName("");
+                setComponentId("");
                 setPurchasedQuantity(0);
                 setPurchasedDate(new Date());
+                setInputCompValue(""); // Clear input field
                 toggleModal();
             }
         } catch (error) {
@@ -109,12 +95,30 @@ const AddComponentForm = ({ reFetchTableData }) => {
         }
     };
 
-    const toggleModal = () => setIsOpen(!isOpen);
+    const handleInputChange = (e) => {
+        setInputCompValue(e.target.value);
+        setShowList(true);
+    };
+
+    const handleSelectList = (item) => {
+        setInputCompValue(item.component_name); // Show component name in input
+        setComponentName(item.component_name); // Set component name for form validation
+        setComponentId(item.component_id); // Internally store component ID
+        setShowList(false);
+    };
 
     return (
         <>
             {successMessage && <SuccessAlert message={successMessage} />}
             {errorMessage && <ErrorAlert message={errorMessage} />}
+
+            <button
+                onClick={toggleModal}
+                className="px-4 py-2 text-white flex float-end mx-2 my-3 items-center justify-center bg-[#10B981] rounded-full"
+            >
+                + Add Purchase
+            </button>
+
             {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     {isLoading ? (
@@ -139,35 +143,36 @@ const AddComponentForm = ({ reFetchTableData }) => {
                                         showMonthDropdown
                                     />
                                 </div>
-                                <div className="flex items-center space-x-2">
-                                    <label htmlFor="componentID" className="w-1/3">
-                                        Component ID
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="componentID"
-                                        className="w-2/3 px-2 py-1 border rounded"
-                                        placeholder="Enter Component ID"
-                                        value={component_id}
-                                        onChange={(e) => setComponentId(e.target.value)}
-                                    />
-                                </div>
-                                {componentIdError && (
-                                    <div className="text-red-500 text-sm mt-1">{componentIdError}</div>
-                                )}
+
                                 <div className="flex items-center space-x-2">
                                     <label htmlFor="componentName" className="w-1/3">
                                         Component Name
                                     </label>
                                     <input
                                         type="text"
-                                        id="componentName"
+                                        value={inputCompValue}
+                                        onChange={handleInputChange}
                                         className="w-2/3 px-2 py-1 border rounded"
-                                        placeholder="Component Name"
-                                        value={component_name}
-                                        readOnly
+                                        placeholder="Enter Component Name / ID"
                                     />
+                                    {showList && (
+                                        <ul className="absolute top-[160px] left-[135px] rounded-sm bg-white max-h-[40vh] overflow-y-scroll w-[220px]">
+                                            {componentsData?.filter((item) =>
+                                                item.component_name.toLowerCase().includes(inputCompValue.toLowerCase()) ||
+                                                item.component_id.toString().includes(inputCompValue)
+                                            ).map((item, index) => (
+                                                <li
+                                                    className="p-2 px-4 cursor-pointer hover:bg-gray-200"
+                                                    onClick={() => handleSelectList(item)}
+                                                    key={index}
+                                                >
+                                                    {item.component_name} [ID-{item.component_id}]
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </div>
+
                                 <div className="flex items-center space-x-2">
                                     <label htmlFor="quantity" className="w-1/3">
                                         Purchase Quantity
@@ -181,13 +186,14 @@ const AddComponentForm = ({ reFetchTableData }) => {
                                         onChange={(e) => setPurchasedQuantity(Number(e.target.value))}
                                     />
                                 </div>
+
                                 <div className="flex justify-center">
                                     <button
                                         type="submit"
                                         className={`${
                                             isFormValid ? "bg-[#10B981]" : "bg-[#10b98190]"
                                         } text-white px-4 py-2 rounded`}
-                                        disabled={!isFormValid || componentIdError}
+                                        disabled={!isFormValid}
                                     >
                                         Add Purchase
                                     </button>
@@ -201,14 +207,6 @@ const AddComponentForm = ({ reFetchTableData }) => {
                     )}
                 </div>
             )}
-            <div className="flex justify-end">
-                <button
-                    onClick={toggleModal}
-                    className="px-4 py-2 m-6 text-white bg-[#10B981] rounded"
-                >
-                    + Add Purchase
-                </button>
-            </div>
         </>
     );
 };

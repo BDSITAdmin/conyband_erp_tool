@@ -27,7 +27,7 @@ function ProductConfiguration() {
 
     const columnDefinitions = {
         'Components': [
-            { field: 'component_id', headerName: 'Id', width: 150 },
+            { field: 'component_id', headerName: 'ID', width: 150 },
             { field: 'component_name', headerName: 'Name', width: 150 },
             { field: 'Component_Category', headerName: 'Category', width: 150 },
             { field: 'Available_Quantity', headerName: 'Available Quantity', width: 150 },
@@ -35,9 +35,9 @@ function ProductConfiguration() {
         
         'Finish Good': [
             { field: 'Manufactured_Date', headerName: 'Date', width: 150 },
-            { field: 'product_id', headerName: 'Product Id', width: 150 },
+            { field: 'product_id', headerName: 'Product ID', width: 150 },
             { field: 'product_name', headerName: 'Product Name', width: 150 },
-            { field: 'Manufactured_Quantity', headerName: 'Manufactured Quantity', width: 150 },
+            { field: 'Manufactured_Quantity', headerName: 'Manufactured Quantity', width: 200 },
             { field: 'Available_Quantity', headerName: 'Available Quantity', width: 150 },
         ],
     };
