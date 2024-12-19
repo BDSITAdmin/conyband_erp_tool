@@ -200,7 +200,7 @@ const AddComponentForm = ({ reFetchTableData }) => {
                                 </div>
                             </form>
                             <CloseIcon
-                                className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-700"
+                                className="absolute text-gray-500 cursor-pointer top-2 right-2 hover:text-gray-700"
                                 onClick={toggleModal}
                             />
                         </div>
