@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddOrderForm from '../components/AddOrderForm';
 import OrderTable from '../components/OrderTable';
@@ -16,33 +16,47 @@ function OrderConfiguration() {
   const [localRows, setLocalRows] = useState(rows); // Maintain a local copy of rows for immediate updates
 
   // Update localRows when rows change from the API
-  React.useEffect(() => {
+  useEffect(() => {
     setLocalRows(rows);
   }, [rows]);
 
-  const handleConfirmOrder = async (product_id) => {
+  const handleConfirmOrder = async (orderId) => {
+    const payload = {
+      order_config_id: orderId, // Payload to be sent to the API
+    };
+  
+    console.log('Payload sent to API:', payload);
+  
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/v1/order-config/confirm-order/${product_id}`
+        `http://localhost:8080/api/v1/order-config/confirm-order`,
+        payload
       );
-
+  
       if (response.status === 200) {
         alert('Order confirmed successfully!');
-
+  
         // Update the status of the specific order in localRows
         setLocalRows((prevRows) =>
           prevRows.map((row) =>
-            row.order_id === orderId ? { ...row, status: 'Confirmed' } : row
+            row.order_id === orderId ? { ...row, is_confirmed: true } : row
           )
         );
       } else {
+        console.error('API Response Error:', response);
         alert('Failed to confirm the order.');
       }
     } catch (error) {
-      console.error('Error confirming the order:', error);
-      alert('An error occurred while confirming the order.');
+      console.error('Error confirming the order:', error.response || error.message);
+      alert(
+        `An error occurred while confirming the order: ${
+          error.response?.data?.message || error.message
+        }`
+      );
     }
   };
+  
+  
 
   const handleViewAll = (productId) => {
     setViewAllId(productId);
@@ -70,7 +84,7 @@ function OrderConfiguration() {
       field: 'status',
       headerName: 'Status',
       width: 150,
-      renderCell: (params) => <span>{params.row.status || 'Pending'}</span>,
+      renderCell: (params) => <span>{params.row.status}</span>,
     },
     {
       field: 'confirmOrder',
@@ -100,6 +114,7 @@ function OrderConfiguration() {
     id: row.order_id,
     productName: row.product_name,
     orderQuantity: row.order_quantity,
+    status: row.is_confirmed ? 'Confirmed' : 'Pending', // Set status based on is_confirmed
   }));
 
   return (
