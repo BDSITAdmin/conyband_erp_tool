@@ -46,7 +46,7 @@ function ProductConfiguration() {
     "Component List": [
       { field: "component_id", headerName: "ID", width: 150 },
       { field: "component_name", headerName: "Name", width: 150 },
-      // { field: "category_id", headerName: "Category", width: 150 },
+      { field: "category_id", headerName: "Category", width: 150 },
     ],
     "Product List": [
       { field: "product_id", headerName: "ID", width: 100 },
@@ -57,7 +57,7 @@ function ProductConfiguration() {
         width: 200,
         renderCell: (params) => (
           <span
-            onClick={() => handleView(params.row.product_id)}
+            onClick={() => handleView(params.row?.product_id)}
             style={{ color: 'blue', cursor: 'pointer' }}
           >
             View
@@ -68,6 +68,7 @@ function ProductConfiguration() {
   };
 
   const columns = columnDefinitions[selectedToggle];
+  console.log(rows)
 
   return (
     <>

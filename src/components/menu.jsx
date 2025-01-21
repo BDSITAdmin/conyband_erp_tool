@@ -24,8 +24,8 @@ const Menu = () => {
           { label: "Vendors", icon: <FiUsers />, path: "/vendors" },
           { label: "Users", icon: <FiClipboard />, path: "/users" },
           { label: "Settings", icon: <FiSettings />, path: "/settings" },
-        ].map(({ label, icon, path }) => (
-          <li key={path}>
+        ].map(({ label, icon, path }, index) => (
+          <li key={index}>
             <Link
               to={path}
               className={`flex items-center gap-2 p-3 rounded hover:bg-gray-200 ${

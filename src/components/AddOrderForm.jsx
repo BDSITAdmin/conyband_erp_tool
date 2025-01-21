@@ -131,7 +131,7 @@ const AddOrderForm = ({ reFetchTableData }) => {
                                             )
                                             .map((product) => (
                                                 <li
-                                                    key={product.product_id}
+                                                    key={product?.product_id}
                                                     onClick={() => handleSelectProduct(product)}
                                                     className="p-2 cursor-pointer hover:bg-gray-200"
                                                 >
