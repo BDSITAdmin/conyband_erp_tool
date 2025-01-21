@@ -9,7 +9,7 @@ const ViewComponentFromProduct = ({ data, setShowComponent, viewAllId }) => {
      }
   })
 
- console.log(componentData?.components.length)
+ //console.log(componentData?.components.length)
 
     const handleCloseView =()=>{
         setShowComponent(false)
