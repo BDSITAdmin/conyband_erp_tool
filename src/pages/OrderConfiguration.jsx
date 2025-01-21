@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import AddOrderForm from '../components/AddOrderForm';
 import OrderTable from '../components/OrderTable';
 import OrderComponentModel from '../components/OrderComponentModel';
@@ -12,30 +13,36 @@ function OrderConfiguration() {
     'http://localhost:8080/api/v1/productConfiguration/order-management'
   );
 
-// console.log(rows)
+  const [localRows, setLocalRows] = useState(rows); // Maintain a local copy of rows for immediate updates
 
-const handleStatusChange = async (newStatus) => {
-  if (newStatus === "Confirm") {
+  // Update localRows when rows change from the API
+  React.useEffect(() => {
+    setLocalRows(rows);
+  }, [rows]);
+
+  const handleConfirmOrder = async (product_id) => {
     try {
-      const response = await fetch(`http:localhost:8080/api/v1/order-config/confirm-order${order_config_id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/order-config/confirm-order/${product_id}`
+      );
 
-      if (response.ok) {
-        alert("Order confirmed successfully!");
-        reFetchTableData(); // Refresh the data after confirmation
+      if (response.status === 200) {
+        alert('Order confirmed successfully!');
+
+        // Update the status of the specific order in localRows
+        setLocalRows((prevRows) =>
+          prevRows.map((row) =>
+            row.order_id === orderId ? { ...row, status: 'Confirmed' } : row
+          )
+        );
       } else {
-        alert("Failed to confirm the order.");
+        alert('Failed to confirm the order.');
       }
     } catch (error) {
-     // console.error("Error confirming the order:", error);
-      alert("An error occurred while confirming the order.");
+      console.error('Error confirming the order:', error);
+      alert('An error occurred while confirming the order.');
     }
-  }
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////
+  };
 
   const handleViewAll = (productId) => {
     setViewAllId(productId);
@@ -46,8 +53,6 @@ const handleStatusChange = async (newStatus) => {
     { field: 'id', headerName: 'Order ID', width: 120 },
     { field: 'productName', headerName: 'Product Name', width: 150 },
     { field: 'orderQuantity', headerName: 'Order Quantity', width: 150 },
-    
-
     {
       field: 'AllComponents',
       headerName: 'All Components',
@@ -61,57 +66,40 @@ const handleStatusChange = async (newStatus) => {
         </span>
       ),
     },
-
     {
-      field: "status",
-      headerName: "Status",
-      width: 200,
-      renderCell: (params) => {
-        const color =
-          params.row.status === "Pending"
-            ? "red"
-            : params.row.status === "Confirm"
-            ? "green"
-            : "black";
-  
-        return (
-          <div>
-            <span style={{ color, fontWeight: "bold" }}>
-              {params.row.status}
-            </span>
-            <select
-              value={params.row.status}
-              onChange={(e) => handleStatusChange(params.row.id, e.target.value)}
-              style={{ padding: "0px", marginLeft: "10px" }}
-            >
-              <option value="Pending">Pending</option>
-              <option value="Confirm">Confirm</option>
-            </select>
-          </div>
-        );
-      },
+      field: 'status',
+      headerName: 'Status',
+      width: 150,
+      renderCell: (params) => <span>{params.row.status || 'Pending'}</span>,
     },
-    // {
-    //   field: 'Status',
-    //   headerName: 'Status',
-    //   width: 200,
-    //   renderCell: (params) => (
-    //     <span
-    //       onClick={() => handleViewAll(params.row.product_id)}
-    //       style={{ color: 'red', cursor: 'pointer' }}
-    //     >
-    //       Pending
-    //     </span>
-    //   ),
-    // },
+    {
+      field: 'confirmOrder',
+      headerName: 'Confirm Order',
+      width: 150,
+      renderCell: (params) => (
+        <button
+          onClick={() => handleConfirmOrder(params.row.id)}
+          disabled={params.row.status === 'Confirmed'}
+          style={{
+            cursor: params.row.status === 'Confirmed' ? 'not-allowed' : 'pointer',
+            backgroundColor: params.row.status === 'Confirmed' ? '#ccc' : '#007bff',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            padding: '5px 10px',
+          }}
+        >
+          {params.row.status === 'Confirmed' ? 'Confirmed' : 'Confirm'}
+        </button>
+      ),
+    },
   ];
-   
-  const transformedRows = rows.map((row) => ({
+
+  const transformedRows = localRows.map((row) => ({
     ...row,
     id: row.order_id,
-    productName:row.product_name,
+    productName: row.product_name,
     orderQuantity: row.order_quantity,
-     // Add an id property using order_id
   }));
 
   return (
@@ -119,20 +107,20 @@ const handleStatusChange = async (newStatus) => {
       {showComponent && (
         <OrderComponentModel
           viewAllId={viewAllId}
-          data={rows}
+          data={localRows}
           setShowComponent={setShowComponent}
         />
       )}
       <div className="w-full p-6 bg-gray-100 rounded-md">
         <h1 className="mb-4 text-2xl font-semibold">Order Management</h1>
-        {rows?.length > 0 ? (
+        {localRows?.length > 0 ? (
           <OrderTable columns={columns} rows={transformedRows} />
         ) : (
           <h2 className="m-4">No Data Found</h2>
         )}
       </div>
       <div className="flex justify-end">
-        <AddOrderForm reFetchTableData={reFetchTableData}  />
+        <AddOrderForm reFetchTableData={reFetchTableData} />
       </div>
     </>
   );
