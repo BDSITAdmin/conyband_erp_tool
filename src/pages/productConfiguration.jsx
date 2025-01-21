@@ -46,7 +46,7 @@ function ProductConfiguration() {
     "Component List": [
       { field: "component_id", headerName: "ID", width: 150 },
       { field: "component_name", headerName: "Name", width: 150 },
-      { field: "category_id", headerName: "Category", width: 150 },
+      //{ field: "category_id", headerName: "Category", width: 150 },
     ],
     "Product List": [
       { field: "product_id", headerName: "ID", width: 100 },
@@ -81,7 +81,7 @@ function ProductConfiguration() {
       setSelectedToggle(value);
     }}
     />
-    {rows.length > 1 ?
+    {rows.length > 0 ?
       <TableComponent 
       columns={columns} 
       rows={rows} 

@@ -14,6 +14,28 @@ function OrderConfiguration() {
 
 // console.log(rows)
 
+const handleStatusChange = async (newStatus) => {
+  if (newStatus === "Confirm") {
+    try {
+      const response = await fetch(`http:localhost:8080/api/v1/order-config/confirm-order${order_config_id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.ok) {
+        alert("Order confirmed successfully!");
+        reFetchTableData(); // Refresh the data after confirmation
+      } else {
+        alert("Failed to confirm the order.");
+      }
+    } catch (error) {
+     // console.error("Error confirming the order:", error);
+      alert("An error occurred while confirming the order.");
+    }
+  }
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////
 
   const handleViewAll = (productId) => {
     setViewAllId(productId);
@@ -24,6 +46,8 @@ function OrderConfiguration() {
     { field: 'id', headerName: 'Order ID', width: 120 },
     { field: 'productName', headerName: 'Product Name', width: 150 },
     { field: 'orderQuantity', headerName: 'Order Quantity', width: 150 },
+    
+
     {
       field: 'AllComponents',
       headerName: 'All Components',
@@ -37,6 +61,49 @@ function OrderConfiguration() {
         </span>
       ),
     },
+
+    {
+      field: "status",
+      headerName: "Status",
+      width: 200,
+      renderCell: (params) => {
+        const color =
+          params.row.status === "Pending"
+            ? "red"
+            : params.row.status === "Confirm"
+            ? "green"
+            : "black";
+  
+        return (
+          <div>
+            <span style={{ color, fontWeight: "bold" }}>
+              {params.row.status}
+            </span>
+            <select
+              value={params.row.status}
+              onChange={(e) => handleStatusChange(params.row.id, e.target.value)}
+              style={{ padding: "0px", marginLeft: "10px" }}
+            >
+              <option value="Pending">Pending</option>
+              <option value="Confirm">Confirm</option>
+            </select>
+          </div>
+        );
+      },
+    },
+    // {
+    //   field: 'Status',
+    //   headerName: 'Status',
+    //   width: 200,
+    //   renderCell: (params) => (
+    //     <span
+    //       onClick={() => handleViewAll(params.row.product_id)}
+    //       style={{ color: 'red', cursor: 'pointer' }}
+    //     >
+    //       Pending
+    //     </span>
+    //   ),
+    // },
   ];
    
   const transformedRows = rows.map((row) => ({
