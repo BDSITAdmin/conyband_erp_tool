@@ -29,7 +29,9 @@ const AddComponentForm = ({ reFetchTableData }) => {
     const [showList, setShowList] = useState(false);
 
     // Fetch components data
-    const { data: componentsData, loading: loadingComponents, error: errorComponents } = useFetch("http://localhost:8080/api/v1/components");
+    const { data: componentsData, loading: loadingComponents, error: errorComponents } = useFetch(
+        "http://localhost:8080/api/v1/components"
+    );
 
     const toggleModal = () => setIsOpen(!isOpen);
 
@@ -69,12 +71,12 @@ const AddComponentForm = ({ reFetchTableData }) => {
                 purchased_quantity: validData.purchased_quantity.toString(),
             };
 
-            console.log("Payload being sent:", payload);
+           // console.log("Payload being sent:", payload);
 
             const response = await axios.post("http://localhost:8080/api/v1/purchases", payload);
 
             if (response.status === 201) {
-                setSuccessMessage("Successfully added purchase!");
+                setSuccessMessage(`${component_name} purchased Successfully !`);
                 setTimeout(() => setSuccessMessage(null), 3000);
                 reFetchTableData();
                 setComponentName("");
@@ -158,8 +160,12 @@ const AddComponentForm = ({ reFetchTableData }) => {
                                     {showList && (
                                         <ul className="absolute top-[160px] left-[135px] rounded-sm bg-white max-h-[40vh] overflow-y-scroll w-[220px]">
                                             {componentsData?.filter((item) =>
-                                                item.component_name.toLowerCase().includes(inputCompValue.toLowerCase()) ||
-                                                item.component_id.toString().includes(inputCompValue)
+                                                item.component_name
+                                                    .toLowerCase()
+                                                    .includes(inputCompValue.toLowerCase()) ||
+                                                item.component_id
+                                                    .toString()
+                                                    .includes(inputCompValue)
                                             ).map((item, index) => (
                                                 <li
                                                     className="p-2 px-4 cursor-pointer hover:bg-gray-200"

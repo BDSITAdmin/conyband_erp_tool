@@ -46,10 +46,10 @@ function PurchaseManagement() {
 
     // Define the column structure for the purchases table
     const columns = [
-        { field: 'purchase_id', headerName: 'ID', width: 150 },
+        { field: 'purchase_id', headerName: 'ID', width: 50 },
         { field: 'component_name', headerName: 'Component Name', width: 150 },
-        { field: 'purchase_date', headerName: 'Date', width: 150 },
-        { field: 'purchased_quantity', headerName: 'Quantity', width: 150 },
+        { field: 'purchase_date', headerName: 'Date', width: 120 },
+        { field: 'purchased_quantity', headerName: 'Quantity', width: 120 },
     ];
 
     return (

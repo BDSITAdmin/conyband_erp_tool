@@ -40,21 +40,21 @@ function ProductConfiguration() {
 
   const columnDefinitions = {
     "Component Category": [
-      { field: "category_id", headerName: "ID", width: 150 },
+      { field: "category_id", headerName: "ID", width: 50 },
       { field: "category_name", headerName: "Name", width: 150 },
     ],
     "Component List": [
-      { field: "component_id", headerName: "ID", width: 150 },
+      { field: "component_id", headerName: "ID", width: 50 },
       { field: "component_name", headerName: "Name", width: 150 },
       //{ field: "category_id", headerName: "Category", width: 150 },
     ],
     "Product List": [
-      { field: "product_id", headerName: "ID", width: 100 },
+      { field: "product_id", headerName: "ID", width: 50 },
       { field: "product_name", headerName: "Name", width: 150 },
       {
         field: "AllComponents",
         headerName: "All Components",
-        width: 200,
+        width: 120,
         renderCell: (params) => (
           <span
             onClick={() => handleView(params.row?.product_id)}
