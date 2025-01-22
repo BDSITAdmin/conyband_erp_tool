@@ -4,10 +4,12 @@ import AddOrderForm from '../components/AddOrderForm';
 import OrderTable from '../components/OrderTable';
 import OrderComponentModel from '../components/OrderComponentModel';
 import useFetch from '../hooks/useFetch';
+import SuccessAlert from '../components/SuccessAlert';
 
 function OrderConfiguration() {
   const [showComponent, setShowComponent] = useState(false);
   const [viewAllId, setViewAllId] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const { data: rows = [], loading, error, reFetch: reFetchTableData } = useFetch(
     'http://localhost:8080/api/v1/productConfiguration/order-management'
@@ -34,7 +36,9 @@ function OrderConfiguration() {
       );
   
       if (response.status === 200) {
-        alert('Order confirmed successfully!');
+        setSuccessMessage(" Confirmed Order added successfully!");
+                setTimeout(() => setSuccessMessage(null), 3000);
+        //alert('Order confirmed successfully!');
   
         // Update the status of the specific order in localRows
         setLocalRows((prevRows) =>
@@ -70,7 +74,7 @@ function OrderConfiguration() {
     {
       field: 'AllComponents',
       headerName: 'All Components',
-      width: 200,
+      width: 150,
       renderCell: (params) => (
         <span
           onClick={() => handleViewAll(params.row.product_id)}
@@ -83,12 +87,12 @@ function OrderConfiguration() {
     {
       field: 'status',
       headerName: 'Status',
-      width: 150,
+      width: 100,
       renderCell: (params) => <span>{params.row.status}</span>,
     },
     {
       field: 'confirmOrder',
-      headerName: 'Confirm Order',
+      headerName: 'Action',
       width: 150,
       renderCell: (params) => (
         <button
@@ -96,11 +100,17 @@ function OrderConfiguration() {
           disabled={params.row.status === 'Confirmed'}
           style={{
             cursor: params.row.status === 'Confirmed' ? 'not-allowed' : 'pointer',
-            backgroundColor: params.row.status === 'Confirmed' ? '#ccc' : '#007bff',
+            backgroundColor: params.row.status === 'Confirmed' ? '#ccc' : '#10B981',
             color: '#fff',
             border: 'none',
             borderRadius: '4px',
-            padding: '5px 10px',
+            height: '30px',
+            width: '80px',
+            display: 'flex',
+            marginTop: '10px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '5px',
           }}
         >
           {params.row.status === 'Confirmed' ? 'Confirmed' : 'Confirm'}
@@ -119,6 +129,8 @@ function OrderConfiguration() {
 
   return (
     <>
+
+      {successMessage && <SuccessAlert message={successMessage} />}
       {showComponent && (
         <OrderComponentModel
           viewAllId={viewAllId}
