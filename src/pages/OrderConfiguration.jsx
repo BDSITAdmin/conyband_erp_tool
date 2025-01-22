@@ -88,7 +88,16 @@ function OrderConfiguration() {
       field: 'status',
       headerName: 'Status',
       width: 100,
-      renderCell: (params) => <span>{params.row.status}</span>,
+      renderCell: (params) => (
+        <span
+          style={{
+            color: params.row.status === 'Confirmed' ? 'green' : 'red', // Conditional color
+            fontWeight: 'bold',
+          }}
+        >
+          {params.row.status}
+        </span>
+      ),
     },
     {
       field: 'confirmOrder',
@@ -100,12 +109,12 @@ function OrderConfiguration() {
           disabled={params.row.status === 'Confirmed'}
           style={{
             cursor: params.row.status === 'Confirmed' ? 'not-allowed' : 'pointer',
-            backgroundColor: params.row.status === 'Confirmed' ? '#ccc' : '#10B981',
+            backgroundColor: params.row.status === 'Confirmed' ? 'gray' : 'green', // Conditional background color
             color: '#fff',
             border: 'none',
             borderRadius: '4px',
             height: '30px',
-            width: '80px',
+            width: '120px',
             display: 'flex',
             marginTop: '10px',
             alignItems: 'center',
@@ -113,11 +122,12 @@ function OrderConfiguration() {
             padding: '5px',
           }}
         >
-          {params.row.status === 'Confirmed' ? 'Confirmed' : 'Confirm'}
+          {params.row.status === 'Confirmed' ? 'Confirmed' : 'Confirm Order'} {/* Conditional button title */}
         </button>
       ),
     },
   ];
+  
 
   const transformedRows = localRows.map((row) => ({
     ...row,
