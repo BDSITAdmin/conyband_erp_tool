@@ -18,7 +18,7 @@ function ProductConfiguration() {
   const apiEndpoints = {
     "Component Category": "http://localhost:8080/api/v1/categories",
     "Component List": "http://localhost:8080/api/v1/components",
-    "Product List": "http://localhost:8080/api/v1/productConfiguration/products",  
+    "Product List": "http://localhost:8080/api/v1/productConfiguration/products",
   };
 
   const handleView = (productId) => {
@@ -30,7 +30,7 @@ function ProductConfiguration() {
 
   const { data: rows, loading, error, reFetch: reFetchTableData } = useFetch(apiEndpoints[selectedToggle]);
 
-// console.log(rows)
+  // console.log(rows)
 
 
   useEffect(() => {
@@ -72,27 +72,27 @@ function ProductConfiguration() {
 
   return (
     <>
-  {showComponet &&<ViewComponentFromProduct viewAllId={viewAllId} data= {rows}  setShowComponent = {setShowComponent} />}
-    <div className="w-full p-6 bg-gray-100 rounded-md">
+      {showComponet && <ViewComponentFromProduct viewAllId={viewAllId} data={rows} setShowComponent={setShowComponent} />}
+      <div className="w-full p-6 bg-gray-100 rounded-md">
         <h1 className="mb-4 text-2xl font-semibold">Configuration</h1>
-    <ToggleButtons  
-    data={Object.keys(apiEndpoints)}
-    onChange={(value) => {
-      setSelectedToggle(value);
-    }}
-    />
-    {rows.length > 0 ?
-      <TableComponent 
-      columns={columns} 
-      rows={rows} 
-      reFetchTableData={reFetchTableData} 
-      /> :
-      <h2 className='m-4' >No Data Found</h2>
-    }
-    { selectedToggle ==="Component Category" && <AddCategoryForm reFetchTableData={reFetchTableData} />}
-    {selectedToggle ==="Component List" && <ComponentList reFetchTableData={reFetchTableData}/>}
-    { selectedToggle ==="Product List" && <AddProductForm reFetchTableData={reFetchTableData}/>}
-    </div>
+        <ToggleButtons
+          data={Object.keys(apiEndpoints)}
+          onChange={(value) => {
+            setSelectedToggle(value);
+          }}
+        />
+        {rows.length > 0 ?
+          <TableComponent
+            columns={columns}
+            rows={rows}
+            reFetchTableData={reFetchTableData}
+          /> :
+          <h2 className='m-4' >No Data Found</h2>
+        }
+        {selectedToggle === "Component Category" && <AddCategoryForm reFetchTableData={reFetchTableData} />}
+        {selectedToggle === "Component List" && <ComponentList reFetchTableData={reFetchTableData} />}
+        {selectedToggle === "Product List" && <AddProductForm reFetchTableData={reFetchTableData} />}
+      </div>
     </>
   )
 }

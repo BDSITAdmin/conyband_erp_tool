@@ -71,7 +71,7 @@ const AddComponentForm = ({ reFetchTableData }) => {
                 purchased_quantity: validData.purchased_quantity.toString(),
             };
 
-           // console.log("Payload being sent:", payload);
+           //n console.log("Payload being sent:", payload);
 
             const response = await axios.post("http://localhost:8080/api/v1/purchases", payload);
 

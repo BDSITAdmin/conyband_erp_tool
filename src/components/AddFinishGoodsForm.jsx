@@ -74,7 +74,7 @@ const FinishGood = ({ reFetchTableData }) => {
             const response = await axios.post("http://localhost:8080/api/v1/finished-products", payload);
 
             if (response.status === 201) {
-                setSuccessMessage("Successfully added finished good!");
+                setSuccessMessage('successfully added finished good!');
                 setTimeout(() => setSuccessMessage(null), 3000);
                 reFetchTableData();
                 setProductName("");

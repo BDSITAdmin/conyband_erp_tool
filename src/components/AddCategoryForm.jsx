@@ -52,7 +52,7 @@ const AddCategoryForm = ({ reFetchTableData }) => {
         try {
             const response = await axios.post("http://localhost:8080/api/v1/categories", payload);
             if (response.status === 201) {
-                settosucessMessage("Category added successfully!");
+                settosucessMessage(`${categoryName} category added successfully!`);
                 setTimeout(() => settosucessMessage(null), 3000);
                 reFetchTableData();
                 setIsLoading(false)

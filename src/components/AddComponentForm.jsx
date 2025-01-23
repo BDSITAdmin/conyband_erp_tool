@@ -67,7 +67,7 @@ const AddComponentForm = ({ reFetchTableData }) => {
     
             const response = await axios.post("http://localhost:8080/api/v1/components", payload);
             if (response.status === 201) {
-                setSuccessMessage("Component added successfully!");
+                setSuccessMessage(`${componentName} component added successfully!`);
                 setTimeout(() => setSuccessMessage(null), 3000);
                 reFetchTableData();
                 setComponentCategory("");
