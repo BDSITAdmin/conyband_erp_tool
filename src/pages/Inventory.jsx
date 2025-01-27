@@ -10,7 +10,7 @@ function ProductConfiguration() {
 
     const apiEndpoints = {
         'Components': 'http://localhost:8080/api/v1/inventory-management/raw-materials',
-        'Finish Good': 'http://localhost:8080/api/v1/inventory-management/finished-goods',
+        'Finished Goods': 'http://localhost:8080/api/v1/inventory-management/finished-goods',
     };
 
     // Fetch data using the selected API endpoint
@@ -33,10 +33,10 @@ function ProductConfiguration() {
             { field: 'Available_Quantity', headerName: 'Available Quantity', width: 150 },
         ],
         
-        'Finish Good': [
+        'Finished Goods': [
             { field: 'Manufactured_Date', headerName: 'Date', width: 150 },
-            { field: 'product_id', headerName: 'Product ID', width: 150 },
-            { field: 'product_name', headerName: 'Product Name', width: 150 },
+            { field: 'Product_Id', headerName: 'Product ID', width: 150 },
+            { field: 'Product_Name', headerName: 'Product Name', width: 150 },
             { field: 'Manufactured_Quantity', headerName: 'Manufactured Quantity', width: 200 },
             { field: 'Available_Quantity', headerName: 'Available Quantity', width: 150 },
         ],
@@ -46,7 +46,7 @@ function ProductConfiguration() {
 
     // Format the Manufactured_Date field for 'Finish Good' section
     const formattedRows = rows.map((row) => {
-        if (selectedToggle === 'Finish Good' && row.Manufactured_Date) {
+        if (selectedToggle === 'Finished Goods' && row.Manufactured_Date) {
             return {
                 ...row,
                 Manufactured_Date: formatDate(row.Manufactured_Date),
@@ -74,7 +74,7 @@ function ProductConfiguration() {
             ) : (
                 <h2 className="m-4">No Data Found</h2>
             )}
-            {selectedToggle === 'Finish Good' && <FinishGood reFetchTableData={reFetchTableData} />}
+            {selectedToggle === 'Finished Goods' && <FinishGood reFetchTableData={reFetchTableData} />}
         </div>
     );
 }

@@ -14,14 +14,14 @@ const AddProductForm = ({ reFetchTableData }) => {
     const [productName, setProductName] = useState('');
     const [components, setComponents] = useState([{ componentID: '', componentName: '', quantity: '' }]);
     const [isFormValid, setIsFormValid] = useState(false);
-    const [showComponentList, setShowComponentList] = useState(false); // To toggle suggestion list for components
-    const [componentSuggestions, setComponentSuggestions] = useState([]); // Stores the fetched suggestions for components
+    const [showComponentList, setShowComponentList] = useState(false);
+    const [componentSuggestions, setComponentSuggestions] = useState([]);
+    const [showConfirmModal, setShowConfirmModal] = useState(false); // New state for confirmation modal
 
-    // Fetch available component data for suggestions
     useEffect(() => {
         const fetchComponents = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/v1/components'); // Assuming API endpoint for components
+                const response = await axios.get('http://localhost:8080/api/v1/components');
                 setComponentSuggestions(response.data);
             } catch (error) {
                 console.error('Error fetching components:', error);
@@ -30,46 +30,39 @@ const AddProductForm = ({ reFetchTableData }) => {
         fetchComponents();
     }, []);
 
-    // Add a new empty component to the list
     const handleAddComponent = () => {
         setComponents([...components, { componentID: '', componentName: '', quantity: '' }]);
     };
 
-    // Remove a component from the list
     const handleRemoveComponent = (index) => {
         setComponents(components.filter((_, i) => i !== index));
     };
 
-    // Handle input change for component name or quantity
     const handleInputChange = (index, field, value) => {
         const updatedComponents = [...components];
         updatedComponents[index][field] = value;
         setComponents(updatedComponents);
     };
 
-    // Handle input for component name search
     const handleComponentInputChange = (e, index) => {
         const value = e.target.value;
-        handleInputChange(index, 'componentName', value); // Update componentName in state
-        handleInputChange(index, 'componentID', ''); // Reset componentID when typing new input
+        handleInputChange(index, 'componentName', value);
+        handleInputChange(index, 'componentID', '');
         setShowComponentList(true);
     };
 
-    // Select a component from the suggestion list
     const handleSelectComponent = (component, index) => {
         const updatedComponents = [...components];
-        updatedComponents[index].componentID = component.component_id; // Set component ID
-        updatedComponents[index].componentName = component.component_name; // Set component name
+        updatedComponents[index].componentID = component.component_id;
+        updatedComponents[index].componentName = component.component_name;
         setComponents(updatedComponents);
         setShowComponentList(false);
     };
 
-    // Toggle modal visibility
     const toggleModal = () => {
         setIsOpen(!isOpen);
     };
 
-    // Form validation
     const validateForm = () => {
         if (!productName.trim()) {
             setIsFormValid(false);
@@ -88,15 +81,12 @@ const AddProductForm = ({ reFetchTableData }) => {
         validateForm();
     }, [productName, components]);
 
-    // Handle product creation and component association with product
-    const handleCreateProduct = async (e) => {
-        e.preventDefault();
+    const handleCreateProduct = async () => {
         setIsLoading(true);
         setSuccessMessage(null);
         setErrorMessage(null);
 
         try {
-            // Step 1: Create the product
             const productResponse = await axios.post('http://localhost:8080/api/v1/products', {
                 product_name: productName.trim(),
             });
@@ -104,10 +94,9 @@ const AddProductForm = ({ reFetchTableData }) => {
             if (productResponse.status === 201) {
                 const productId = productResponse.data.product_id;
 
-                // Step 2: Create product components payload
                 const componentPayload = components.map((component) => ({
                     product_id: productId.toString(),
-                    component_id: component.componentID.toString(), // Use component ID in the payload
+                    component_id: component.componentID.toString(),
                     quantity: component.quantity.toString(),
                 }));
 
@@ -117,7 +106,6 @@ const AddProductForm = ({ reFetchTableData }) => {
                     setSuccessMessage('Product and components added successfully!');
                     setTimeout(() => setSuccessMessage(null), 3000);
 
-                    // Reset form
                     setProductName('');
                     setComponents([{ componentID: '', componentName: '', quantity: '' }]);
                     reFetchTableData();
@@ -130,6 +118,11 @@ const AddProductForm = ({ reFetchTableData }) => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleConfirm = () => {
+        setShowConfirmModal(false);
+        handleCreateProduct();
     };
 
     return (
@@ -153,7 +146,13 @@ const AddProductForm = ({ reFetchTableData }) => {
                             <h2 className="text-lg font-medium text-center text-white bg-[#10B981] py-3 rounded-t-xl">
                                 Add New Product
                             </h2>
-                            <form onSubmit={handleCreateProduct} className="px-6 pb-6 mt-4 space-y-4">
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    setShowConfirmModal(true);
+                                }}
+                                className="px-6 pb-6 mt-4 space-y-4"
+                            >
                                 <div className="my-4">
                                     <label className="block text-sm font-medium text-gray-700">Product Name*</label>
                                     <input
@@ -169,14 +168,22 @@ const AddProductForm = ({ reFetchTableData }) => {
                                     {components.map((component, index) => (
                                         <div key={index} className="my-4">
                                             <div className="flex items-center justify-between">
-                                                <label className="block text-sm font-medium text-gray-700">Component {index + 1}</label>
+                                                <label className="block text-sm font-medium text-gray-700">
+                                                    Component {index + 1}
+                                                </label>
                                                 {index > 0 && (
                                                     <button
                                                         type="button"
                                                         onClick={() => handleRemoveComponent(index)}
                                                         className="font-semibold text-red-500"
                                                     >
-                                                        <CloseIcon sx={{ cursor: 'pointer', color: '#4e504f', fontSize: '20px' }} />
+                                                        <CloseIcon
+                                                            sx={{
+                                                                cursor: 'pointer',
+                                                                color: '#4e504f',
+                                                                fontSize: '20px',
+                                                            }}
+                                                        />
                                                     </button>
                                                 )}
                                             </div>
@@ -196,7 +203,9 @@ const AddProductForm = ({ reFetchTableData }) => {
                                                                 item.component_name
                                                                     .toLowerCase()
                                                                     .includes(component.componentName.toLowerCase()) ||
-                                                                item.component_id.toString().includes(component.componentName)
+                                                                item.component_id
+                                                                    .toString()
+                                                                    .includes(component.componentName)
                                                             )
                                                             .map((item) => (
                                                                 <li
@@ -212,7 +221,9 @@ const AddProductForm = ({ reFetchTableData }) => {
                                                 <input
                                                     type="number"
                                                     value={component.quantity}
-                                                    onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
+                                                    onChange={(e) =>
+                                                        handleInputChange(index, 'quantity', e.target.value)
+                                                    }
                                                     placeholder="Quantity"
                                                     className="block w-1/2 p-2 border border-gray-300 rounded-md"
                                                     required
@@ -222,7 +233,11 @@ const AddProductForm = ({ reFetchTableData }) => {
                                     ))}
                                 </div>
                                 <div className="flex justify-end">
-                                    <button type="button" onClick={handleAddComponent} className="mt-2 text-sm font-semibold text-[#10B981]">
+                                    <button
+                                        type="button"
+                                        onClick={handleAddComponent}
+                                        className="mt-2 text-sm font-semibold text-[#10B981]"
+                                    >
                                         Add Component
                                     </button>
                                 </div>
@@ -251,6 +266,31 @@ const AddProductForm = ({ reFetchTableData }) => {
                             />
                         </div>
                     )}
+                </div>
+            )}
+
+            {/* Confirmation Modal */}
+            {showConfirmModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="p-6 bg-white rounded-lg shadow-lg w-80">
+                        <h2 className="mb-4 text-lg font-medium text-gray-800">
+                            Are you sure you want to add this product?
+                        </h2>
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                onClick={() => setShowConfirmModal(false)}
+                                className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-200 rounded-md"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleConfirm}
+                                className="px-4 py-2 text-sm font-medium text-white bg-[#10B981] rounded-md"
+                            >
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

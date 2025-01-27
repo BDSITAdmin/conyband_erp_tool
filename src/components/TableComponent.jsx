@@ -10,7 +10,7 @@ function TableComponent({ columns, rows, reFetchTableData }) {
   const [selectedRowId, setSelectedRowId] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({});
-  const paginationModel = { page: 0, pageSize: 5 };
+  const paginationModel = { page: 0, pageSize: 10 };
 
   const row = rows.map((row) => ({ id: row.category_id, ...row }));
 

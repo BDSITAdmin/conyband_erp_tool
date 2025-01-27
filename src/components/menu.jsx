@@ -8,6 +8,9 @@ import {
   FiPackage,
   FiClipboard,
 } from "react-icons/fi";
+import { FaUser } from "react-icons/fa";
+import { MdBorderColor } from "react-icons/md";
+import { GrDocumentConfig } from "react-icons/gr";
 
 const Menu = () => {
   const location = useLocation();
@@ -17,12 +20,12 @@ const Menu = () => {
       <ul>
         {[
           { label: "Dashboard", icon: <FiHome />, path: "/dashboard" },
-          { label: "Order Management ", icon: <FiBox />, path: "/order-management" },
+          { label: "Order Management ", icon: <MdBorderColor />, path: "/order-management" },
           { label: "Inventory", icon: <FiBox />, path: "/inventory" },
-          { label: "Purchase", icon: <FiShoppingCart />, path: "/purchase" },
-          { label: "Configuration", icon: <FiPackage />, path: "/product-config" },
+          { label: "Component Purchase", icon: <FiShoppingCart />, path: "/purchase" },
+          { label: "Product Configuration", icon: <GrDocumentConfig />, path: "/product-config" },
           { label: "Vendors", icon: <FiUsers />, path: "/vendors" },
-          { label: "Users", icon: <FiClipboard />, path: "/users" },
+          { label: "Users", icon: <FaUser />, path: "/users" },
           { label: "Settings", icon: <FiSettings />, path: "/settings" },
         ].map(({ label, icon, path }, index) => (
           <li key={index}>

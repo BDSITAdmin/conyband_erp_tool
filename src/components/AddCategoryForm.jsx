@@ -13,7 +13,7 @@ const categorySchema = z.object({
         .string()
         .min(3, "Category name must be at least 3 characters long")
         .max(50, "Category name must be less than 50 characters")
-        .regex(/^[A-Za-z0-9 ]+$/, "Category name can only contain letters, numbers, and spaces"),
+        //.regex(/^[A-Za-z0-9 ]+$/, "Category name can only contain letters, numbers, and spaces"),
 });
 
 const AddCategoryForm = ({ reFetchTableData }) => {
