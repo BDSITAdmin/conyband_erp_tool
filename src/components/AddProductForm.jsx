@@ -221,13 +221,22 @@ const AddProductForm = ({ reFetchTableData }) => {
                                                 <input
                                                     type="number"
                                                     value={component.quantity}
-                                                    onChange={(e) =>
-                                                        handleInputChange(index, 'quantity', e.target.value)
-                                                    }
+                                                    onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        if (value < 0) {
+                                                            alert("Quantity cannot be negative!");
+                                                        } else {
+                                                            handleInputChange(index, 'quantity', value);
+                                                        }
+                                                    }}
                                                     placeholder="Quantity"
+                                                    min="0"
                                                     className="block w-1/2 p-2 border border-gray-300 rounded-md"
                                                     required
                                                 />
+                                                
+
+
                                             </div>
                                         </div>
                                     ))}
@@ -245,9 +254,8 @@ const AddProductForm = ({ reFetchTableData }) => {
                                 <div className="flex justify-center mt-4">
                                     <button
                                         type="submit"
-                                        className={`px-4 py-[6px] rounded-md text-white ${
-                                            isFormValid ? 'bg-[#10B981]' : 'bg-[#10b98190]'
-                                        }`}
+                                        className={`px-4 py-[6px] rounded-md text-white ${isFormValid ? 'bg-[#10B981]' : 'bg-[#10b98190]'
+                                            }`}
                                         disabled={!isFormValid}
                                     >
                                         Add Product
